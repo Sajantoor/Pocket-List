@@ -1,0 +1,241 @@
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body, header, header input {
+  font-family: 'Barlow', sans-serif;
+}
+
+header {
+  width: 100%;
+  height: 80px;
+  padding: 15px;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  background-color: #30a0ff;
+  z-index: 20;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(28, 29, 29, 0.5);
+  font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+header #item {
+  width: 100%;
+  height: 40px;
+  top: 5px;
+  padding:  10px  10px 10px 0px;
+  font-size: 0.9em;
+  text-indent: 10px;
+  color: #FFF;
+  position: relative;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: none;
+  outline: none;
+  background-color: #6fcaff;
+  appearance: none;
+
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+
+/* Compatibility Across Other Web Browsers */
+header #item::-webkit-input-placeholder {
+  color: rgba(255,255,255, 0.7)
+}
+header #item::-moz-placeholder {
+  color: rgba(255,255,255, 0.7)
+}
+header #item:-ms-input-placeholder {
+  color: rgba(255,255,255, 0.7)
+}
+header #item:-moz-placeholder {
+  color: rgba(255,255,255, 0.7)
+}
+
+#add {
+  position: fixed;
+  right: 0;
+  padding: 10px 15px 20px 10px;
+  bottom: 0;
+  z-index: 30;
+}
+
+#add button {
+  height: 52px;
+  width: 52px;
+  background-color: #30a0ff;
+  padding: 12px;
+  z-index: 30;
+  border-radius: 50%;
+  border: 0;
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+ul#todo, ul#complete {
+  width: 100%;
+  padding: 10px;
+  position: relative;
+  top: 90px;
+  float:left;
+}
+
+ul#todo li, ul#complete li {
+  width: 100%;
+  min-height: 50px;
+  font-size: 0.9em;
+  position: relative;
+  float: left;
+  padding: 15px 100px 20px 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 5px rgba(28, 29, 29, 0.3);
+  background-color: #f3f3f3;
+  word-break: break-word;
+}
+
+ul#todo li .buttons, ul#complete li .buttons {
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  float: left;
+}
+
+ul#todo li .buttons button, ul#complete li button {
+  width: 50px;
+  height: 50px;
+  float: right;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+ul#todo li .buttons button:last-of-type:before, ul#complete li .buttons button:last-of-type:before {
+  content: '';
+  width: 1px;
+  height: 40px;
+  float: right;
+  border: 0;
+  background-color: #c4c4c4;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+.buttons button svg {
+  z-index: 10;
+  width: 35px;
+  height: 35px;
+}
+
+#addtodo, #removetodo {
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+button #removetodo:hover  {
+  fill: #ff4f4f;
+  -webkit-animation: glow 1.0s ease-in-out infinite alternate;
+  -moz-animation: glow 1.0s ease-in-out infinite alternate;
+  animation: glow 1.0s ease-in-out infinite alternate;
+}
+
+ul#complete:last-of-type::before {
+  content: '';
+  width: 20%;
+  height: 2px;
+  margin-bottom: 30px;
+  position: relative;
+  transform: translate(200%);
+  display: inline-block;
+  border: 0;
+  background-color: #c4c4c4;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+ul#complete #addtodo, ul#todo #addtodo {
+  width:29px;
+  height:29px;
+}
+
+ul#todo #addtodo {
+  padding:2px;
+  border-radius: 50%;
+  border: solid 3px #2ecc71;
+  position: relative;
+  top:-1px;
+}
+
+ul#todo div #addtodo:hover {
+  background-color: #2ecc71;
+  fill:#FFF;
+}
+
+ul#complete #addtodo {
+  background-color: #2ecc71;
+  fill:#FFF;
+  padding:2px;
+  border-radius: 50%;
+  border: solid 3px #2ecc71;
+  position: relative;
+  top:-1px;
+}
+
+ul#complete div  #addtodo:hover {
+  background-color: #FFF;
+  border-color: #2ecc71;
+  fill: #2ecc71;
+}
+
+#removetodo {
+  width:32px;
+  height:32px;
+  position: relative;
+  top: 2px;
+}
+
+ul#todo:empty:after {
+  display:block;
+  content: 'You have nothing todo right now...';
+  font-weight: 200;
+  text-align: center;
+  color: #c4c4c4;
+}
+
+ul#complete:empty:after {
+  display:block;
+  content: 'You have completed no tasks today...';
+  font-weight: 200;
+  text-align: center;
+  color: #c4c4c4;
+}
