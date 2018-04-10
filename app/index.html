@@ -16,12 +16,18 @@
 
     <header>
       <input id="item" type="text" value="" autocorrect="on" autocapitalize="words" placeholder="Add something todo...">
+      <label id="upload-label"><svg fill="#3C8EFA" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+        <input type="file" id="upload" multiple/>
+      </label>
     </header>
 
+    <!-- Todo List -->
     <ul id="todo"></ul>
 
+    <!-- Complete List -->
     <ul id="complete"></ul>
 
+    <!-- Add Buttons -->
     <div id="add">
     <button>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="#FFF" viewBox="0 0 42 42" style="enable-background:new 0 0 42 42;" xml:space="preserve"> <polygon class="fill" points="42,20 22,20 22,0 20,0 20,20 0,20 0,22 20,22 20,42 22,42 22,22 42,22 "/><g></g></svg>
@@ -32,5 +38,3 @@
     <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
-
-<!-- Testing Github again on another computer --> 
