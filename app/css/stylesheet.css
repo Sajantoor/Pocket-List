@@ -241,17 +241,21 @@ ul#complete:empty:after {
 }
 
 #upload {
-	width: 0.1px;
+  width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
 	overflow: hidden;
-	position: relative;
 }
 
 #upload-label {
-  position: relative;
-  float: right;
+  right: 5px;
   z-index: 20;
-  bottom: 28pt;
-  padding: 10pt;
+  top: 20px;
+  padding: 10px;
+  position: fixed;
+  float: right;
+}
+
+#preview {
+  float: left;
 }

@@ -27,6 +27,12 @@ function createItem() {
   }
 }
 
+document.getElementById('upload').onchange = function() {
+    var url = URL.createObjectURL(this.files[0]);
+    console.log(url);
+    document.getElementById('preview').src = url;
+  };
+
 // Event Listner For The Button Click
 document.getElementById('add').addEventListener('click', function () {
   createItem();
@@ -128,7 +134,7 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
 }
 
- var completeList = document.getElementById('complete');
+
 
 // Requires a working navigation button
 
