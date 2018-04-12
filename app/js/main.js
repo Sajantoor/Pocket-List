@@ -31,12 +31,8 @@ document.getElementById('upload').onchange = function uploadFile() {
     var url = URL.createObjectURL(this.files[0]);
     console.log(url);
     document.getElementById('preview').src = url;
-    var x = document.getElementById('preview').height;
-    console.log(x);
-  //  console.log(height/2);
-  //  document.getElementById('preview').style.marginBottom = (height/2);
-  //  console.log(document.getElementById('preview').style.marginBottom);
-  };
+    document.getElementById('preview').style.visibility = "visible";
+  }
 
 
 // Event Listner For The Button Click
@@ -139,7 +135,19 @@ if (id === 'todo') {
   item.remove();
   target.insertBefore(item, target.childNodes[0]);
 }
+/* Image Centering system for later use
 
+var img = document.getElementById('preview')
+img.onload = function verticalCenter() {
+        let x = this.height;
+        let y = (x/4);
+        console.log(y);
+        document.getElementById('preview').style.bottom = y + "px";
+        console.log(document.getElementById('preview').style.bottom)
+      }
+};
+
+*/
 
 
 // Requires a working navigation button
