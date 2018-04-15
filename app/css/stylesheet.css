@@ -14,7 +14,6 @@ header {
   background-image: -webkit-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
   background-image: -ms-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
   box-shadow: -0.262px 4.993px 9px 0px rgba(0, 0, 0, 0.1);
-
   width: 100%;
   height: 80px;
   padding: 15px;
@@ -31,7 +30,7 @@ header {
 
 header #item {
   width: 100%;
-  height: 40px;
+  height: 45px;
   top: 5px;
   padding:  10px  10px 10px 0px;
   font-size: 0.9em;
@@ -44,26 +43,25 @@ header #item {
   outline: none;
   background-color: #6fcaff;
   appearance: none;
-
+  
   -webkit-appearance-none;
   -moz-appearance-none;
   -ms-appearance-none;
   -o-appearance-none;
 }
 
-
 /* Compatibility Across Other Web Browsers */
 header #item::-webkit-input-placeholder {
-  color: rgba(255,255,255, 0.7)
+  color: rgba(255,255,255, 0.7);
 }
 header #item::-moz-placeholder {
-  color: rgba(255,255,255, 0.7)
+  color: rgba(255,255,255, 0.7);
 }
 header #item:-ms-input-placeholder {
-  color: rgba(255,255,255, 0.7)
+  color: rgba(255,255,255, 0.7);
 }
 header #item:-moz-placeholder {
-  color: rgba(255,255,255, 0.7)
+  color: rgba(255,255,255, 0.7);
 }
 
 #add {
@@ -101,13 +99,13 @@ ul#todo li, ul#complete li {
   width: 100%;
   min-height: 50px;
   font-size: 0.9em;
-  position: relative;
   float: left;
   padding: 15px 100px 20px 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   background-color: #f3f3f3;
   word-break: break-word;
+  position: relative;
 }
 
 ul#todo li .buttons, ul#complete li .buttons {
@@ -119,7 +117,7 @@ ul#todo li .buttons, ul#complete li .buttons {
   float: left;
 }
 
-ul#todo li .buttons button, ul#complete li button {
+ul#todo li button, ul#complete li button {
   width: 50px;
   height: 50px;
   float: right;
@@ -231,6 +229,7 @@ ul#complete div  #addtodo:hover {
 }
 
 ul#todo:empty:after {
+  position: relative;
   display:block;
   content: 'You have nothing todo right now...';
   font-weight: 200;
@@ -239,6 +238,7 @@ ul#todo:empty:after {
 }
 
 ul#complete:empty:after {
+  position: relative;
   display:block;
   content: 'You have completed no tasks today...';
   font-weight: 200;
@@ -254,25 +254,24 @@ ul#complete:empty:after {
 }
 
 #upload-label {
-  right: 5px;
+  right: -5px;
   z-index: 20;
-  top: 20px;
+  bottom: 35px;
   padding: 10px;
-  position: fixed;
+  position: relative;
   float: right;
 }
 
 #preview {
   visibility: hidden;
-  margin: auto;
-  position: relative;
+  float: right;
+  position: absolute;
   height: 100px;
   width: 100px;
   object-fit: cover;
   display: block;
-}
-
-#upload-contain {
-  text-align: center;
-  margin: auto;
+  border-radius: 15px;
+  top: 20px;
+  right: 50px;
+  padding: 10px;
 }

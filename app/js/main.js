@@ -27,14 +27,13 @@ function createItem() {
   }
 }
 
+// Upload Image into dom and change styling of img and item header
 document.getElementById('upload').onchange = function uploadFile() {
     var url = URL.createObjectURL(this.files[0]);
     console.log(url);
     document.getElementById('preview').src = url;
     document.getElementById('preview').style.visibility = "visible";
   }
-
-
 // Event Listner For The Button Click
 document.getElementById('add').addEventListener('click', function () {
   createItem();
@@ -135,6 +134,7 @@ if (id === 'todo') {
   item.remove();
   target.insertBefore(item, target.childNodes[0]);
 }
+
 /* Image Centering system for later use
 
 var img = document.getElementById('preview')
@@ -146,9 +146,10 @@ img.onload = function verticalCenter() {
         console.log(document.getElementById('preview').style.bottom)
       }
 };
-
 */
 
+// Requires a click on file to remove it
+// Multiple Files
 
 // Requires a working navigation button
 
