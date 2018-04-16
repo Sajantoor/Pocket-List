@@ -43,7 +43,7 @@ header #item {
   outline: none;
   background-color: #6fcaff;
   appearance: none;
-  
+
   -webkit-appearance-none;
   -moz-appearance-none;
   -ms-appearance-none;
@@ -95,6 +95,7 @@ ul#todo, ul#complete {
 }
 
 ul#todo li, ul#complete li {
+  position: relative;
   color: #000;
   width: 100%;
   min-height: 50px;
@@ -117,7 +118,7 @@ ul#todo li .buttons, ul#complete li .buttons {
   float: left;
 }
 
-ul#todo li button, ul#complete li button {
+ul#todo li div, ul#complete li div {
   width: 50px;
   height: 50px;
   float: right;
@@ -132,7 +133,7 @@ ul#todo li button, ul#complete li button {
   -o-appearance-none;
 }
 
-ul#todo li .buttons button:last-of-type:before, ul#complete li .buttons button:last-of-type:before {
+ul#todo li .buttons svg:last-of-type:before, ul#complete li .buttons svg:last-of-type:before {
   content: '';
   width: 1px;
   height: 40px;
@@ -148,7 +149,7 @@ ul#todo li .buttons button:last-of-type:before, ul#complete li .buttons button:l
   -o-appearance-none;
 }
 
-.buttons button svg {
+.buttons div svg {
   z-index: 10;
   width: 35px;
   height: 35px;
@@ -160,7 +161,7 @@ ul#todo li .buttons button:last-of-type:before, ul#complete li .buttons button:l
   transition: all 0.2s;
 }
 
-button #removetodo:hover  {
+svg #removetodo:hover  {
   fill: #ff4f4f;
   -webkit-animation: glow 1.0s ease-in-out infinite alternate;
   -moz-animation: glow 1.0s ease-in-out infinite alternate;
@@ -200,7 +201,7 @@ ul#todo #addtodo {
   top:-1px;
 }
 
-ul#todo div #addtodo:hover {
+ul#todo #addtodo:hover {
   background-color: #2ecc71;
   fill:#FFF;
 }
@@ -263,15 +264,19 @@ ul#complete:empty:after {
 }
 
 #preview {
+  margin: auto;
+  position: relative;
+  width: 100%;
   visibility: hidden;
-  float: right;
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  object-fit: cover;
-  display: block;
-  border-radius: 15px;
-  top: 20px;
-  right: 50px;
-  padding: 10px;
+  display: none;
 }
+
+#upload-contain {
+  margin: auto;
+  position: relative;
+  width: 0%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 15px;
+  bottom: 105px;
+ }

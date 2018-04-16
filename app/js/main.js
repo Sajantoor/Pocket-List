@@ -32,8 +32,28 @@ document.getElementById('upload').onchange = function uploadFile() {
     var url = URL.createObjectURL(this.files[0]);
     console.log(url);
     document.getElementById('preview').src = url;
-    document.getElementById('preview').style.visibility = "visible";
-  }
+    var img = document.getElementById('preview')
+    img.onload = function verticalCenter() {
+        let x = this.height;
+        let y = (x/4);
+        console.log(y);
+        document.getElementById('preview').style.bottom = y + "px";
+        console.log(document.getElementById('preview').style.bottom)
+        previewFile();
+      }
+    };
+
+// Change styling stuff toggle
+function previewFile() {
+  document.getElementById('preview').style.visibility = "visible";
+  document.getElementById('preview').style.display = "block";
+  document.getElementById('upload-contain').style.width = "90%";
+  document.getElementById('header').style.height = "190px";
+  document.getElementById('item').style.padding = "20px 0px 131px 0px";
+  document.getElementById('todo').style.top = "200px";
+  document.getElementById('complete').style.top = "200px";
+}
+
 // Event Listner For The Button Click
 document.getElementById('add').addEventListener('click', function () {
   createItem();
@@ -75,10 +95,10 @@ function addItem(text, complete) {
   var buttons = document.createElement('div');
   buttons.classList.add('buttons');
 
-  var complete = document.createElement('button');
+  var complete = document.createElement('svg');
   complete.innerHTML = completeSVG;
 
-  var remove = document.createElement('button');
+  var remove = document.createElement('svg');
   remove.innerHTML = removeSVG;
 
 // Append Child of parent nodes
@@ -137,16 +157,10 @@ if (id === 'todo') {
 
 /* Image Centering system for later use
 
-var img = document.getElementById('preview')
-img.onload = function verticalCenter() {
-        let x = this.height;
-        let y = (x/4);
-        console.log(y);
-        document.getElementById('preview').style.bottom = y + "px";
-        console.log(document.getElementById('preview').style.bottom)
-      }
-};
+
 */
+
+// BUG: Fix styling in for the svg in on the List Items 
 
 // Requires a click on file to remove it
 // Multiple Files
