@@ -30,19 +30,18 @@ function createItem() {
 // Upload Image into dom and change styling of img and item header
 document.getElementById('upload').onchange = function uploadFile() {
     var url = URL.createObjectURL(this.files[0]);
-    console.log(url);
     document.getElementById('preview').src = url;
     var img = document.getElementById('preview')
     img.onload = function verticalCenter() {
         let x = this.height;
-        let y = (x/4);
+        console.log(x);
+        let y = (x/3);
         console.log(y);
         document.getElementById('preview').style.bottom = y + "px";
         console.log(document.getElementById('preview').style.bottom)
         previewFile();
       }
     };
-
 // Change styling stuff toggle
 function previewFile() {
   document.getElementById('preview').style.visibility = "visible";
@@ -155,12 +154,7 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
 }
 
-/* Image Centering system for later use
-
-
-*/
-
-// BUG: Fix styling in for the svg in on the List Items 
+// BUG: Sometimes the image preview doesn't work. Reason unknown... Occurs on first upload
 
 // Requires a click on file to remove it
 // Multiple Files
