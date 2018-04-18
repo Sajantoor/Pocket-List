@@ -5,10 +5,14 @@ var todo = document.getElementById('todo');
 
 time();
 
+// Basically a clock
 function time () {
   var date = new Date();
   var hours = date.getHours();
   var minute = date.getMinutes();
+  if (minute < 10) {
+    minute = '0' + minute;
+  }
 
   console.log(hours + ":" + minute);
 }
@@ -44,32 +48,48 @@ function createItem() {
     }
 }
 
-
 // Upload Image into dom and change styling of img and item header
-document.getElementById('upload').onchange = function uploadFile(change) {
+/* document.getElementById('upload').onchange = function uploadFile(change) {
     var url = URL.createObjectURL(this.files[0]);
     document.getElementById('preview').src = url;
-    var img = document.getElementById('preview')
-    img.onload = function verticalCenter() {
+    var file = document.getElementById('preview')
+    file.onload = function verticalCenter() {
         let x = this.height;
         console.log(x);
-        let y = (x/3);
+        let y = (x/4);
         console.log(y);
         document.getElementById('preview').style.bottom = y + "px";
-        console.log(document.getElementById('preview').style.bottom)
         previewFile();
-      }
-    };
+    }
+  } */
+
+document.getElementById('upload').onchange = function uploadFile() {
+  var upload = document.getElementById('upload');
+  var value = upload.value;
+  var fileExtention = // Check file extention after the dot;
+  var imageExtention = // Valid Image extentions
+  console.log(value);
+  console.log(fileExtention);
+/*  if (fileExtention = imageExtention) {
+    alert('IMAGE!')
+  } else {
+    alert('NOT AN IMAGE!')
+  } */
+  var img = document.getElementById('preview');
+
+  // If file is an image then change img.src to the file's (reuse the old code)
+  // Else change img.src to file icon and store the src somewhere else.
+}
 
 // Change styling stuff toggle
 function previewFile() {
-    document.getElementById('preview').style.visibility = "visible";
-    document.getElementById('preview').style.display = "block";
-    document.getElementById('upload-contain').style.width = "90%";
-    document.getElementById('header').style.height = "190px";
-    document.getElementById('item').style.padding = "20px 0px 131px 0px";
-    document.getElementById('todo').style.top = "200px";
-    document.getElementById('complete').style.top = "200px";
+  document.getElementById('preview').style.visibility = "visible";
+  document.getElementById('preview').style.display = "block";
+  document.getElementById('upload-contain').style.width = "90%";
+  document.getElementById('header').style.height = "190px";
+  document.getElementById('item').style.padding = "20px 0px 131px 0px";
+  document.getElementById('todo').style.top = "200px";
+  document.getElementById('complete').style.top = "200px";
 }
 
 function previewFileOff() {
