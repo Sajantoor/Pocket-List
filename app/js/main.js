@@ -3,6 +3,16 @@ var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 
 var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
 
+time();
+
+function time () {
+  var date = new Date();
+  var hours = date.getHours();
+  var minute = date.getMinutes();
+
+  console.log(hours + ":" + minute);
+}
+
 var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
   todo: [],
   complete: []
@@ -25,10 +35,18 @@ function createItem() {
       document.getElementById('item').value = "";
       alert('Error: Invalid entry, please add text to your entry!')
   }
+    var image = document.getElementById('preview');
+    if (image.src != '') {
+      alert('It works!')
+      setTimeout(5000);
+      document.getElementById('preview').src = "";
+      previewFileOff();
+    }
 }
 
+
 // Upload Image into dom and change styling of img and item header
-document.getElementById('upload').onchange = function uploadFile() {
+document.getElementById('upload').onchange = function uploadFile(change) {
     var url = URL.createObjectURL(this.files[0]);
     document.getElementById('preview').src = url;
     var img = document.getElementById('preview')
@@ -42,15 +60,26 @@ document.getElementById('upload').onchange = function uploadFile() {
         previewFile();
       }
     };
+
 // Change styling stuff toggle
 function previewFile() {
-  document.getElementById('preview').style.visibility = "visible";
-  document.getElementById('preview').style.display = "block";
-  document.getElementById('upload-contain').style.width = "90%";
-  document.getElementById('header').style.height = "190px";
-  document.getElementById('item').style.padding = "20px 0px 131px 0px";
-  document.getElementById('todo').style.top = "200px";
-  document.getElementById('complete').style.top = "200px";
+    document.getElementById('preview').style.visibility = "visible";
+    document.getElementById('preview').style.display = "block";
+    document.getElementById('upload-contain').style.width = "90%";
+    document.getElementById('header').style.height = "190px";
+    document.getElementById('item').style.padding = "20px 0px 131px 0px";
+    document.getElementById('todo').style.top = "200px";
+    document.getElementById('complete').style.top = "200px";
+}
+
+function previewFileOff() {
+  document.getElementById('preview').style.visibility = "";
+  document.getElementById('preview').style.display = "";
+  document.getElementById('upload-contain').style.width = "";
+  document.getElementById('header').style.height = "";
+  document.getElementById('item').style.padding = "";
+  document.getElementById('todo').style.top = "";
+  document.getElementById('complete').style.top = "";
 }
 
 // Event Listner For The Button Click
@@ -155,14 +184,14 @@ if (id === 'todo') {
 }
 
 // BUG: Sometimes the image preview doesn't work. Reason unknown... Occurs on first upload
+// BUG: Needs a better way to upload Files instead of the current method
 
 // Requires a click on file to remove it
 // Multiple Files
 
 // Requires a working navigation button
 
-/* Requires an upload icon that adds an image or file with the list item
-This file should be able to be downloaded by the user when clicking on the item. */
+// file should be able to be downloaded by the user when clicking on the item. */
 
 /* Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/
