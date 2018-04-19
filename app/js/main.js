@@ -30,21 +30,14 @@ console.log(data);
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
 function createItem() {
   var value = document.getElementById('item').value;
-    if (value && value.replace(/\s/g, "")) {
-      addItem(value.trim());
-      document.getElementById('item').value = "";
-      data.todo.push(value.trim());
-      dataObject();
-    } else {
-      document.getElementById('item').value = "";
-      alert('Error: Invalid entry, please add text to your entry!')
-  }
-    var image = document.getElementById('preview');
-    if (image.src != '') {
-      alert('It works!')
-      setTimeout(5000);
-      document.getElementById('preview').src = "";
-      previewFileOff();
+      if (value && value.replace(/\s/g, "")) {
+        addItem(value.trim());
+        document.getElementById('item').value = "";
+        data.todo.push(value.trim());
+        dataObject();
+      } else {
+        document.getElementById('item').value = "";
+        alert('Error: Invalid entry, please add text to your entry!')
     }
 }
 
@@ -55,25 +48,29 @@ document.getElementById('upload').onchange = function uploadFile() {
   var upload = document.getElementById('upload');
   var path = upload.value;
   var fileExtention = path.split('.').pop(); // Check file extention after the dot and get rid of the rest;
-  var imageExtention = "png" || "jpg" || "gif"; // Valid Image extentions
+  var imageExtention = "png" || "jpg" || "gif" ||  "jpeg" || "svg"; // Valid Image extentions
+  console.log(path);
+  console.log(fileExtention);
 
 // Checks file extention for if it is a valid image extention
-  if (fileExtention === imageExtention) {
+  if (fileExtention = imageExtention) {
     var url = URL.createObjectURL(this.files[0]);
     file.src = url;
-    file.onload = function verticalCenter() {
+      file.onload = function verticalCenter() {
         let x = this.height;
         console.log(x);
-        let y = (x/4 - 25);
+        let y = (x/8);
         console.log(y);
         file.style.bottom = y + "px";
-        previewFile(); }
+        previewFile();
+      }
   } else {
+      alert('NOT IMAGE');
       file.src = "Icons/file.svg";
-      var url = URL.createObjectURL(this.files[0]);
+  //    var url = URL.createObjectURL(this.files[0]);
       // Creating link with actual downloadable file
-      var newFile = document.createElement('a');
-      newFile.innerHTML = url;
+    //  var newFile = document.createElement('a');
+    //  newFile.innerHTML = url;
 
       previewFile();
   }
@@ -84,10 +81,10 @@ document.getElementById('upload').onchange = function uploadFile() {
 function previewFile() {
   var path = upload.value;
   var fileExtention = path.split('.').pop();
-  var imageExtention = "png" || "jpg" || "gif";
+  var imageExtention = "png" || "jpg" || "gif" ||  "jpeg" || "svg";
 
-  if (fileExtention === imageExtention) {
-    alert('IMAGE');
+  if (fileExtention = imageExtention) {
+    alert('IMAGE IN PREVIEW');
     file.style.visibility = "visible";
     file.style.display = "block";
     document.getElementById('upload-contain').style.width = "90%";
@@ -96,7 +93,7 @@ function previewFile() {
     document.getElementById('todo').style.top = "200px";
     document.getElementById('complete').style.top = "200px";
   } else {
-    alert('NOT IMAGE')
+    alert('NOT IMAGE IN PREVIEW')
     file.style.visibility = "visible";
     file.style.display = "block";
     document.getElementById('upload-contain').style.width = "98%";
@@ -117,6 +114,8 @@ function previewFileOff() {
   file.style.float = "";
   file.style.marginRight = "";
   file.style.top = "";
+  file.style.bottom = "";
+
   document.getElementById('upload-contain').style.width = "";
   document.getElementById('header').style.height = "";
   document.getElementById('item').style.padding = "";
