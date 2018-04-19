@@ -48,53 +48,75 @@ function createItem() {
     }
 }
 
-// Upload Image into dom and change styling of img and item header
-/* document.getElementById('upload').onchange = function uploadFile(change) {
+var file = document.getElementById('preview');
+
+document.getElementById('upload').onchange = function uploadFile() {
+  var img = document.getElementById('preview');
+  var upload = document.getElementById('upload');
+  var path = upload.value;
+  var fileExtention = path.split('.').pop(); // Check file extention after the dot and get rid of the rest;
+  var imageExtention = "png" || "jpg" || "gif"; // Valid Image extentions
+
+// Checks file extention for if it is a valid image extention
+  if (fileExtention === imageExtention) {
     var url = URL.createObjectURL(this.files[0]);
-    document.getElementById('preview').src = url;
-    var file = document.getElementById('preview')
+    file.src = url;
     file.onload = function verticalCenter() {
         let x = this.height;
         console.log(x);
-        let y = (x/4);
+        let y = (x/4 - 25);
         console.log(y);
-        document.getElementById('preview').style.bottom = y + "px";
-        previewFile();
-    }
-  } */
-
-document.getElementById('upload').onchange = function uploadFile() {
-  var upload = document.getElementById('upload');
-  var value = upload.value;
-  var fileExtention = // Check file extention after the dot;
-  var imageExtention = // Valid Image extentions
-  console.log(value);
-  console.log(fileExtention);
-/*  if (fileExtention = imageExtention) {
-    alert('IMAGE!')
+        file.style.bottom = y + "px";
+        previewFile(); }
   } else {
-    alert('NOT AN IMAGE!')
-  } */
-  var img = document.getElementById('preview');
+      file.src = "Icons/file.svg";
+      var url = URL.createObjectURL(this.files[0]);
+      // Creating link with actual downloadable file
+      var newFile = document.createElement('a');
+      newFile.innerHTML = url;
 
-  // If file is an image then change img.src to the file's (reuse the old code)
-  // Else change img.src to file icon and store the src somewhere else.
+      previewFile();
+  }
+  previewFileOff();
 }
 
-// Change styling stuff toggle
+// Change styling stuff
 function previewFile() {
-  document.getElementById('preview').style.visibility = "visible";
-  document.getElementById('preview').style.display = "block";
-  document.getElementById('upload-contain').style.width = "90%";
-  document.getElementById('header').style.height = "190px";
-  document.getElementById('item').style.padding = "20px 0px 131px 0px";
-  document.getElementById('todo').style.top = "200px";
-  document.getElementById('complete').style.top = "200px";
+  var path = upload.value;
+  var fileExtention = path.split('.').pop();
+  var imageExtention = "png" || "jpg" || "gif";
+
+  if (fileExtention === imageExtention) {
+    alert('IMAGE');
+    file.style.visibility = "visible";
+    file.style.display = "block";
+    document.getElementById('upload-contain').style.width = "90%";
+    document.getElementById('header').style.height = "190px";
+    document.getElementById('item').style.padding = "20px 0px 131px 0px";
+    document.getElementById('todo').style.top = "200px";
+    document.getElementById('complete').style.top = "200px";
+  } else {
+    alert('NOT IMAGE')
+    file.style.visibility = "visible";
+    file.style.display = "block";
+    document.getElementById('upload-contain').style.width = "98%";
+    file.style.width = "30px";
+    file.style.height = "30px";
+    file.style.top = "25px";
+    file.style.float = "right";
+    file.style.marginRight = "20pt";
+  }
 }
 
+// Reseting changed styling
 function previewFileOff() {
-  document.getElementById('preview').style.visibility = "";
-  document.getElementById('preview').style.display = "";
+  file.style.visibility = "";
+  file.style.display = "";
+  file.style.width = "";
+  file.style.height = "";
+  file.style.float = "";
+  file.style.marginRight = "";
+  file.style.top = "";
   document.getElementById('upload-contain').style.width = "";
   document.getElementById('header').style.height = "";
   document.getElementById('item').style.padding = "";
