@@ -48,25 +48,23 @@ document.getElementById('upload').onchange = function uploadFile() {
   var upload = document.getElementById('upload');
   var path = upload.value;
   var fileExtention = path.split('.').pop(); // Check file extention after the dot and get rid of the rest;
-  var imageExtention = "png" || "jpg" || "gif" ||  "jpeg" || "svg"; // Valid Image extentions
-  console.log(path);
-  console.log(fileExtention);
+  var imageExtention = ["png", "jpg", "gif", "jpeg", "svg"]; // Valid Image extentions
 
 // Checks file extention for if it is a valid image extention
-  if (fileExtention = imageExtention) {
+  if (imageExtention.indexOf(fileExtention) > -1) {
+    previewFileOff();
     var url = URL.createObjectURL(this.files[0]);
     file.src = url;
       file.onload = function verticalCenter() {
         let x = this.height;
-        console.log(x);
         let y = (x/8);
-        console.log(y);
         file.style.bottom = y + "px";
         previewFile();
       }
-  } else {
-      alert('NOT IMAGE');
-      file.src = "Icons/file.svg";
+    }
+     if (imageExtention.indexOf(fileExtention) <= -1) {
+         previewFileOff();
+         file.src = "Icons/file.svg";
   //    var url = URL.createObjectURL(this.files[0]);
       // Creating link with actual downloadable file
     //  var newFile = document.createElement('a');
@@ -74,17 +72,21 @@ document.getElementById('upload').onchange = function uploadFile() {
 
       previewFile();
   }
-  previewFileOff();
+  // Remove the previewed file
+  file.addEventListener('click', function () {
+      previewFileOff();
+      console.log('Removed file!');
+  })
 }
 
 // Change styling stuff
 function previewFile() {
   var path = upload.value;
   var fileExtention = path.split('.').pop();
-  var imageExtention = "png" || "jpg" || "gif" ||  "jpeg" || "svg";
+  var imageExtention = ["png", "jpg", "gif",  "jpeg", "svg"];
 
-  if (fileExtention = imageExtention) {
-    alert('IMAGE IN PREVIEW');
+// If file's image extention is one of the avalible image extentions then style accordingly
+  if (imageExtention.indexOf(fileExtention) > -1) {
     file.style.visibility = "visible";
     file.style.display = "block";
     document.getElementById('upload-contain').style.width = "90%";
@@ -92,16 +94,21 @@ function previewFile() {
     document.getElementById('item').style.padding = "20px 0px 131px 0px";
     document.getElementById('todo').style.top = "200px";
     document.getElementById('complete').style.top = "200px";
-  } else {
-    alert('NOT IMAGE IN PREVIEW')
+  }
+
+// If file's image extention is not one of the avalible image extentions then style accordingly
+  if (imageExtention.indexOf(fileExtention) <= -1) {
     file.style.visibility = "visible";
     file.style.display = "block";
-    document.getElementById('upload-contain').style.width = "98%";
+    document.getElementById('upload-contain').style.width = "10%";
+    document.getElementById('upload-contain').style.float = "right";
+    document.getElementById('upload-contain').style.top = "-57px";
+    document.getElementById('upload-contain').style.left = "10px";
     file.style.width = "30px";
     file.style.height = "30px";
     file.style.top = "25px";
     file.style.float = "right";
-    file.style.marginRight = "20pt";
+    file.style.marginRight = "0pt";
   }
 }
 
@@ -115,8 +122,13 @@ function previewFileOff() {
   file.style.marginRight = "";
   file.style.top = "";
   file.style.bottom = "";
+  file.src = "";
 
+  document.getElementById('upload-contain').style.float = "";
+  document.getElementById('upload-contain').style.top = "";
+  document.getElementById('upload-contain').style.left = "";
   document.getElementById('upload-contain').style.width = "";
+
   document.getElementById('header').style.height = "";
   document.getElementById('item').style.padding = "";
   document.getElementById('todo').style.top = "";
@@ -224,10 +236,8 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
 }
 
-// BUG: Sometimes the image preview doesn't work. Reason unknown... Occurs on first upload
-// BUG: Needs a better way to upload Files instead of the current method
+// BUG: If choosing a file and then hitting cancel it counts as not an image
 
-// Requires a click on file to remove it
 // Multiple Files
 
 // Requires a working navigation button
