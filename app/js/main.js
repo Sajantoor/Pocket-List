@@ -46,32 +46,20 @@ var file = document.getElementById('preview');
 document.getElementById('upload').onchange = function uploadFile() {
   var img = document.getElementById('preview');
   var upload = document.getElementById('upload');
-  var path = upload.value;
-  var fileExtention = path.split('.').pop(); // Check file extention after the dot and get rid of the rest;
-  var imageExtention = ["png", "jpg", "gif", "jpeg", "svg"]; // Valid Image extentions
+  var fileType = this.files[0]['type'];
+  var fileValue = fileType.split('/')[0];
 
-// Checks file extention for if it is a valid image extention
-  if (imageExtention.indexOf(fileExtention) > -1) {
-    previewFileOff();
-    var url = URL.createObjectURL(this.files[0]);
-    file.src = url;
-      file.onload = function verticalCenter() {
-        let x = this.height;
-        let y = (x/8);
-        file.style.bottom = y + "px";
-        previewFile();
-      }
-    }
-     if (imageExtention.indexOf(fileExtention) <= -1) {
-         previewFileOff();
-         file.src = "Icons/file.svg";
-  //    var url = URL.createObjectURL(this.files[0]);
-      // Creating link with actual downloadable file
-    //  var newFile = document.createElement('a');
-    //  newFile.innerHTML = url;
-
+  if(fileValue == 'image'){
+      previewFileOff();
+      var url = URL.createObjectURL(this.files[0]);
+      file.src = url;
+      previewImage();
+    } else {
+      previewFileOff();
+      file.src = "Icons/file.svg";
       previewFile();
   }
+
   // Remove the previewed file
   file.addEventListener('click', function () {
       previewFileOff();
@@ -80,24 +68,17 @@ document.getElementById('upload').onchange = function uploadFile() {
 }
 
 // Change styling stuff
-function previewFile() {
-  var path = upload.value;
-  var fileExtention = path.split('.').pop();
-  var imageExtention = ["png", "jpg", "gif",  "jpeg", "svg"];
-
-// If file's image extention is one of the avalible image extentions then style accordingly
-  if (imageExtention.indexOf(fileExtention) > -1) {
+function previewImage() {
     file.style.visibility = "visible";
     file.style.display = "block";
-    document.getElementById('upload-contain').style.width = "90%";
+    document.getElementById('upload-contain').style.width = "100%";
     document.getElementById('header').style.height = "190px";
     document.getElementById('item').style.padding = "20px 0px 131px 0px";
     document.getElementById('todo').style.top = "200px";
     document.getElementById('complete').style.top = "200px";
   }
 
-// If file's image extention is not one of the avalible image extentions then style accordingly
-  if (imageExtention.indexOf(fileExtention) <= -1) {
+function previewFile() {
     file.style.visibility = "visible";
     file.style.display = "block";
     document.getElementById('upload-contain').style.width = "10%";
@@ -106,11 +87,11 @@ function previewFile() {
     document.getElementById('upload-contain').style.left = "10px";
     file.style.width = "30px";
     file.style.height = "30px";
-    file.style.top = "25px";
+    file.style.bottom = "-30px";
     file.style.float = "right";
     file.style.marginRight = "0pt";
+    file.style.right = "5px";
   }
-}
 
 // Reseting changed styling
 function previewFileOff() {
@@ -123,6 +104,7 @@ function previewFileOff() {
   file.style.top = "";
   file.style.bottom = "";
   file.src = "";
+  file.style.right = "";
 
   document.getElementById('upload-contain').style.float = "";
   document.getElementById('upload-contain').style.top = "";
@@ -147,6 +129,7 @@ document.addEventListener('keypress', function(event)  {
     }
 });
 
+// Generates Todo List on Startup
 function generateTodoList() {
   if (!data.todo.length && !data.complete.length) return;
 
@@ -182,10 +165,12 @@ function addItem(text, complete) {
   var remove = document.createElement('svg');
   remove.innerHTML = removeSVG;
 
+
 // Append Child of parent nodes
   buttons.appendChild(complete);
   buttons.appendChild(remove);
   newItem.appendChild(buttons);
+
   todo.prepend(newItem);
 
 // Tell Js to remove item
@@ -235,8 +220,6 @@ if (id === 'todo') {
   item.remove();
   target.insertBefore(item, target.childNodes[0]);
 }
-
-// BUG: If choosing a file and then hitting cancel it counts as not an image
 
 // Multiple Files
 
