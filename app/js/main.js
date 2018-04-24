@@ -2,6 +2,7 @@ var removeSVG = '<svg id="removetodo" fill="#c0cecb" x="0px" y="0px" viewBox="0 
 var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
+var file = document.getElementById('preview');
 
 time();
 
@@ -22,6 +23,21 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
   complete: []
 };
 
+// Generates Todo List on Startup
+function generateTodoList() {
+  if (!data.todo.length && !data.complete.length) return;
+
+  for (var i = 0; i < data.todo.length; i++) {
+    var value = data.todo[i];
+    addItem(value);
+  }
+
+  for (var j = 0; j < data.complete.length; j++) {
+    var value = data.complete[j];
+    addItem(value, true);
+  }
+}
+
 // Gets the Local Storage Array and Generates the todo and complete list
 generateTodoList();
 console.log(data);
@@ -37,11 +53,23 @@ function createItem() {
         dataObject();
       } else {
         document.getElementById('item').value = "";
-        alert('Error: Invalid entry, please add text to your entry!')
+        alert('Error: Invalid entry, please add text to your entry!');
     }
 }
 
-var file = document.getElementById('preview');
+// Event Listner For The Button Click
+document.getElementById('add').addEventListener('click', function () {
+  createItem();
+  previewFileOff();
+})
+
+// Event Listner For Enter
+document.addEventListener('keypress', function(event)  {
+    if (event.keyCode == '13') {
+      createItem();
+      previewFileOff();
+    }
+});
 
 document.getElementById('upload').onchange = function uploadFile() {
   var img = document.getElementById('preview');
@@ -67,83 +95,6 @@ document.getElementById('upload').onchange = function uploadFile() {
   })
 }
 
-// Change styling stuff
-function previewImage() {
-    file.style.visibility = "visible";
-    file.style.display = "block";
-    document.getElementById('upload-contain').style.width = "100%";
-    document.getElementById('header').style.height = "190px";
-    document.getElementById('item').style.padding = "20px 0px 131px 0px";
-    document.getElementById('todo').style.top = "200px";
-    document.getElementById('complete').style.top = "200px";
-  }
-
-function previewFile() {
-    file.style.visibility = "visible";
-    file.style.display = "block";
-    document.getElementById('upload-contain').style.width = "10%";
-    document.getElementById('upload-contain').style.float = "right";
-    document.getElementById('upload-contain').style.top = "-57px";
-    document.getElementById('upload-contain').style.left = "10px";
-    file.style.width = "30px";
-    file.style.height = "30px";
-    file.style.bottom = "-30px";
-    file.style.float = "right";
-    file.style.marginRight = "0pt";
-    file.style.right = "5px";
-  }
-
-// Reseting changed styling
-function previewFileOff() {
-  file.style.visibility = "";
-  file.style.display = "";
-  file.style.width = "";
-  file.style.height = "";
-  file.style.float = "";
-  file.style.marginRight = "";
-  file.style.top = "";
-  file.style.bottom = "";
-  file.src = "";
-  file.style.right = "";
-
-  document.getElementById('upload-contain').style.float = "";
-  document.getElementById('upload-contain').style.top = "";
-  document.getElementById('upload-contain').style.left = "";
-  document.getElementById('upload-contain').style.width = "";
-
-  document.getElementById('header').style.height = "";
-  document.getElementById('item').style.padding = "";
-  document.getElementById('todo').style.top = "";
-  document.getElementById('complete').style.top = "";
-}
-
-// Event Listner For The Button Click
-document.getElementById('add').addEventListener('click', function () {
-  createItem();
-})
-
-// Event Listner For Enter
-document.addEventListener('keypress', function(event)  {
-    if (event.keyCode == '13') {
-      createItem();
-    }
-});
-
-// Generates Todo List on Startup
-function generateTodoList() {
-  if (!data.todo.length && !data.complete.length) return;
-
-  for (var i = 0; i < data.todo.length; i++) {
-    var value = data.todo[i];
-    addItem(value);
-  }
-
-  for (var j = 0; j < data.complete.length; j++) {
-    var value = data.complete[j];
-    addItem(value, true);
-  }
-}
-
 function dataObject() {
   localStorage.setItem('todoList', JSON.stringify(data));
   console.log(data);
@@ -164,6 +115,17 @@ function addItem(text, complete) {
 
   var remove = document.createElement('svg');
   remove.innerHTML = removeSVG;
+
+  if (document.getElementById('preview').src) {
+    var newImage = new Image();
+    newImage.src = document.getElementById('preview').src;
+    var container = document.createElement('div');
+//    var link = document.createElement('a');
+//    link.href = newImage.src;
+
+    container.appendChild(newImage);
+    newItem.appendChild(container);
+  }
 
 
 // Append Child of parent nodes
@@ -221,7 +183,35 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
 }
 
-// Multiple Files
+
+
+// Change styling stuff
+function previewImage() {
+    file.style = "visibility: visible; display:block;";
+    document.getElementById('upload-contain').style = "width:100%;";
+    document.getElementById('header').style = "height:190px;";
+    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
+    document.getElementById('todo').style = "top: 200px;";
+    document.getElementById('complete').style = "top:200px;";
+    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
+  }
+
+function previewFile() {
+    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
+    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
+  }
+
+// Reseting changed styling
+function previewFileOff() {
+  file.style = "";
+  file.removeAttribute('src');
+  document.getElementById('upload-contain').style = "";
+  document.getElementById('header').style = "";
+  document.getElementById('item').style = "";
+  document.getElementById('todo').style = "";
+  document.getElementById('complete').style = "";
+  document.getElementById('upload-label').style = "";
+}
 
 // Requires a working navigation button
 

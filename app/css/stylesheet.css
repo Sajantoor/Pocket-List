@@ -118,7 +118,7 @@ ul#todo li .buttons, ul#complete li .buttons {
   float: left;
 }
 
-ul#todo li div, ul#complete li div {
+ul#todo li div .buttons, ul#complete li div .buttons {
   width: 50px;
   height: 50px;
   float: right;
@@ -262,7 +262,6 @@ ul#complete:empty:after {
   padding: 10px;
   position: relative;
   float: right;
-  mix-blend-mode: screen;
 }
 
 #preview {
@@ -282,7 +281,7 @@ ul#complete:empty:after {
   height: 100px;
   overflow: hidden;
   border-radius: 5px;
-  bottom: 105pt;
+  bottom: 107pt;
  }
 
  #upload-contain img {
