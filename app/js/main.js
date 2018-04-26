@@ -23,7 +23,6 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
   complete: []
 };
 
-
 // Generates Todo List on Startup
 function generateTodoList() {
   if (!data.todo.length && !data.complete.length) return;
@@ -41,7 +40,7 @@ function generateTodoList() {
 
 // Gets the Local Storage Array and Generates the todo and complete list
 generateTodoList();
-console.log(data);
+progress();
 
 // Grabs the value and then pushes it to dom and local storage
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
@@ -108,7 +107,6 @@ document.getElementById('upload').onchange = function uploadFile() {
 
 function dataObject() {
   localStorage.setItem('todoList', JSON.stringify(data));
-  console.log(data);
 }
 
 // Add List Object To the DOM
@@ -161,7 +159,7 @@ function addItem(text, complete) {
 // Tell Js to complete Item
   complete.addEventListener('click', completeItem);
 
-// Add item to local storage
+  progress();
 }
 
 // Remove Item
@@ -179,6 +177,8 @@ function removeItem() {
   dataObject();
 // Remove Item From DOM
   item.remove();
+
+  progress();
 }
 
 function completeItem() {
@@ -201,7 +201,26 @@ if (id === 'todo') {
   var target = (id === 'todo') ? completeList:todo;
   item.remove();
   target.insertBefore(item, target.childNodes[0]);
+
+  progress();
 }
+
+
+// Gets progress of your todo list with some math
+function progress() {
+  var todoItems = todo.children.length;
+  var completedItems = completeList.children.length;
+  var progress = Math.round((completedItems/(completedItems + todoItems)*100))
+
+  if (todoItems === 0 & completedItems === 0) {
+    let progress = 0 + "%"
+    console.log(progress);
+
+  } else {
+    console.log(progress + "%");
+  }
+}
+
 
 // Change styling stuff
 function previewImage() {
@@ -231,7 +250,7 @@ function previewFileOff() {
   document.getElementById('upload-label').style = "";
 }
 
-/* Old file system that will probably be used for files
+/* Old file system that will probably be used for files other than images
 
 if(fileValue == 'image'){
     previewFileOff();
