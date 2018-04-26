@@ -23,6 +23,7 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
   complete: []
 };
 
+
 // Generates Todo List on Startup
 function generateTodoList() {
   if (!data.todo.length && !data.complete.length) return;
@@ -71,20 +72,30 @@ document.addEventListener('keypress', function(event)  {
     }
 });
 
+
+// Upload file system
 document.getElementById('upload').onchange = function uploadFile() {
-  var img = document.getElementById('preview');
   var upload = document.getElementById('upload');
   var fileType = this.files[0]['type'];
   var fileValue = fileType.split('/')[0];
 
+// Changes the file to base64 information
+  var fileReader = new FileReader();
+  fileReader.readAsDataURL(this.files[0]);
+  fileReader.onload = function() {
+    base64 = fileReader.result;
+    file.src = base64;
+  }
+
+// If the file is an image is previews the image like how the image should be previewed
   if(fileValue == 'image'){
       previewFileOff();
-      var url = URL.createObjectURL(this.files[0]);
-      file.src = url;
+    //  var url = URL.createObjectURL(this.files[0]);
+    //  file.src = url;
       previewImage();
     } else {
       previewFileOff();
-      file.src = "Icons/file.svg";
+  //    file.src = "Icons/file.svg";
       previewFile();
   }
 
@@ -116,14 +127,23 @@ function addItem(text, complete) {
   var remove = document.createElement('svg');
   remove.innerHTML = removeSVG;
 
+// Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
+    var fileName = document.getElementById('upload').value.split('\\')[2];
+
     var newImage = new Image();
     newImage.src = document.getElementById('preview').src;
-    var container = document.createElement('div');
-//    var link = document.createElement('a');
-//    link.href = newImage.src;
+    newImage.setAttribute('id', 'img-file');
 
-    container.appendChild(newImage);
+    var container = document.createElement('div');
+    container.setAttribute('id', 'img-container');
+
+    var link = document.createElement('a');
+    link.href = newImage.src;
+    link.setAttribute('download', fileName);
+
+    link.appendChild(newImage);
+    container.appendChild(link);
     newItem.appendChild(container);
   }
 
@@ -183,8 +203,6 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
 }
 
-
-
 // Change styling stuff
 function previewImage() {
     file.style = "visibility: visible; display:block;";
@@ -212,6 +230,20 @@ function previewFileOff() {
   document.getElementById('complete').style = "";
   document.getElementById('upload-label').style = "";
 }
+
+/* Old file system that will probably be used for files
+
+if(fileValue == 'image'){
+    previewFileOff();
+    var url = URL.createObjectURL(this.files[0]);
+    file.src = url;
+    previewImage();
+  } else {
+    previewFileOff();
+    file.src = "Icons/file.svg";
+    previewFile();
+}
+*/
 
 // Requires a working navigation button
 

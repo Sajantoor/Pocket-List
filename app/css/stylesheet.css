@@ -292,3 +292,31 @@ ul#complete:empty:after {
   width: 100%;
   height: auto;
 }
+
+#img-container {
+  left: 20pt;
+  top: 10px;
+  margin: auto;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 5px;
+
+}
+
+#img-file {
+  margin: auto;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+#img-container img {
+  position:absolute;
+  top:-50%;
+  bottom:-50%;
+  margin:auto;
+  width: 100%;
+  height: auto;
+}
