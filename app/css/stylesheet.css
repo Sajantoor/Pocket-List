@@ -9,7 +9,7 @@ body, header, header input {
   font-family: 'Barlow', sans-serif;
 }
 
-header {
+#header {
   background-image: -moz-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
   background-image: -webkit-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
   background-image: -ms-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
@@ -29,10 +29,11 @@ header {
 }
 
 header #item {
-  width: 100%;
+  width: calc(100% - 35px);
   height: 45px;
+  float: right;
   top: 5px;
-  padding:  10px  10px 10px 0px;
+  padding:  10px  35px 10px 0px;
   font-size: 0.9em;
   text-indent: 10px;
   color: #FFF;
@@ -62,6 +63,83 @@ header #item:-ms-input-placeholder {
 }
 header #item:-moz-placeholder {
   color: rgba(255,255,255, 0.7);
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  transition: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+#upload {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+}
+
+#upload-label {
+  right: -5px;
+  z-index: 20;
+  bottom: 35px;
+  padding: 10px;
+  position: relative;
+  float: right;
+}
+
+#preview {
+  margin: auto;
+  position: relative;
+  width: 90%;
+  left: 0;
+  visibility: hidden;
+  display: none;
+  height: auto;
+}
+
+#upload-contain {
+  margin: auto;
+  position: relative;
+  width: 0%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 5px;
+  bottom: 107pt;
+ }
+
+ #upload-contain img {
+  position:absolute;
+  top:-50%;
+  bottom:-50%;
+  margin:auto;
+  width: 100%;
+  height: auto;
+}
+
+#navigation {
+  float: left;
+  z-index: 100;
+  height: 100%;
+  transition-timing-function: ease-in-out;
+  transition: 0.4s;
+  width: 0;
+  overflow: hidden;
+  position: fixed;
+  background-color: red;
+}
+
+#navButton {
+  background-color: transparent;
+  position: relative;
+  top: 10pt;
+  height: 28px;
+  width: 28px;
+  border: 0;
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
 }
 
 #add {
@@ -104,8 +182,12 @@ ul#todo li, ul#complete li {
   padding: 15px 100px 20px 10px;
   margin-bottom: 10px;
   border-radius: 5px;
-  background-color: #f3f3f3;
+  background-color: #FFF;
   word-break: break-word;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
   position: relative;
 }
 
@@ -246,51 +328,6 @@ ul#complete:empty:after {
   font-weight: 200;
   text-align: center;
   color: #484c4f;
-}
-
-#upload {
-  width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-}
-
-#upload-label {
-  right: -5px;
-  z-index: 20;
-  bottom: 35px;
-  padding: 10px;
-  position: relative;
-  float: right;
-}
-
-#preview {
-  margin: auto;
-  position: relative;
-  width: 90%;
-  left: 0;
-  visibility: hidden;
-  display: none;
-  height: auto;
-}
-
-#upload-contain {
-  margin: auto;
-  position: relative;
-  width: 0%;
-  height: 100px;
-  overflow: hidden;
-  border-radius: 5px;
-  bottom: 107pt;
- }
-
- #upload-contain img {
-  position:absolute;
-  top:-50%;
-  bottom:-50%;
-  margin:auto;
-  width: 100%;
-  height: auto;
 }
 
 #img-container {

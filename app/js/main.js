@@ -13,7 +13,7 @@ function time () {
   var minute = date.getMinutes();
   if (minute < 10) {
     minute = '0' + minute;
-  }
+}
 
   console.log(hours + ":" + minute);
 }
@@ -221,11 +221,21 @@ function progress() {
   }
 }
 
+document.getElementById('navButton').addEventListener('click', function () {
+  document.getElementById('navigation').style = "width: 400px;";
+  document.getElementById('container').style = "filter:blur(5px);";
+})
+
+document.getElementById('close').addEventListener('click', function () {
+  document.getElementById('navigation').style = "";
+  document.getElementById('container').style = "";
+})
+
 
 // Change styling stuff
 function previewImage() {
     file.style = "visibility: visible; display:block;";
-    document.getElementById('upload-contain').style = "width:100%;";
+    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
     document.getElementById('header').style = "height:190px;";
     document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
     document.getElementById('todo').style = "top: 200px;";
@@ -266,7 +276,9 @@ if(fileValue == 'image'){
 
 // Requires a working navigation button
 
-// file should be able to be downloaded by the user when clicking on the item. */
+// The coloured labels
+
+// BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
 
 /* Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/
