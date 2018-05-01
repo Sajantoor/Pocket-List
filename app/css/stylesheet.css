@@ -10,9 +10,10 @@ body, header, header input, h1 {
 }
 
 #header {
-  background-image: -moz-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
-  background-image: -webkit-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
-  background-image: -ms-linear-gradient( 90deg, #30a0ff) 0%, #2e98f3) 100%);
+  background: linear-gradient(#30a0ff, #2e98f3);
+  background: -moz-linear-gradient(#30a0ff, #2e98f3);
+  background: -webkit-linear-gradient(#30a0ff, #2e98f3);
+  background: -ms-linear-gradient(#30a0ff, #2e98f3);
   box-shadow: -0.262px 4.993px 9px 0px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 80px;
@@ -377,11 +378,17 @@ ul#complete:empty:after {
 }
 
 #navigation * {
-  text-align: center;
   white-space: -moz-nowrap; /* Firefox */
   white-space: -o-nowrap; /* Opera */
   white-space: nowrap; /* Chrome */
   word-wrap: keep-all; /* IE */
+}
+
+input#List-Input {
+  position: relative;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #List-Input {
@@ -412,19 +419,28 @@ ul#complete:empty:after {
 #close {
   position: relative;
   bottom: 70pt;
-  left: 130pt;
+  left: 270pt;
   opacity: 0.5;
   mix-blend-mode: overlay;
 }
 
-#todo-lists a li {
+ul#todo-lists {
+  padding: 10px;
+  text-align: center;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#todo-lists li {
   position: relative;
   top: 20pt;
+  left: 18pt;
   color: #000;
   width: 80%;
   height: 50px;
   font-size: 0.9em;
-  padding: 15px 100px 20px 10px;
+  padding: 15px 0 0 0;
   margin-bottom: 15px;
   border-radius: 5px;
   background-color: #FFF;
