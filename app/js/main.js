@@ -213,19 +213,22 @@ function progress() {
   var progress = Math.round((completedItems/(completedItems + todoItems)*100))
 
   if (todoItems === 0 & completedItems === 0) {
-    let progress = 0 + "%"
+    let progress = 0;
     console.log(progress);
-
+    document.getElementById('progress-percentage').innerHTML = progress + "%";
   } else {
     console.log(progress + "%");
+    document.getElementById('progress-percentage').innerHTML = progress + "%";
   }
 }
 
+// Navigation Button Event Listener
 document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 400px;";
   document.getElementById('container').style = "filter:blur(5px);";
 })
 
+// Close navigation Button Event Listener
 document.getElementById('close').addEventListener('click', function () {
   document.getElementById('navigation').style = "";
   document.getElementById('container').style = "";
@@ -279,6 +282,7 @@ if(fileValue == 'image'){
 // The coloured labels
 
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
+// BUG: YOU can still intract with stuff even when it's blurred 
 
 /* Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/

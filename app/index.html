@@ -18,18 +18,25 @@
     <nav id="navigation">
       <header id="menu-header">
         <h1> Pocket List </h1>
-
       </header>
       <div id="close">
         <svg fill="#FFF" height="30" viewBox="0 0 24 24" width="30" xmlns="http://www.w3.org/2000/svg"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/></svg>
       </div>
       <!-- Input Field, Multiple Todo Lists and Progress Bar Goes Here -->
       <input id="List-Input" type="text" value="" autocorrect="on" autocapitalize="words" placeholder="Add a new todo list...">
+      <button id="add-list">
+        <svg id="add-button" height="40" weight="40"version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="#FFF" viewBox="0 0 42 42" style="enable-background:new 0 0 42 42;" xml:space="preserve"> <polygon class="fill" points="42,20 22,20 22,0 20,0 20,20 0,20 0,22 20,22 20,42 22,42 22,22 42,22 "/><g></g></svg>
+      </button>
       <ul id="todo-lists">
         <li> <a href=""> General </a> </li>
         <li> <a href=""> Work </a> </li>
-        <li> <a href=""> School </a> </li> 
-      <ul>
+        <li> <a href=""> School </a> </li>
+      </ul>
+      <div id="progress">
+        <p id="progress-percentage" class="text"> This text shouldn't be seen, if it seen, then there is a bug. Please report it! </p>
+        <p class="text"> Done </p>
+        <div id="progress-bar"> </div>
+      </div>
     </nav>
 
   <div id="container">
@@ -50,8 +57,6 @@
 
     <!-- Complete List -->
     <ul id="complete"></ul>
-
-
 
     <!-- Add Buttons -->
     <div id="add">
