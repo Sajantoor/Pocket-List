@@ -226,12 +226,14 @@ function progress() {
 document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 400px;";
   document.getElementById('container').style = "filter:blur(5px);";
+  document.getElementById('overlay').style = "position: absolute; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.5;"
 })
 
 // Close navigation Button Event Listener
 document.getElementById('close').addEventListener('click', function () {
   document.getElementById('navigation').style = "";
   document.getElementById('container').style = "";
+  document.getElementById('overlay').style = "";
 })
 
 
@@ -263,6 +265,8 @@ function previewFileOff() {
   document.getElementById('upload-label').style = "";
 }
 
+
+
 /* Old file system that will probably be used for files other than images
 
 if(fileValue == 'image'){
@@ -282,7 +286,7 @@ if(fileValue == 'image'){
 // The coloured labels
 
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
-// BUG: YOU can still intract with stuff even when it's blurred 
+// Suggestion: CLick anywhere that's blurred to close the menu, this is better for the user.
 
 /* Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/

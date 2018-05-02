@@ -506,19 +506,19 @@ div#progress {
   margin-left: auto;
 }
 
+div#progress-bar {
+
+}
+
+
 .text {
   text-align: center;
   position: relative;
-  top: 20px;
+  top: 12pt;
   font-size: 25px;
   font-family: Barlow;
 }
 
 p#progress-percentage {
-  font-weight: 500;
-}
-
-div#progress-bar {
-  /* I have no idea how to code this xD
-  It needs to be a progess bar that is in the shape of a circle */
+  font-weight: 600;
 }
