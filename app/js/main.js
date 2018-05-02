@@ -220,6 +220,11 @@ function progress() {
     console.log(progress + "%");
     document.getElementById('progress-percentage').innerHTML = progress + "%";
   }
+  var circumference = 146.5 * Math.PI * 2;
+  var percentage = (progress / 100);
+  var bar = document.getElementById('progress-bar');
+  var barPercentage = Math.round(circumference * (1 - percentage));
+  bar.setAttribute("stroke-dashoffset", barPercentage);
 }
 
 // Navigation Button Event Listener

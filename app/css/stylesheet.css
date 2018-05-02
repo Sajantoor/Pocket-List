@@ -506,10 +506,14 @@ div#progress {
   margin-left: auto;
 }
 
-div#progress-bar {
-
+ .progress {
+  transform: rotate(-90deg);
+  height: 120pt;
+  width: 120pt;
+  position: relative;
+  bottom: 68pt;
+  right: 22.5pt;
 }
-
 
 .text {
   text-align: center;
