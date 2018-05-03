@@ -201,7 +201,6 @@ if (id === 'todo') {
   var target = (id === 'todo') ? completeList:todo;
   item.remove();
   target.insertBefore(item, target.childNodes[0]);
-
   progress();
 }
 
@@ -212,34 +211,45 @@ function progress() {
   var completedItems = completeList.children.length;
   var progress = Math.round((completedItems/(completedItems + todoItems)*100))
 
-  if (todoItems === 0 & completedItems === 0) {
-    let progress = 0;
-    console.log(progress);
-    document.getElementById('progress-percentage').innerHTML = progress + "%";
-  } else {
-    console.log(progress + "%");
+  function mathStuff() {
+    var r = 146.5;
+    var circumference = r * 2 * Math.PI;
+    var percentage = (progress / 100);
+    var bar = document.getElementById('progress-bar');
+    var barPercentage = Math.round(circumference * (1 - percentage));
+    bar.setAttribute("stroke-dashoffset", barPercentage);
     document.getElementById('progress-percentage').innerHTML = progress + "%";
   }
-  var circumference = 146.5 * Math.PI * 2;
-  var percentage = (progress / 100);
-  var bar = document.getElementById('progress-bar');
-  var barPercentage = Math.round(circumference * (1 - percentage));
-  bar.setAttribute("stroke-dashoffset", barPercentage);
+
+  if (todoItems === 0 & completedItems === 0) {
+    progress = 0;
+    mathStuff();
+  } else {
+    mathStuff();
+  }
 }
 
 // Navigation Button Event Listener
 document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 400px;";
   document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('overlay').style = "position: absolute; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.5;"
+  document.getElementById('overlay').style = "position: absolute; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;"
 })
 
 // Close navigation Button Event Listener
 document.getElementById('close').addEventListener('click', function () {
+  close();
+})
+
+document.getElementById('overlay').addEventListener('click', function() {
+  close();
+})
+
+function close() {
   document.getElementById('navigation').style = "";
   document.getElementById('container').style = "";
   document.getElementById('overlay').style = "";
-})
+}
 
 
 // Change styling stuff
@@ -286,9 +296,12 @@ if(fileValue == 'image'){
 }
 */
 
-// Requires a working navigation button
-
 // The coloured labels
+// <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.38 99"><defs><style>.cls-1{stroke:#231f20;stroke-miterlimit:10;}</style></defs><title>Asset 2</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M20.5.5a20.06,20.06,0,0,0-20,20v58a20.06,20.06,0,0,0,20,20H60.88V.5Z"/></g></g></svg>
+
+// BUG: Local Storage Redesign for more than just text values
+
+// BUG: Forgot to add a remove option for todo lists lol.
 
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
 // Suggestion: CLick anywhere that's blurred to close the menu, this is better for the user.
