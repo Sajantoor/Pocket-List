@@ -14,7 +14,6 @@ function time () {
   if (minute < 10) {
     minute = '0' + minute;
 }
-
   console.log(hours + ":" + minute);
 }
 
@@ -41,6 +40,12 @@ function generateTodoList() {
 // Gets the Local Storage Array and Generates the todo and complete list
 generateTodoList();
 progress();
+focus();
+
+function focus() {
+  document.getElementById('item').focus();
+}
+
 
 // Grabs the value and then pushes it to dom and local storage
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
@@ -58,19 +63,21 @@ function createItem() {
 }
 
 // Event Listner For The Button Click
-document.getElementById('add').addEventListener('click', function () {
-  createItem();
-  previewFileOff();
-})
+  document.getElementById('add').addEventListener('click', function () {
+    createItem();
+    previewFileOff();
+  })
 
-// Event Listner For Enter
-document.addEventListener('keypress', function(event)  {
-    if (event.keyCode == '13') {
-      createItem();
-      previewFileOff();
+  // Event Listner For Enter and checks for active element
+  document.addEventListener('keypress', function(event)  {
+    var item = document.getElementById('item');
+    if (document.activeElement === item) {
+      if (event.keyCode == '13') {
+        createItem();
+        previewFileOff();
+      }
     }
-});
-
+  });
 
 // Upload file system
 document.getElementById('upload').onchange = function uploadFile() {
@@ -87,7 +94,7 @@ document.getElementById('upload').onchange = function uploadFile() {
   }
 
 // If the file is an image is previews the image like how the image should be previewed
-  if(fileValue == 'image'){
+  if(fileValue == 'image') {
       previewFileOff();
     //  var url = URL.createObjectURL(this.files[0]);
     //  file.src = url;
@@ -144,7 +151,6 @@ function addItem(text, complete) {
     container.appendChild(link);
     newItem.appendChild(container);
   }
-
 
 // Append Child of parent nodes
   buttons.appendChild(complete);
@@ -280,6 +286,40 @@ function previewFileOff() {
   document.getElementById('upload-label').style = "";
 }
 
+document.getElementById('add-list').addEventListener('click', function () {
+  createNewList();
+})
+
+document.addEventListener('keypress', function(event)  {
+  var input = document.getElementById('List-Input');
+  if (document.activeElement === input) {
+    if (event.keyCode == '13') {
+      createNewList();
+    }
+  }
+});
+
+function createNewList() {
+  var value = document.getElementById('List-Input').value;
+  if (value && value.replace(/\s/g, "")) {
+    addList(value.trim());
+    document.getElementById('List-Input').value = "";
+  } else {
+    document.getElementById('item').value = "";
+    alert('Error: Invalid entry, please add text to your entry!');
+  }
+}
+
+function addList(text) {
+  var listOfLists = document.getElementById('todo-lists');
+
+  var newItem = document.createElement('li');
+  newItem.innerHTML = text;
+
+  var link = document.createElement('a');
+
+  listOfLists.append(newItem);
+}
 
 
 /* Old file system that will probably be used for files other than images
@@ -304,7 +344,6 @@ if(fileValue == 'image'){
 // BUG: Forgot to add a remove option for todo lists lol.
 
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
-// Suggestion: CLick anywhere that's blurred to close the menu, this is better for the user.
 
 /* Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/

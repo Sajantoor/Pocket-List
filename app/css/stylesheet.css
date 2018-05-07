@@ -342,7 +342,8 @@ ul#complete:empty:after {
   transition: 0.4s;
   width: 0;
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: fixed;
   background-color: #bdc3c7;
   box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);
@@ -496,6 +497,8 @@ ul#todo-lists:last-of-type::before {
   -o-appearance-none;
 }
 
+
+
 div#progress {
   height: 120pt;
   width: 120pt;
@@ -517,25 +520,26 @@ div#progress {
 }
 
 footer.Basic-Footer {
-  position: absolute;
+  position: relative;
   background-color: #7b878f;
   width: 100%;
   height: 25px;
-  bottom: 0;
+  top: 172pt;
   left: 0;
 }
 
 div.Gradient-Thing {
-  position: absolute;
+  position: relative;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
   background: -ms-linear-gradient(0deg, #3298e0, #6666ff);
   height: 10px;
   width: 100%;
-  bottom: 25px;
+  top: 172pt;
   left: 0;
 }
+
 
 .text {
   text-align: center;
