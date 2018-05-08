@@ -436,7 +436,6 @@ ul#todo-lists {
 #todo-lists li {
   position: relative;
   bottom: 10pt;
-  left: 18pt;
   color: #000;
   width: 80%;
   height: 50px;
@@ -445,6 +444,8 @@ ul#todo-lists {
   margin-bottom: 15px;
   border-radius: 5px;
   background-color: #FFF;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 button#add-list {
@@ -476,11 +477,10 @@ svg#add-button {
   margin-left: auto;
 }
 
-ul#todo-lists:last-of-type::before {
+ul#todo-lists:last-of-type::before, ul#todo-lists:last-of-type::after {
   content: '';
   width: 30%;
   height: 1px;
-  bottom: 30pt;
   position: relative;
   display: inline-block;
   border: 0;
@@ -497,7 +497,13 @@ ul#todo-lists:last-of-type::before {
   -o-appearance-none;
 }
 
+ul#todo-lists:last-of-type::before {
+  bottom: 30pt;
+}
 
+ul#todo-lists:last-of-type::after {
+  bottom: 10pt;
+}
 
 div#progress {
   height: 120pt;
@@ -519,27 +525,26 @@ div#progress {
   right: 17pt;
 }
 
-footer.Basic-Footer {
-  position: relative;
+footer#Basic-Footer {
+  position: absolute;
   background-color: #7b878f;
   width: 100%;
   height: 25px;
-  top: 172pt;
+  bottom: 0;
   left: 0;
+
 }
 
-div.Gradient-Thing {
-  position: relative;
+div#Gradient-Thing {
+  position: absolute;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
   background: -ms-linear-gradient(0deg, #3298e0, #6666ff);
   height: 10px;
   width: 100%;
-  top: 172pt;
-  left: 0;
+  bottom: 25px;
 }
-
 
 .text {
   text-align: center;

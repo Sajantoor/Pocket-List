@@ -316,10 +316,9 @@ function addList(text) {
   var newItem = document.createElement('li');
   newItem.innerHTML = text;
 
-  var link = document.createElement('a');
-
   listOfLists.append(newItem);
 }
+
 
 
 /* Old file system that will probably be used for files other than images
