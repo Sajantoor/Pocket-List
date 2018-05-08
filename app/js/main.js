@@ -132,6 +132,9 @@ function addItem(text, complete) {
   var remove = document.createElement('svg');
   remove.innerHTML = removeSVG;
 
+  var label = document.createElement('div');
+  label.setAttribute('id', 'label');
+
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
@@ -155,6 +158,7 @@ function addItem(text, complete) {
 // Append Child of parent nodes
   buttons.appendChild(complete);
   buttons.appendChild(remove);
+  newItem.appendChild(label);
   newItem.appendChild(buttons);
 
   todo.prepend(newItem);
@@ -197,6 +201,7 @@ function completeItem() {
 if (id === 'todo') {
   data.todo.splice(data.todo.indexOf(value), 1);
   data.complete.push(value);
+  document.getElementById('label').style = "background-color: #2ecc71;";
 } else {
   data.complete.splice(data.complete.indexOf(value), 1);
   data.todo.push(value);
@@ -317,6 +322,10 @@ function addList(text) {
   newItem.innerHTML = text;
 
   listOfLists.append(newItem);
+}
+
+function colourChange() {
+
 }
 
 

@@ -156,9 +156,9 @@ ul#todo li, ul#complete li {
   min-height: 50px;
   font-size: 0.9em;
   float: left;
-  padding: 15px 100px 20px 10px;
+  padding: 10px 100px 20px 50px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #FFF;
   word-break: break-word;
   white-space: pre-wrap;
@@ -178,7 +178,6 @@ ul#todo li .buttons, ul#complete li .buttons {
 }
 
 ul#todo li div .buttons, ul#complete li div .buttons {
-  width: 50px;
   height: 50px;
   float: right;
   background: none;
@@ -191,6 +190,22 @@ ul#todo li div .buttons, ul#complete li div .buttons {
   -ms-appearance-none;
   -o-appearance-none;
 }
+
+div#label {
+  float: left;
+  position: absolute;
+  bottom: 0pt;
+  padding: 0;
+  z-index: 10;
+  margin: 0;
+  height: 100%;
+  width: 35px;
+  left: 0;
+  overflow: hidden;
+  background-color: #30a0ff;
+  border-radius: 15px 0 0 15px;
+}
+
 
 #addtodo, #removetodo {
   -webkit-transition: all 0.2s;
@@ -239,7 +254,7 @@ ul#todo #addtodo {
   left: 15px;
 }
 
-ul#todo li svg:last-child:before , ul#complete li svg:last-child:before {
+ul#todo li .buttons svg:last-child:before , ul#complete li .buttons svg:last-child:before {
    content: '';
    width: 1px;
    height: 30px;
