@@ -41,7 +41,7 @@ function generateTodoList() {
 generateTodoList();
 progress();
 focus();
-
+// Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function focus() {
   document.getElementById('item').focus();
 }
@@ -169,6 +169,8 @@ function addItem(text, complete) {
 // Tell Js to complete Item
   complete.addEventListener('click', completeItem);
 
+  label.addEventListener('click', colourPicker);
+
   progress();
 }
 
@@ -196,15 +198,17 @@ function completeItem() {
   var parent = item.parentNode;
   var id = parent.id;
   var value = item.innerText;
+  var label = this.parentNode.previousSibling;
 
 // Remove from current array / list and move to the other array / list
 if (id === 'todo') {
   data.todo.splice(data.todo.indexOf(value), 1);
   data.complete.push(value);
-  document.getElementById('label').style = "background-color: #2ecc71;";
+  label.style = "background-color: #2ecc71;"
 } else {
   data.complete.splice(data.complete.indexOf(value), 1);
   data.todo.push(value);
+  label.style = "";
 }
   dataObject();
 
@@ -214,7 +218,6 @@ if (id === 'todo') {
   target.insertBefore(item, target.childNodes[0]);
   progress();
 }
-
 
 // Gets progress of your todo list with some math
 function progress() {
@@ -231,7 +234,7 @@ function progress() {
     bar.setAttribute("stroke-dashoffset", barPercentage);
     document.getElementById('progress-percentage').innerHTML = progress + "%";
   }
-
+// 0 / 0 is not a number, this fixes that.
   if (todoItems === 0 & completedItems === 0) {
     progress = 0;
     mathStuff();
@@ -245,24 +248,22 @@ document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 400px;";
   document.getElementById('container').style = "filter:blur(5px);";
   document.getElementById('overlay').style = "position: absolute; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;"
+
+  // Close navigation Button Event Listener
+  document.getElementById('close').addEventListener('click', function () {
+    close();
+  })
+  // If clicking anything but the navigation or the close button
+  document.getElementById('overlay').addEventListener('click', function() {
+    close();
+  })
+  // Style Reset
+  function close() {
+    document.getElementById('navigation').style = "";
+    document.getElementById('container').style = "";
+    document.getElementById('overlay').style = "";
+  }
 })
-
-// Close navigation Button Event Listener
-document.getElementById('close').addEventListener('click', function () {
-  close();
-})
-
-document.getElementById('overlay').addEventListener('click', function() {
-  close();
-})
-
-function close() {
-  colourChange();
-  document.getElementById('navigation').style = "";
-  document.getElementById('container').style = "";
-  document.getElementById('overlay').style = "";
-}
-
 
 // Change styling stuff
 function previewImage() {
@@ -274,7 +275,7 @@ function previewImage() {
     document.getElementById('complete').style = "top:200px;";
     document.getElementById('upload-label').style = "mix-blend-mode: difference;"
   }
-
+// Preview File
 function previewFile() {
     file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
     document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
@@ -291,7 +292,7 @@ function previewFileOff() {
   document.getElementById('complete').style = "";
   document.getElementById('upload-label').style = "";
 }
-
+// Adds a new list when clicking that button
 document.getElementById('add-list').addEventListener('click', function () {
   createNewList();
 })
@@ -318,36 +319,92 @@ function createNewList() {
 
 function addList(text) {
   var listOfLists = document.getElementById('todo-lists');
-
   var newItem = document.createElement('li');
   newItem.innerHTML = text;
-
   listOfLists.append(newItem);
 }
 
-document.getElementById('label').addEventListener('click', function() {
-    document.getElementById('colorPopUp').style = "display: block;"
-    colourChange();
-})
+function colourPicker() {
+    var element = this;
+    var list = element.parentNode.parentNode;
+    var todo = document.getElementById('todo');
 
-function colourChange() {
-  var red = document.getElementById('red');
-  var blue = document.getElementById('blue');
-  var green = document.getElementById('green');
-  var orange = document.getElementById('orange');
-  var yellow = document.getElementById('yellow');
-  var purple = document.getElementById('purple');
-  var black = document.getElementById('black');
-  var grey = document.getElementById('grey');
-  var white = document.getElementById('white');
+    if (list === todo) {
+      document.getElementById('colorPopUp').style = "display: block;";
+      document.getElementById('overlay').style = "position: absolute; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+      document.getElementById('container').style = "filter:blur(5px);";
 
-  red.addEventListener('click', function () {
-    label.style = "background-color: #e74c3c;"
-      document.getElementById('colorPopUp').style = "";
-  })
+      var red = document.getElementById('red');
+      var blue = document.getElementById('blue');
+      var green = document.getElementById('green');
+      var orange = document.getElementById('orange');
+      var yellow = document.getElementById('yellow');
+      var purple = document.getElementById('purple');
+      var black = document.getElementById('black');
+      var grey = document.getElementById('grey');
+      var white = document.getElementById('white');
+
+      red.addEventListener('click', function () {
+        element.style = "background-color: #e74c3c;"
+          repetition();
+      })
+
+      blue.addEventListener('click', function () {
+        element.style = "background-color: #30a0ff;"
+          repetition();
+      })
+
+      green.addEventListener('click', function () {
+        element.style = "background-color: #2ecc71;"
+          repetition();
+      })
+
+      orange.addEventListener('click', function () {
+        element.style = "background-color: #e67e22;"
+          repetition();
+      })
+
+      yellow.addEventListener('click', function () {
+        element.style = "background-color: #f1c40f;"
+          repetition();
+      })
+
+      purple.addEventListener('click', function () {
+        element.style = "background-color: #9b59b6;"
+          repetition();
+      })
+
+      black.addEventListener('click', function () {
+        element.style = "background-color: #000;"
+        repetition();
+      })
+
+      grey.addEventListener('click', function () {
+        element.style = "background-color: #95a5a6;"
+        repetition();
+      })
+
+      white.addEventListener('click', function () {
+        element.style = "background-color: #ecf0f1;"
+        repetition();
+      })
+
+      document.getElementById('overlay').addEventListener('click', function() {
+        repetition();
+      })
+
+      document.getElementById('closeMenu').addEventListener('click', function() {
+        repetition();
+      })
+
+      function repetition() {
+          document.getElementById('colorPopUp').style = "";
+          document.getElementById('overlay').style = "";
+          document.getElementById('container').style = "";
+          element = "I could put literally anything here to stop this bug except null for some reason, weird.";
+      }
+    }
 }
-
-
 
 /* Old file system that will probably be used for files other than images
 
@@ -363,17 +420,16 @@ if(fileValue == 'image'){
 }
 */
 
-// The coloured labels
-// <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.38 99"><defs><style>.cls-1{stroke:#231f20;stroke-miterlimit:10;}</style></defs><title>Asset 2</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M20.5.5a20.06,20.06,0,0,0-20,20v58a20.06,20.06,0,0,0,20,20H60.88V.5Z"/></g></g></svg>
-
-// BUG: Local Storage Redesign for more than just text values
-
 // BUG: Forgot to add a remove option for todo lists lol.
-
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
+// BUG: The color menu moves when adding too many items
+// BUG: Microsoft Edge Event Listener Bugs
+// BUG: The weird streaks in Firefox Quantium
 
-/* Requires a expand option when clicking on a list item itself. This shows more options
+// HACK: Local Storage Redesign for more than just text values
+
+/* HACK: Requires a expand option when clicking on a list item itself. This shows more options
 including notes and addition information, uploading a file otption and more.*/
 
-/* Requires a way to clear the completed items after 24 hours of real time. This value
+/* HACK: Requires a way to clear the completed items after 24 hours of real time. This value
 should be able to be changed by the user, in app settings and should be able to be turned off. */
