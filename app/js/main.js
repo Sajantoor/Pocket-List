@@ -257,6 +257,7 @@ document.getElementById('overlay').addEventListener('click', function() {
 })
 
 function close() {
+  colourChange();
   document.getElementById('navigation').style = "";
   document.getElementById('container').style = "";
   document.getElementById('overlay').style = "";
@@ -324,8 +325,26 @@ function addList(text) {
   listOfLists.append(newItem);
 }
 
-function colourChange() {
+document.getElementById('label').addEventListener('click', function() {
+    document.getElementById('colorPopUp').style = "display: block;"
+    colourChange();
+})
 
+function colourChange() {
+  var red = document.getElementById('red');
+  var blue = document.getElementById('blue');
+  var green = document.getElementById('green');
+  var orange = document.getElementById('orange');
+  var yellow = document.getElementById('yellow');
+  var purple = document.getElementById('purple');
+  var black = document.getElementById('black');
+  var grey = document.getElementById('grey');
+  var white = document.getElementById('white');
+
+  red.addEventListener('click', function () {
+    label.style = "background-color: #e74c3c;"
+      document.getElementById('colorPopUp').style = "";
+  })
 }
 
 
