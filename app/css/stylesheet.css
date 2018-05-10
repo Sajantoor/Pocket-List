@@ -576,15 +576,17 @@ p#progress-percentage {
 div#colorPopUp {
   padding: 10px;
   width: 90%;
-  height: 55ch;
-  position: relative;
+  height: 50%;
+  position: fixed;
   text-align: center;
   margin-left: auto;
+  overflow: hidden;
   margin-right: auto;
   display: none;
   background-color: #FFF;
-  border-radius: 30px;
-  bottom: 80%;
+  border-radius: 25px;
+  bottom: 25ch;
+  left: 5%;
   z-index: 9;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 }
@@ -597,8 +599,8 @@ div#colorPopUp h1 {
 
 div.color {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 70pt;
+  height: 70pt;
   display: inline-block;
   background-color: #000;
   border-radius: 10px;
@@ -611,6 +613,37 @@ div.color p {
   position: relative;
   top: 35%;
   mix-blend-mode: overlay;
+}
+
+div#colorPopUp h3 {
+  position: relative;
+  top: 10pt;
+  padding: 20px;
+  font-size: 18pt;
+}
+
+input#color {
+  border: 0;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+
+  -webkit-appearance-none;
+  -moz-appearance-none;
+  -ms-appearance-none;
+  -o-appearance-none;
+}
+
+div#closeMenu {
+  cursor: pointer;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 15px;
+}
+
+div#closeMenu svg:hover {
+  fill: #e81123;
 }
 
 div#red {background-color: #e74c3c;}

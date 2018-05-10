@@ -247,7 +247,7 @@ function progress() {
 document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 400px;";
   document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('overlay').style = "position: absolute; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;"
+  document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;"
 
   // Close navigation Button Event Listener
   document.getElementById('close').addEventListener('click', function () {
@@ -331,7 +331,7 @@ function colourPicker() {
 
     if (list === todo) {
       document.getElementById('colorPopUp').style = "display: block;";
-      document.getElementById('overlay').style = "position: absolute; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+      document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
 
       var red = document.getElementById('red');
@@ -397,6 +397,16 @@ function colourPicker() {
         repetition();
       })
 
+      document.getElementById('color').onchange = function customColor() {
+        var color = document.getElementById('color');
+        var value = color.value;
+
+        if (value) {
+          element.style.backgroundColor = value;
+          value = "";
+        }
+      }
+
       function repetition() {
           document.getElementById('colorPopUp').style = "";
           document.getElementById('overlay').style = "";
@@ -405,6 +415,8 @@ function colourPicker() {
       }
     }
 }
+
+
 
 /* Old file system that will probably be used for files other than images
 
@@ -422,9 +434,10 @@ if(fileValue == 'image'){
 
 // BUG: Forgot to add a remove option for todo lists lol.
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
-// BUG: The color menu moves when adding too many items
 // BUG: Microsoft Edge Event Listener Bugs
 // BUG: The weird streaks in Firefox Quantium
+
+// HACK: Notification System
 
 // HACK: Local Storage Redesign for more than just text values
 
