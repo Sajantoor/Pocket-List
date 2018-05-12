@@ -27,6 +27,8 @@ body, header, header input, h1, h2 {
   border-bottom-left-radius: 10px;
   box-shadow: 0px 2px 10px rgba(28, 28, 27, 0.2);
   font-family: 'Barlow Semi Condensed', sans-serif;
+
+  content: "test";
 }
 
 header #item {
@@ -403,8 +405,10 @@ header#menu-header {
 
 input#List-Input {
   display: block;
+  position: relative;
   margin-right: auto;
   margin-left: auto;
+  top: 10pt;
 }
 
 #List-Input {
@@ -433,9 +437,9 @@ input#List-Input {
 }
 
 #close {
-  position: relative;
-  bottom: 70pt;
-  left: 270pt;
+  position: absolute;
+  top: 10pt;
+  right: 10pt;
   opacity: 0.5;
   mix-blend-mode: overlay;
 }
@@ -450,7 +454,7 @@ ul#todo-lists {
 
 #todo-lists li {
   position: relative;
-  bottom: 10pt;
+  top: 10pt;
   color: #000;
   width: 80%;
   height: 50px;
@@ -467,9 +471,9 @@ button#add-list {
   height: 50px;
   width: 50px;
   background-color: #30a0ff;
-  position: relative;
-  bottom: 35pt;
-  left: 120pt;
+  position: absolute;
+  top: 115px;
+  right: 4%;
   padding: 12px;
   z-index: 30;
   border-radius: 50%;
@@ -510,14 +514,6 @@ ul#todo-lists:last-of-type::before, ul#todo-lists:last-of-type::after {
   -moz-appearance-none;
   -ms-appearance-none;
   -o-appearance-none;
-}
-
-ul#todo-lists:last-of-type::before {
-  bottom: 30pt;
-}
-
-ul#todo-lists:last-of-type::after {
-  bottom: 10pt;
 }
 
 div#progress {
@@ -580,12 +576,13 @@ div#colorPopUp {
   position: fixed;
   text-align: center;
   margin-left: auto;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin-right: auto;
   display: none;
   background-color: #FFF;
   border-radius: 25px;
-  bottom: 25ch;
+  bottom: 25%;
   left: 5%;
   z-index: 9;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
@@ -632,6 +629,7 @@ input#color {
   -moz-appearance-none;
   -ms-appearance-none;
   -o-appearance-none;
+  margin-bottom: 20px;
 }
 
 div#closeMenu {
