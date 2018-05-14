@@ -247,12 +247,15 @@ function progress() {
 document.getElementById('navButton').addEventListener('click', function () {
   document.getElementById('navigation').style = "width: 90%;";
   document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;"
+  document.getElementById('Gradient-Thing').style = "width: 90%;";
+  document.getElementById('Basic-Footer').style = "width: 90%;";
+  document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
 
   // Close navigation Button Event Listener
   document.getElementById('close').addEventListener('click', function () {
     close();
   })
+
   // If clicking anything but the navigation or the close button
   document.getElementById('overlay').addEventListener('click', function() {
     close();
@@ -262,6 +265,8 @@ document.getElementById('navButton').addEventListener('click', function () {
     document.getElementById('navigation').style = "";
     document.getElementById('container').style = "";
     document.getElementById('overlay').style = "";
+    document.getElementById('Gradient-Thing').style = "";
+    document.getElementById('Basic-Footer').style = "";
   }
 })
 

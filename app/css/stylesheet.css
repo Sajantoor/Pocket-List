@@ -440,6 +440,7 @@ input#List-Input {
   right: 10pt;
   opacity: 0.5;
   mix-blend-mode: overlay;
+  border: 1px solid rgba(255, 255, 255, 0.0)
 }
 
 ul#todo-lists {
@@ -470,7 +471,7 @@ button#add-list {
   width: 50px;
   background-color: #30a0ff;
   position: absolute;
-  top: 115px;
+  top: 118px;
   right: 4%;
   padding: 12px;
   z-index: 30;
@@ -535,23 +536,28 @@ div#progress {
 }
 
 footer#Basic-Footer {
-  position: absolute;
+  position: fixed;
+  transition-timing-function: ease-in-out;
+  transition: 0.4s;
+  z-index: 10000;
   background-color: #7b878f;
-  width: 100%;
+  width: 0;
   height: 25px;
   bottom: 0;
   left: 0;
-
 }
 
 div#Gradient-Thing {
-  position: absolute;
+  position: fixed;
+  z-index: 10000;
+  transition-timing-function: ease-in-out;
+  transition: 0.4s;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
   background: -ms-linear-gradient(0deg, #3298e0, #6666ff);
   height: 10px;
-  width: 100%;
+  width: 0;
   bottom: 25px;
 }
 
