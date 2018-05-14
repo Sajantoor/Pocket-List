@@ -126,7 +126,7 @@ header #item:-moz-placeholder {
   z-index: 30;
 }
 
-#add button {
+#add div {
   height: 52px;
   width: 52px;
   background-color: #30a0ff;
@@ -206,6 +206,18 @@ div#label {
   border-radius: 15px 0 0 15px;
 }
 
+p#paragraph {
+  display: none;
+}
+
+div#click-box {
+  position: absolute;
+  width: calc(100% - 130px);
+  height: 50px;
+  top: 0;
+  right: 100px;
+  z-index: 0;
+}
 
 #addtodo, #removetodo {
   -webkit-transition: all 0.2s;
@@ -213,7 +225,7 @@ div#label {
   transition: all 0.2s;
 }
 
-svg #removetodo:hover  {
+svg #removetodo:hover, svg #removetodo:focus  {
   fill: #ff4f4f;
   -webkit-animation: glow 1.0s ease-in-out infinite alternate;
   -moz-animation: glow 1.0s ease-in-out infinite alternate;
@@ -274,7 +286,7 @@ ul#todo li .buttons svg:last-child:before , ul#complete li .buttons svg:last-chi
    top: 10px;
 }
 
-ul#todo #addtodo:hover {
+ul#todo #addtodo:hover, ul#todo #addtodo:focus {
   background-color: #2ecc71;
   fill:#FFF;
 }
@@ -290,7 +302,7 @@ ul#complete #addtodo {
   left: 15px;
 }
 
-ul#complete div  #addtodo:hover {
+ul#complete div  #addtodo:hover, ul#complete div  #addtodo:focus {
   background-color: #FFF;
   border-color: #2ecc71;
   fill: #2ecc71;
@@ -466,7 +478,7 @@ ul#todo-lists {
   margin-left: auto;
 }
 
-button#add-list {
+div#add-list {
   height: 50px;
   width: 50px;
   background-color: #30a0ff;
@@ -644,7 +656,7 @@ div#closeMenu {
   right: 15px;
 }
 
-div#closeMenu svg:hover {
+div#closeMenu svg:hover, div#closeMenu svg:focus {
   fill: #e81123;
 }
 

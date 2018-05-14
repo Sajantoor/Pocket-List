@@ -41,11 +41,11 @@ function generateTodoList() {
 generateTodoList();
 progress();
 focus();
+
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function focus() {
   document.getElementById('item').focus();
 }
-
 
 // Grabs the value and then pushes it to dom and local storage
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
@@ -135,6 +135,13 @@ function addItem(text, complete) {
   var label = document.createElement('div');
   label.setAttribute('id', 'label');
 
+  var paragraph = document.createElement('p');
+  paragraph.setAttribute('id', 'paragraph');
+  paragraph.setAttribute('contenteditable', 'true');
+
+  var clickBox = document.createElement('div');
+  clickBox.setAttribute('id', 'click-box');
+
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
@@ -160,6 +167,8 @@ function addItem(text, complete) {
   buttons.appendChild(remove);
   newItem.appendChild(label);
   newItem.appendChild(buttons);
+  newItem.appendChild(clickBox);
+  clickBox.appendChild(paragraph);
 
   todo.prepend(newItem);
 
@@ -171,6 +180,7 @@ function addItem(text, complete) {
 
   label.addEventListener('click', colourPicker);
 
+  clickBox.addEventListener('click', expandList);
   progress();
 }
 
@@ -245,30 +255,34 @@ function progress() {
 
 // Navigation Button Event Listener
 document.getElementById('navButton').addEventListener('click', function () {
+  openNavigation();
+})
+
+  // Close navigation Button Event Listener
+document.getElementById('close').addEventListener('click', function () {
+  close();
+})
+
+  // If clicking anything but the navigation or the close button
+document.getElementById('overlay').addEventListener('click', function() {
+  close();
+})
+  // Style Reset
+function close() {
+  document.getElementById('navigation').style = "";
+  document.getElementById('container').style = "";
+  document.getElementById('overlay').style = "";
+  document.getElementById('Gradient-Thing').style = "";
+  document.getElementById('Basic-Footer').style = "";
+}
+
+function openNavigation() {
   document.getElementById('navigation').style = "width: 90%;";
   document.getElementById('container').style = "filter:blur(5px);";
   document.getElementById('Gradient-Thing').style = "width: 90%;";
   document.getElementById('Basic-Footer').style = "width: 90%;";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-
-  // Close navigation Button Event Listener
-  document.getElementById('close').addEventListener('click', function () {
-    close();
-  })
-
-  // If clicking anything but the navigation or the close button
-  document.getElementById('overlay').addEventListener('click', function() {
-    close();
-  })
-  // Style Reset
-  function close() {
-    document.getElementById('navigation').style = "";
-    document.getElementById('container').style = "";
-    document.getElementById('overlay').style = "";
-    document.getElementById('Gradient-Thing').style = "";
-    document.getElementById('Basic-Footer').style = "";
-  }
-})
+}
 
 // Change styling stuff
 function previewImage() {
@@ -297,11 +311,13 @@ function previewFileOff() {
   document.getElementById('complete').style = "";
   document.getElementById('upload-label').style = "";
 }
-// Adds a new list when clicking that button
+
+// Event Listener For Clicking on the add button
 document.getElementById('add-list').addEventListener('click', function () {
   createNewList();
 })
 
+// Event Listner for clicking enter
 document.addEventListener('keypress', function(event)  {
   var input = document.getElementById('List-Input');
   if (document.activeElement === input) {
@@ -311,6 +327,7 @@ document.addEventListener('keypress', function(event)  {
   }
 });
 
+// Creates a new list in the navigation
 function createNewList() {
   var value = document.getElementById('List-Input').value;
   if (value && value.replace(/\s/g, "")) {
@@ -322,6 +339,7 @@ function createNewList() {
   }
 }
 
+// Add Item For the Lists
 function addList(text) {
   var listOfLists = document.getElementById('todo-lists');
   var newItem = document.createElement('li');
@@ -329,7 +347,9 @@ function addList(text) {
   listOfLists.append(newItem);
 }
 
+// Colour Picker Thing
 function colourPicker() {
+  // element is the label intially clicked on
     var element = this;
     var list = element.parentNode.parentNode;
     var todo = document.getElementById('todo');
@@ -422,6 +442,33 @@ function colourPicker() {
     }
 }
 
+// Swipe Right Gesture
+window.onload = function() {
+  var touchstartX = 0;
+  var touchendX = 0;
+
+  var gestureZone = document.getElementById('container');
+
+  gestureZone.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+  }, false);
+
+  gestureZone.addEventListener('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    handleGesture();
+  }, false);
+
+  function handleGesture() {
+    if (touchendX >= touchstartX) {
+      openNavigation();
+    }
+  }
+}
+
+// Function that runs when a list is clicked on.
+function expandList() {
+  console.log('click');
+}
 
 
 /* Old file system that will probably be used for files other than images
@@ -438,10 +485,9 @@ if(fileValue == 'image'){
 }
 */
 
-// BUG: Forgot to add a remove option for todo lists lol.
+// FIXME: Forgot to add a remove option for todo lists lol.
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
 // BUG: Microsoft Edge Event Listener Bugs
-// BUG: The weird streaks in Firefox Quantium
 
 // HACK: Notification System
 
