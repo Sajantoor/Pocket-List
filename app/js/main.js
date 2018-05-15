@@ -180,7 +180,7 @@ function addItem(text, complete) {
 
   label.addEventListener('click', colourPicker);
 
-  clickBox.addEventListener('click', expandList);
+  // clickBox.addEventListener('click', expandList);
   progress();
 }
 
@@ -442,7 +442,7 @@ function colourPicker() {
     }
 }
 
-// Swipe Right Gesture
+// Swipe Gesture
 window.onload = function() {
   var touchstartX = 0;
   var touchendX = 0;
@@ -461,14 +461,34 @@ window.onload = function() {
   function handleGesture() {
     if (touchendX >= touchstartX) {
       openNavigation();
+      }
+      if (touchstartX >= touchendX) {
+        close();
     }
   }
 }
 
 // Function that runs when a list is clicked on.
-function expandList() {
-  console.log('click');
-}
+/* function expandList() {
+  var li = this.parentNode;
+  var list = li.parentNode;
+  var todo = document.getElementById('todo');
+  var liText = li.innerText;
+
+  if (list === todo) {
+    li.style = "width: 90%; height: 30%; position: fixed; overflow-x: hidden; overflow-y: auto;  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000;"
+    document.getElementById('click-box').style = "display: block;";
+    document.getElementById('paragraph').style = "display: block;";
+    document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+  }
+
+  document.getElementById('overlay').addEventListener('click', function(){
+    li.style = ""
+    document.getElementById('click-box').style = "";
+    document.getElementById('paragraph').style = "";
+    document.getElementById('overlay').style = "";
+  })
+} */
 
 
 /* Old file system that will probably be used for files other than images
