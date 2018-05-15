@@ -137,7 +137,7 @@ function addItem(text, complete) {
 
   var paragraph = document.createElement('p');
   paragraph.setAttribute('id', 'paragraph');
-  paragraph.setAttribute('contenteditable', 'true');
+  paragraph.innerText = "Add some notes!"
 
   var clickBox = document.createElement('div');
   clickBox.setAttribute('id', 'click-box');
@@ -156,31 +156,34 @@ function addItem(text, complete) {
     var link = document.createElement('a');
     link.href = newImage.src;
     link.setAttribute('download', fileName);
-
+// Append Child of parent nodes
+    buttons.appendChild(complete);
+    buttons.appendChild(remove);
+    newItem.appendChild(label);
+    newItem.appendChild(buttons);
+    newItem.appendChild(clickBox);
+    newItem.appendChild(paragraph);
+    todo.prepend(newItem);
     link.appendChild(newImage);
     container.appendChild(link);
     newItem.appendChild(container);
+  } else {
+  // Append Child of parent nodes
+    buttons.appendChild(complete);
+    buttons.appendChild(remove);
+    newItem.appendChild(label);
+    newItem.appendChild(buttons);
+    newItem.appendChild(clickBox);
+    newItem.appendChild(paragraph);
+    todo.prepend(newItem);
   }
-
-// Append Child of parent nodes
-  buttons.appendChild(complete);
-  buttons.appendChild(remove);
-  newItem.appendChild(label);
-  newItem.appendChild(buttons);
-  newItem.appendChild(clickBox);
-  clickBox.appendChild(paragraph);
-
-  todo.prepend(newItem);
-
-// Tell Js to remove item
   remove.addEventListener('click', removeItem);
 
-// Tell Js to complete Item
   complete.addEventListener('click', completeItem);
 
   label.addEventListener('click', colourPicker);
 
-  // clickBox.addEventListener('click', expandList);
+  clickBox.addEventListener('click', expandList);
   progress();
 }
 
@@ -469,26 +472,51 @@ window.onload = function() {
 }
 
 // Function that runs when a list is clicked on.
-/* function expandList() {
+function expandList() {
   var li = this.parentNode;
   var list = li.parentNode;
   var todo = document.getElementById('todo');
   var liText = li.innerText;
-
+  var text = li.childNodes[0];
+  var label = li.childNodes[1];
+  var buttons = li.childNodes[2];
+  var complete = buttons.childNodes[0];
+  var remove = buttons.childNodes[1];
+  var clickBox = document.getElementById('click-box');
+  var paragraph = document.getElementById('paragraph');
+  var overlay = document.getElementById('overlay');
+  var editButton = '<svg fill="#000000" id="addtodo" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  var closeButton = '<svg fill="#000000" height="48" id="removetodo" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  var img = document.getElementById('img-container');
+// Expand it.
   if (list === todo) {
-    li.style = "width: 90%; height: 30%; position: fixed; overflow-x: hidden; overflow-y: auto;  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000;"
-    document.getElementById('click-box').style = "display: block;";
-    document.getElementById('paragraph').style = "display: block;";
-    document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-  }
+// Checks for an image and resizes accordingly.
+    if (img) {
+      li.style = "width: 90%; height: 50%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
+    } else {
+      li.style = "width: 90%; height: 12%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
+    }
 
+    clickBox.style = "display: block;";
+    paragraph.style = "display: block;";
+    label.style = "position: fixed; overflow-y: auto;";
+    overlay.style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+    complete.innerHTML = editButton;
+    remove.innerHTML = closeButton;
+  }
+  paragraph.setAttribute('contenteditable', 'true');
+
+// Remove the expansion
   document.getElementById('overlay').addEventListener('click', function(){
-    li.style = ""
-    document.getElementById('click-box').style = "";
-    document.getElementById('paragraph').style = "";
-    document.getElementById('overlay').style = "";
+    li.style = "";
+    clickBox.style = "";
+    paragraph.style = "";
+    overlay.style = "";
+    label.style = "";
+    complete.innerHTML = completeSVG;
+    remove.innerHTML = removeSVG;
   })
-} */
+}
 
 
 /* Old file system that will probably be used for files other than images
