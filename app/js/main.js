@@ -156,6 +156,7 @@ function addItem(text, complete) {
     var link = document.createElement('a');
     link.href = newImage.src;
     link.setAttribute('download', fileName);
+    link.setAttribute('id', 'link');
 // Append Child of parent nodes
     buttons.appendChild(complete);
     buttons.appendChild(remove);
@@ -177,6 +178,7 @@ function addItem(text, complete) {
     newItem.appendChild(paragraph);
     todo.prepend(newItem);
   }
+// Event Listeners
   remove.addEventListener('click', removeItem);
 
   complete.addEventListener('click', completeItem);
@@ -212,7 +214,6 @@ function completeItem() {
   var id = parent.id;
   var value = item.innerText;
   var label = this.parentNode.previousSibling;
-
 // Remove from current array / list and move to the other array / list
 if (id === 'todo') {
   data.todo.splice(data.todo.indexOf(value), 1);
@@ -270,6 +271,14 @@ document.getElementById('close').addEventListener('click', function () {
 document.getElementById('overlay').addEventListener('click', function() {
   close();
 })
+
+function openNavigation() {
+  document.getElementById('navigation').style = "width: 90%;";
+  document.getElementById('container').style = "filter:blur(5px);";
+  document.getElementById('Gradient-Thing').style = "width: 90%;";
+  document.getElementById('Basic-Footer').style = "width: 90%;";
+  document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+}
   // Style Reset
 function close() {
   document.getElementById('navigation').style = "";
@@ -279,41 +288,7 @@ function close() {
   document.getElementById('Basic-Footer').style = "";
 }
 
-function openNavigation() {
-  document.getElementById('navigation').style = "width: 90%;";
-  document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('Gradient-Thing').style = "width: 90%;";
-  document.getElementById('Basic-Footer').style = "width: 90%;";
-  document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-}
 
-// Change styling stuff
-function previewImage() {
-    file.style = "visibility: visible; display:block;";
-    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-    document.getElementById('header').style = "height:190px;";
-    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
-    document.getElementById('todo').style = "top: 200px;";
-    document.getElementById('complete').style = "top:200px;";
-    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
-  }
-// Preview File
-function previewFile() {
-    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
-    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
-  }
-
-// Reseting changed styling
-function previewFileOff() {
-  file.style = "";
-  file.removeAttribute('src');
-  document.getElementById('upload-contain').style = "";
-  document.getElementById('header').style = "";
-  document.getElementById('item').style = "";
-  document.getElementById('todo').style = "";
-  document.getElementById('complete').style = "";
-  document.getElementById('upload-label').style = "";
-}
 
 // Event Listener For Clicking on the add button
 document.getElementById('add-list').addEventListener('click', function () {
@@ -485,53 +460,98 @@ function expandList() {
   var clickBox = document.getElementById('click-box');
   var paragraph = document.getElementById('paragraph');
   var overlay = document.getElementById('overlay');
-  var editButton = '<svg fill="#000000" id="addtodo" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
-  var closeButton = '<svg fill="#000000" height="48" id="removetodo" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  var uploadSVG = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>';
+  var closeSVG = '<svg fill="#000000" height="48" id="closebutton" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   var img = document.getElementById('img-container');
+  var link = document.getElementById('link');
 // Expand it.
   if (list === todo) {
 // Checks for an image and resizes accordingly.
     if (img) {
       li.style = "width: 90%; height: 50%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
+      expansion();
     } else {
       li.style = "width: 90%; height: 12%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
+      expansion();
     }
-
-    clickBox.style = "display: block;";
-    paragraph.style = "display: block;";
-    label.style = "position: fixed; overflow-y: auto;";
-    overlay.style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-    complete.innerHTML = editButton;
-    remove.innerHTML = closeButton;
   }
+
+function expansion() {
+  clickBox.style = "display: block;";
+  paragraph.style = "display: block;";
+  label.style = "position: fixed; overflow-y: auto;";
+  overlay.style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+  complete.innerHTML = uploadSVG;
+  // BUG:  Idk why this doesn't work (Below)! 
+  remove.style = closeSVG;
+  complete.removeEventListener('click', completeItem);
+  remove.removeEventListener('click', removeItem);
+
+  remove.addEventListener('click', removeExpansion);
+
   paragraph.setAttribute('contenteditable', 'true');
 
+  if (img) {
+    link.removeAttribute('download');
+    link.addEventListener('click', expandImage);
+  }
+}
+
 // Remove the expansion
-  document.getElementById('overlay').addEventListener('click', function(){
+  document.getElementById('overlay').addEventListener('click', removeExpansion);
+
+
+  function removeExpansion() {
     li.style = "";
     clickBox.style = "";
     paragraph.style = "";
     overlay.style = "";
     label.style = "";
-    complete.innerHTML = completeSVG;
-    remove.innerHTML = removeSVG;
-  })
+    // Restore everything to normal including all event listeners
+  }
+
+  function expandImage() {
+      // Display none the container and expand image fully
+      // Create a close button
+      // Blur the background by dynamically creating an element to blur the background
+
+  }
+
+  function uploadImage() {
+    // Upload a new image creating all containers and stuff again.
+    // This will have to result in the expansion changing to the image expansion size
+  }
 }
 
 
-/* Old file system that will probably be used for files other than images
+// Change styling stuff
+function previewImage() {
+    file.style = "visibility: visible; display:block;";
+    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
+    document.getElementById('header').style = "height:190px;";
+    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
+    document.getElementById('todo').style = "top: 200px;";
+    document.getElementById('complete').style = "top:200px;";
+    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
+  }
+// Preview File
+function previewFile() {
+    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
+    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
+  }
 
-if(fileValue == 'image'){
-    previewFileOff();
-    var url = URL.createObjectURL(this.files[0]);
-    file.src = url;
-    previewImage();
-  } else {
-    previewFileOff();
-    file.src = "Icons/file.svg";
-    previewFile();
+// Reseting changed styling
+function previewFileOff() {
+  file.style = "";
+  file.removeAttribute('src');
+  document.getElementById('upload-contain').style = "";
+  document.getElementById('header').style = "";
+  document.getElementById('item').style = "";
+  document.getElementById('todo').style = "";
+  document.getElementById('complete').style = "";
+  document.getElementById('upload-label').style = "";
 }
-*/
+
 
 // FIXME: Forgot to add a remove option for todo lists lol.
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.

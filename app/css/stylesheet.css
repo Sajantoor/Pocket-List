@@ -258,7 +258,7 @@ ul#complete:last-of-type::before {
   -o-appearance-none;
 }
 
-ul#complete #addtodo, ul#todo #addtodo {
+ul#complete #addtodo, #edit, ul#todo #addtodo {
   width:29px;
   height:29px;
 }
