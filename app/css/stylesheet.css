@@ -71,14 +71,14 @@ header #item:-moz-placeholder {
   height: 100%;
 }
 
-#upload {
+#upload, #uploadAgain {
   width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
 	overflow: hidden;
 }
 
-#upload-label {
+#upload-label, #upload-labelAgain {
   right: -5px;
   z-index: 20;
   bottom: 35px;
@@ -87,7 +87,7 @@ header #item:-moz-placeholder {
   float: right;
 }
 
-#preview {
+#preview, #previewAgain {
   margin: auto;
   position: relative;
   width: 90%;
@@ -97,7 +97,7 @@ header #item:-moz-placeholder {
   height: auto;
 }
 
-#upload-contain {
+#upload-contain, #upload-containAgain {
   margin: auto;
   position: relative;
   width: 0%;
@@ -107,7 +107,7 @@ header #item:-moz-placeholder {
   bottom: 107pt;
  }
 
- #upload-contain img {
+ #upload-contain img, #upload-containAgain img {
   position:absolute;
   top:-50%;
   bottom:-50%;
@@ -683,4 +683,59 @@ div#white p, div#black p {
 div#colorPopUp h2 {
   position: relative;
   top: 80px;
+}
+
+div#blur {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #000;
+  filter: blur(5px);
+}
+
+#expansion * {
+
+}
+
+div#expansion {
+  padding: 10px;
+  width: 90%;
+  position: fixed;
+  text-align: center;
+  margin: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #FFF;
+  border-radius: 25px;
+  bottom: 40%;
+  left: 5%;
+  z-index: 100;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+h1#dynamic-li {
+  position: relative;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  width: 80%;
+  left: 10%;
+  font-size: 16pt;
+  padding: 10px;
+  min-height: 20pt;
+  max-height: 45pt;
+  overflow-y: auto;
+}
+
+p#notes {
+  font-size: 11pt;
+  text-align: left;
+  padding: 10px;
+  width: 90%;
+  bottom: 20pt;
+  height: 60pt;
+  overflow-y: auto;
+  position: absolute;
+  border-radius: 15px;
+  left: 5%;
+  background-color: #ecf0f1;
 }

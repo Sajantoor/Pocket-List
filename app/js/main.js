@@ -137,10 +137,20 @@ function addItem(text, complete) {
 
   var paragraph = document.createElement('p');
   paragraph.setAttribute('id', 'paragraph');
-  paragraph.innerText = "Add some notes!"
+  paragraph.innerText = "Add some notes..."
 
   var clickBox = document.createElement('div');
   clickBox.setAttribute('id', 'click-box');
+
+  function append() {
+    buttons.appendChild(complete);
+    buttons.appendChild(remove);
+    newItem.appendChild(label);
+    newItem.appendChild(buttons);
+    newItem.appendChild(clickBox);
+    newItem.appendChild(paragraph);
+    todo.prepend(newItem);
+  }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
@@ -158,25 +168,13 @@ function addItem(text, complete) {
     link.setAttribute('download', fileName);
     link.setAttribute('id', 'link');
 // Append Child of parent nodes
-    buttons.appendChild(complete);
-    buttons.appendChild(remove);
-    newItem.appendChild(label);
-    newItem.appendChild(buttons);
-    newItem.appendChild(clickBox);
-    newItem.appendChild(paragraph);
-    todo.prepend(newItem);
+    append();
     link.appendChild(newImage);
     container.appendChild(link);
     newItem.appendChild(container);
   } else {
   // Append Child of parent nodes
-    buttons.appendChild(complete);
-    buttons.appendChild(remove);
-    newItem.appendChild(label);
-    newItem.appendChild(buttons);
-    newItem.appendChild(clickBox);
-    newItem.appendChild(paragraph);
-    todo.prepend(newItem);
+    append();
   }
 // Event Listeners
   remove.addEventListener('click', removeItem);
@@ -287,8 +285,6 @@ function close() {
   document.getElementById('Gradient-Thing').style = "";
   document.getElementById('Basic-Footer').style = "";
 }
-
-
 
 // Event Listener For Clicking on the add button
 document.getElementById('add-list').addEventListener('click', function () {
@@ -452,76 +448,39 @@ function expandList() {
   var list = li.parentNode;
   var todo = document.getElementById('todo');
   var liText = li.innerText;
-  var text = li.childNodes[0];
-  var label = li.childNodes[1];
-  var buttons = li.childNodes[2];
-  var complete = buttons.childNodes[0];
-  var remove = buttons.childNodes[1];
   var clickBox = document.getElementById('click-box');
   var paragraph = document.getElementById('paragraph');
   var overlay = document.getElementById('overlay');
-  var uploadSVG = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>';
-  var closeSVG = '<svg fill="#000000" height="48" id="closebutton" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   var img = document.getElementById('img-container');
-  var link = document.getElementById('link');
+
 // Expand it.
   if (list === todo) {
-// Checks for an image and resizes accordingly.
-    if (img) {
-      li.style = "width: 90%; height: 50%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
-      expansion();
-    } else {
-      li.style = "width: 90%; height: 12%; position: fixed; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); z-index: 1000; left: 50%; transform: translate(-50%, 0);";
-      expansion();
+    function expansion() {
+      // Show the expansion box
+      // Have the values of the li, img and paragraph element be the value of the stuff in the expansion box
+      // Blur everythig behind the expansion box
+    }
+
+    function removeExpansion() {
+      // Display none the expansion box
+      // Change the values of the paragraph and li to the updated values
+      // Unblur the stuff
+    }
+
+    function expandImage() {
+      // Make it so you can click the image to look at the full thing it, download it and delete it
+      // Create a close button
+      // Blur the background by dynamically creating an element to blur the background
+    }
+
+    function uploadImage() {
+      // Upload a new image creating all containers and stuff again.
+      // This will have to result in the expansion changing to the image expansion size
+      }
     }
   }
 
-function expansion() {
-  clickBox.style = "display: block;";
-  paragraph.style = "display: block;";
-  label.style = "position: fixed; overflow-y: auto;";
-  overlay.style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-  complete.innerHTML = uploadSVG;
-  // BUG:  Idk why this doesn't work (Below)! 
-  remove.style = closeSVG;
-  complete.removeEventListener('click', completeItem);
-  remove.removeEventListener('click', removeItem);
 
-  remove.addEventListener('click', removeExpansion);
-
-  paragraph.setAttribute('contenteditable', 'true');
-
-  if (img) {
-    link.removeAttribute('download');
-    link.addEventListener('click', expandImage);
-  }
-}
-
-// Remove the expansion
-  document.getElementById('overlay').addEventListener('click', removeExpansion);
-
-
-  function removeExpansion() {
-    li.style = "";
-    clickBox.style = "";
-    paragraph.style = "";
-    overlay.style = "";
-    label.style = "";
-    // Restore everything to normal including all event listeners
-  }
-
-  function expandImage() {
-      // Display none the container and expand image fully
-      // Create a close button
-      // Blur the background by dynamically creating an element to blur the background
-
-  }
-
-  function uploadImage() {
-    // Upload a new image creating all containers and stuff again.
-    // This will have to result in the expansion changing to the image expansion size
-  }
-}
 
 
 // Change styling stuff
@@ -556,6 +515,8 @@ function previewFileOff() {
 // FIXME: Forgot to add a remove option for todo lists lol.
 // BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
 // BUG: Microsoft Edge Event Listener Bugs
+
+// HACK: Gotta cursor pointer a lot of clickable stuff so the user clearly knows it's clickable
 
 // HACK: Notification System
 

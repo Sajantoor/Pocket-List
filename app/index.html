@@ -59,11 +59,10 @@
 
     <!-- Todo List -->
     <ul id="todo"></ul>
-
     <!-- Complete List -->
     <ul id="complete"></ul>
 
-    <!-- Add Buttons -->
+    <!-- Add Button -->
     <div id="add">
     <div>
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="#FFF" viewBox="0 0 42 42" style="enable-background:new 0 0 42 42;" xml:space="preserve"> <polygon class="fill" points="42,20 22,20 22,0 20,0 20,20 0,20 0,22 20,22 20,42 22,42 22,22 42,22 "/><g></g></svg>
@@ -71,7 +70,7 @@
     </div>
   </div>
 
-  <!-- Color Pop Up --> 
+  <!-- Color Pop Up -->
   <div id="colorPopUp">
     <div id="closeMenu">
       <svg fill="#000" height="30" viewBox="0 0 24 24" width="30" xmlns="http://www.w3.org/2000/svg"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -89,6 +88,25 @@
       <h3> Pick A Custom Color </h3>
     <input type="color" id="color">
   </div>
+
+  <!-- Dynamic Expansion Box Thing -->
+<div id="expansion">
+  <!-- Li Value gets stored as an editable h1 -->
+  <h1 contenteditable="true" id="dynamic-li"> Lorem ipsum... </h1>
+    <p contenteditable="true" id="notes"> Add some notes...</p>
+  <!-- To upload images again -->
+  <label id="upload-labelAgain"><svg fill="#30a0ff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+    <input type="file" id="uploadAgain" accept="image/*" onchange="uploadFile"/>
+  </label>
+
+  <!-- Close Button -->
+
+
+  <!-- If there is an image it needs to display said image -->
+  <div id=upload-containAgain>
+    <img id="previewAgain">
+  </div>
+</div>
 
     <!-- JavaScript -->
     <script type="text/javascript" src="js/main.js"></script>
