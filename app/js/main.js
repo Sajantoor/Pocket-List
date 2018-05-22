@@ -5,6 +5,7 @@ var todo = document.getElementById('todo');
 var file = document.getElementById('preview');
 
 time();
+navListener();
 
 
 // Basically a clock
@@ -256,20 +257,20 @@ function progress() {
   }
 }
 
-// Navigation Button Event Listener
-document.getElementById('navButton').addEventListener('click', function () {
-  openNavigation();
-})
+function navListener() {
+  // Navigation Button Event Listener
+  document.getElementById('navButton').addEventListener('click', openNavigation);
 
-  // Close navigation Button Event Listener
-document.getElementById('close').addEventListener('click', function () {
-  close();
-})
+    // Close navigation Button Event Listener
+  document.getElementById('close').addEventListener('click', function () {
+    close();
+  })
 
-  // If clicking anything but the navigation or the close button
-document.getElementById('overlay').addEventListener('click', function() {
-  close();
-})
+    // If clicking anything but the navigation or the close button
+  document.getElementById('overlay').addEventListener('click', function() {
+    close();
+  })
+}
 
 function openNavigation() {
   document.getElementById('navigation').style = "width: 90%;";
@@ -445,10 +446,13 @@ window.onload = function swipe() {
 
 // Function that runs when a list is clicked on.
 function expandList() {
-  var li = this.parentNode;
+  var element = this;
+  var li = element.parentNode;
   var list = li.parentNode;
   var todo = document.getElementById('todo');
   var liText = li.childNodes[0];
+
+  // Change this stuff later to like child nodes to fix the bugs maybe?
   var clickBox = document.getElementById('click-box');
   var paragraph = document.getElementById('paragraph');
   var overlay = document.getElementById('overlay');
@@ -458,22 +462,23 @@ function expandList() {
   var notes = document.getElementById('notes');
   var uploadContainer = document.getElementById('upload-containAgain');
   var preview = document.getElementById('previewAgain');
-  console.log(liText.textContent);
 
 // Expand it.
   if (list === todo) {
     expansion();
   }
 
-  document.getElementById('upload-labelAgain').addEventListener('click', removeExpansion);
-
     function expansion() {
-      alert('it works m8');
       expansionBox.style = "display: block;";
       expansionBox.children.style = "display: block;";
+      document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+      document.getElementById('container').style = "filter:blur(5px);";
       dynamicLi.innerText = liText.textContent;
       notes.innerText = paragraph.innerText;
-
+      document.getElementById('navButton').removeEventListener('click', openNavigation);
+      document.getElementById('label').removeEventListener('click', colourPicker);
+      document.getElementById('click-box').removeEventListener('click', expandList);
+      document.getElementById('overlay').addEventListener('click', removeExpansion);
       // Have the values of the li, img and paragraph element be the value of the stuff in the expansion box
       // Blur everythig behind the expansion box
     }
@@ -482,9 +487,15 @@ function expandList() {
       expansionBox.style = "";
       liText.textContent = dynamicLi.innerText;
       paragraph.innerText = notes.innerText;
-      // Display none the expansion box
-      // Change the values of the paragraph and li to the updated values
-      // Unblur the stuff
+      let element = 'stuffs';
+
+      expansionBox.style = "";
+      expansionBox.children.style = "";
+      document.getElementById('overlay').style = "";
+      document.getElementById('container').style = "";
+      document.getElementById('navButton').addEventListener('click', openNavigation);
+      document.getElementById('label').addEventListener('click', colourPicker);
+      document.getElementById('click-box').addEventListener('click', expandList);
     }
 
     function expandImage() {
