@@ -6,6 +6,7 @@ var file = document.getElementById('preview');
 
 time();
 
+
 // Basically a clock
 function time () {
   var date = new Date();
@@ -417,51 +418,70 @@ function colourPicker() {
 }
 
 // Swipe Gesture
-window.onload = function() {
-  var touchstartX = 0;
-  var touchendX = 0;
+window.onload = function swipe() {
+    var touchstartX = 0;
+    var touchendX = 0;
 
-  var gestureZone = document.getElementById('container');
+    var gestureZone = document.getElementById('container');
 
-  gestureZone.addEventListener('touchstart', function(event) {
-    touchstartX = event.changedTouches[0].screenX;
-  }, false);
+    gestureZone.addEventListener('touchstart', function(event) {
+      touchstartX = event.changedTouches[0].screenX;
+    }, false);
 
-  gestureZone.addEventListener('touchend', function(event) {
-    touchendX = event.changedTouches[0].screenX;
-    handleGesture();
-  }, false);
+    gestureZone.addEventListener('touchend', function(event) {
+      touchendX = event.changedTouches[0].screenX;
+      handleGesture();
+    }, false);
 
-  function handleGesture() {
-    if (touchendX >= touchstartX) {
-      openNavigation();
+    function handleGesture() {
+      if (touchendX >= touchstartX) {
+        openNavigation();
+        }
+        if (touchstartX >= touchendX) {
+          close();
       }
-      if (touchstartX >= touchendX) {
-        close();
     }
   }
-}
 
 // Function that runs when a list is clicked on.
 function expandList() {
   var li = this.parentNode;
   var list = li.parentNode;
   var todo = document.getElementById('todo');
-  var liText = li.innerText;
+  var liText = li.childNodes[0];
   var clickBox = document.getElementById('click-box');
   var paragraph = document.getElementById('paragraph');
   var overlay = document.getElementById('overlay');
   var img = document.getElementById('img-container');
+  var expansionBox = document.getElementById('expansion');
+  var dynamicLi = document.getElementById('dynamic-li');
+  var notes = document.getElementById('notes');
+  var uploadContainer = document.getElementById('upload-containAgain');
+  var preview = document.getElementById('previewAgain');
+  console.log(liText.textContent);
 
 // Expand it.
   if (list === todo) {
+    expansion();
+  }
+
+  document.getElementById('upload-labelAgain').addEventListener('click', removeExpansion);
+
     function expansion() {
-      // Show the expansion box
+      alert('it works m8');
+      expansionBox.style = "display: block;";
+      expansionBox.children.style = "display: block;";
+      dynamicLi.innerText = liText.textContent;
+      notes.innerText = paragraph.innerText;
+
       // Have the values of the li, img and paragraph element be the value of the stuff in the expansion box
       // Blur everythig behind the expansion box
     }
 
     function removeExpansion() {
+      expansionBox.style = "";
+      liText.textContent = dynamicLi.innerText;
+      paragraph.innerText = notes.innerText;
       // Display none the expansion box
       // Change the values of the paragraph and li to the updated values
       // Unblur the stuff
@@ -478,10 +498,6 @@ function expandList() {
       // This will have to result in the expansion changing to the image expansion size
       }
     }
-  }
-
-
-
 
 // Change styling stuff
 function previewImage() {
