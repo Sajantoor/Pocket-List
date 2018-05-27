@@ -97,7 +97,7 @@ header #item:-moz-placeholder {
   height: auto;
 }
 
-#upload-contain, #upload-containAgain {
+#upload-contain {
   margin: auto;
   position: relative;
   width: 0%;
@@ -693,7 +693,6 @@ div#blur {
   filter: blur(5px);
 }
 
-
 div#expansion {
   display: none;
   padding: 10px;
@@ -705,7 +704,7 @@ div#expansion {
   overflow-y: auto;
   background-color: #FFF;
   border-radius: 25px;
-  bottom: 40%;
+  bottom: 50%;
   left: 5%;
   z-index: 100;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
@@ -725,6 +724,7 @@ h1#dynamic-li {
 }
 
 p#notes {
+  bottom: 20pt;
   font-size: 11pt;
   text-align: left;
   padding: 10px;
@@ -735,4 +735,16 @@ p#notes {
   position: relative;
   border-radius: 15px;
   background-color: #ecf0f1;
+}
+
+#upload-containAgain {
+  margin: auto;
+  position: relative;
+  width: 0%;
+  height: 50%;
+  overflow: hidden;
+  border-radius: 5px;
+
+
+  display: none;
 }

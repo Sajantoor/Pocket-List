@@ -446,57 +446,73 @@ window.onload = function swipe() {
 
 // Function that runs when a list is clicked on.
 function expandList() {
-  var element = this;
-  var li = element.parentNode;
-  var list = li.parentNode;
-  var todo = document.getElementById('todo');
-  var liText = li.childNodes[0];
-
-  // Change this stuff later to like child nodes to fix the bugs maybe?
-  var clickBox = document.getElementById('click-box');
-  var paragraph = document.getElementById('paragraph');
-  var overlay = document.getElementById('overlay');
-  var img = document.getElementById('img-container');
-  var expansionBox = document.getElementById('expansion');
-  var dynamicLi = document.getElementById('dynamic-li');
-  var notes = document.getElementById('notes');
-  var uploadContainer = document.getElementById('upload-containAgain');
-  var preview = document.getElementById('previewAgain');
 
 // Expand it.
   if (list === todo) {
-    expansion();
-  }
+    // Variables and stuff
+    var element = this;
+    var li = element.parentNode;
+    var list = li.parentNode;
+    var liText = li.childNodes[0];
+    var clickBox = li.childNodes[3];
+    var paragraph = li.childNodes[4];
+    var img = li.childNodes[5];
+    var todo = document.getElementById('todo');
+    var overlay = document.getElementById('overlay');
+    var expansionBox = document.getElementById('expansion');
+    var dynamicLi = document.getElementById('dynamic-li');
+    var notes = document.getElementById('notes');
+    var uploadContainer = document.getElementById('upload-containAgain');
+    var previewAgain = document.getElementById('previewAgain');
 
-    function expansion() {
-      expansionBox.style = "display: block;";
-      expansionBox.children.style = "display: block;";
+    if (img) {
+      expansionBox.style = "display: block; height: 50%; top: 50%;";
+      uploadContainer.style = "display: block; width: 100%;"
+      previewAgain.src = img.childNodes[0].childNodes[0].src;
+      previewAgain.style = "visibility: visible; display: block;";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
       dynamicLi.innerText = liText.textContent;
       notes.innerText = paragraph.innerText;
-      document.getElementById('navButton').removeEventListener('click', openNavigation);
-      document.getElementById('label').removeEventListener('click', colourPicker);
-      document.getElementById('click-box').removeEventListener('click', expandList);
       document.getElementById('overlay').addEventListener('click', removeExpansion);
-      // Have the values of the li, img and paragraph element be the value of the stuff in the expansion box
-      // Blur everythig behind the expansion box
+      uploadContainer.addEventListener('click', imageExpansion);
+    } else {
+      expansionBox.style = "display: block;";
+      document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
+      document.getElementById('container').style = "filter:blur(5px);";
+      dynamicLi.innerText = liText.textContent;
+      notes.innerText = paragraph.innerText;
+      document.getElementById('overlay').addEventListener('click', removeExpansion);
+    }
+
+    function imageExpansion() {
+      uploadContainer.style = "display: block; height: 100%; width: auto; position: fixed;";
     }
 
     function removeExpansion() {
       expansionBox.style = "";
       liText.textContent = dynamicLi.innerText;
       paragraph.innerText = notes.innerText;
-      let element = 'stuffs';
-
       expansionBox.style = "";
       expansionBox.children.style = "";
       document.getElementById('overlay').style = "";
       document.getElementById('container').style = "";
-      document.getElementById('navButton').addEventListener('click', openNavigation);
-      document.getElementById('label').addEventListener('click', colourPicker);
-      document.getElementById('click-box').addEventListener('click', expandList);
+      clear();
     }
+
+    function clear() {
+      element = "null";
+      li = "null";
+      list = "null";
+      liText = "null";
+      clickBox = "null";
+      paragraph = "null";
+      img = "null";
+    }
+  }
+
+
+
 
     function expandImage() {
       // Make it so you can click the image to look at the full thing it, download it and delete it
