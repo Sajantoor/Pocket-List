@@ -140,10 +140,10 @@ function addItem(text, complete) {
 
   var paragraph = document.createElement('p');
   paragraph.setAttribute('id', 'paragraph');
-  paragraph.innerText = "Add some notes..."
 
   var clickBox = document.createElement('div');
   clickBox.setAttribute('id', 'click-box');
+  clickBox.setAttribute('ondragstart', 'grab()');
 
   function append() {
     buttons.appendChild(complete);
@@ -435,11 +435,24 @@ window.onload = function swipe() {
       handleGesture();
     }, false);
 
+    gestureZone.addEventListener('touchstart', function(event) {
+      touchstartY = event.changedTouches[0].screenY;
+          console.log(touchstartY);
+      handleGesture();
+    }, false);
+
+    gestureZone.addEventListener('touchend', function(event) {
+      touchendY = event.changedTouches[0].screenY;
+          console.log(touchendY);
+      handleGesture();
+    }, false);
+
     function handleGesture() {
-      if (touchendX >= touchstartX) {
+// If screen y is too big then don't let it run. 
+      if (touchendX >= (touchstartX + 50)) {
         openNavigation();
         }
-        if (touchstartX >= touchendX) {
+        if ((touchstartX + 50) >= touchendX) {
           close();
       }
     }
@@ -452,7 +465,7 @@ function expandList() {
   var list = li.parentNode;
   var todo = document.getElementById('todo');
 
-// Expand it.
+    // Expand it.
   if (list === todo) {
     // Variables and stuff
 
@@ -512,24 +525,19 @@ function expandList() {
     }
   }
 
-
-
-
-    function expandImage() {
-      // Make it so you can click the image to look at the full thing it, download it and delete it
-      // Create a close button
-      // Blur the background by dynamically creating an element to blur the background
-    }
-
     function uploadImage() {
       // Upload a new image creating all containers and stuff again.
       // This will have to result in the expansion changing to the image expansion size
       }
     }
 
+function grab() {
+  alert("Marth's grab range");
+}
+
 // Change styling stuff
 function previewImage() {
-    file.style = "visibility: visible; display:block;";
+    file.style = "visibility:visible; display:block;";
     document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
     document.getElementById('header').style = "height:190px;";
     document.getElementById('item').style = "padding: 20px 0px 131px 0px;";

@@ -79,6 +79,7 @@ header #item:-moz-placeholder {
 }
 
 #upload-label, #upload-labelAgain {
+  cursor: pointer;
   right: -5px;
   z-index: 20;
   bottom: 35px;
@@ -88,6 +89,7 @@ header #item:-moz-placeholder {
 }
 
 #preview, #previewAgain {
+  cursor: pointer;
   margin: auto;
   position: relative;
   width: 90%;
@@ -108,6 +110,7 @@ header #item:-moz-placeholder {
  }
 
  #upload-contain img, #upload-containAgain img {
+  cursor: pointer;
   position:absolute;
   top:-50%;
   bottom:-50%;
@@ -117,6 +120,7 @@ header #item:-moz-placeholder {
 }
 
 #add {
+  cursor: pointer;
   position: fixed;
   right: 0;
   padding: 10px 15px 20px 10px;
@@ -190,6 +194,7 @@ ul#todo li div .buttons, ul#complete li div .buttons {
 }
 
 div#label {
+  cursor: pointer;
   float: left;
   position: absolute;
   bottom: 0pt;
@@ -217,6 +222,7 @@ p#paragraph {
 }
 
 div#click-box {
+  cursor: pointer;
   position: absolute;
   width: calc(100% - 130px);
   height: 50px;
@@ -258,12 +264,13 @@ ul#complete:last-of-type::before {
   -o-appearance-none;
 }
 
-ul#complete #addtodo, #edit, ul#todo #addtodo {
+ul#complete #addtodo, ul#todo #addtodo {
   width:29px;
   height:29px;
 }
 
 ul#todo #addtodo {
+  cursor: pointer;
   padding:2px;
   border-radius: 50%;
   border: solid 3px #2ecc71;
@@ -298,6 +305,7 @@ ul#todo #addtodo:hover, ul#todo #addtodo:focus {
 }
 
 ul#complete #addtodo {
+  cursor: pointer;
   background-color: #2ecc71;
   fill:#FFF;
   padding:2px;
@@ -315,6 +323,7 @@ ul#complete div  #addtodo:hover, ul#complete div  #addtodo:focus {
 }
 
 #removetodo {
+  cursor: pointer;
   width:32px;
   height:32px;
   position: relative;
@@ -383,6 +392,7 @@ ul#complete:empty:after {
 }
 
 #navButton {
+  cursor: pointer;
   background-color: transparent;
   position: relative;
   top: 10pt;
@@ -453,6 +463,7 @@ input#List-Input {
 }
 
 #close {
+  cursor: pointer;
   position: absolute;
   top: 10pt;
   right: 10pt;
@@ -485,6 +496,7 @@ ul#todo-lists {
 }
 
 div#add-list {
+  cursor: pointer;
   height: 50px;
   width: 50px;
   background-color: #30a0ff;
@@ -642,11 +654,11 @@ div#colorPopUp h3 {
 }
 
 input#color {
+  cursor: pointer;
   border: 0;
   box-shadow: none;
   outline: none;
   appearance: none;
-
   -webkit-appearance-none;
   -moz-appearance-none;
   -ms-appearance-none;
@@ -664,6 +676,11 @@ div#closeMenu {
 
 div#closeMenu svg:hover, div#closeMenu svg:focus {
   fill: #e81123;
+}
+
+#red, #blue, #green, #purple, #yellow, #orange, #black, #grey, #white {
+  cursor: pointer;
+
 }
 
 div#red {background-color: #e74c3c;}
@@ -720,6 +737,7 @@ h1#dynamic-li {
   padding: 10px;
   min-height: 20pt;
   max-height: 45pt;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -744,7 +762,10 @@ p#notes {
   height: 50%;
   overflow: hidden;
   border-radius: 5px;
-
-
   display: none;
+}
+
+p#notes:empty:not(:focus)::before {
+  color: rgba(0, 0, 0, 0.75);
+  content: attr(data-placeholder);
 }
