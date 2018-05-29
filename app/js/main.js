@@ -8,7 +8,7 @@ time();
 navListener();
 
 
-// Basically a clock
+// Basically a clock that serves no purpose right now xDDD
 function time () {
   var date = new Date();
   var hours = date.getHours();
@@ -92,7 +92,7 @@ document.getElementById('upload').onchange = function uploadFile() {
   fileReader.readAsDataURL(this.files[0]);
   fileReader.onload = function() {
     base64 = fileReader.result;
-    file.src = base64;
+    file.setAttribute('src', base64);
   }
 
 // If the file is an image is previews the image like how the image should be previewed
@@ -109,6 +109,7 @@ document.getElementById('upload').onchange = function uploadFile() {
 
   // Remove the previewed file
   file.addEventListener('click', function () {
+    file.src = null;
       previewFileOff();
       console.log('Removed file!');
   })
@@ -222,7 +223,7 @@ if (id === 'todo') {
 } else {
   data.complete.splice(data.complete.indexOf(value), 1);
   data.todo.push(value);
-  label.style = "";
+  label.removeAttribute('style');
 }
   dataObject();
 
@@ -281,11 +282,11 @@ function openNavigation() {
 }
   // Style Reset
 function close() {
-  document.getElementById('navigation').style = "";
-  document.getElementById('container').style = "";
-  document.getElementById('overlay').style = "";
-  document.getElementById('Gradient-Thing').style = "";
-  document.getElementById('Basic-Footer').style = "";
+  document.getElementById('navigation').removeAttribute('style');
+  document.getElementById('container').removeAttribute('style');
+  document.getElementById('overlay').removeAttribute('style');
+  document.getElementById('Gradient-Thing').removeAttribute('style');
+  document.getElementById('Basic-Footer').removeAttribute('style');
 }
 
 // Event Listener For Clicking on the add button
@@ -410,9 +411,9 @@ function colourPicker() {
       }
 
       function repetition() {
-          document.getElementById('colorPopUp').style = "";
-          document.getElementById('overlay').style = "";
-          document.getElementById('container').style = "";
+          document.getElementById('colorPopUp').removeAttribute('style');
+          document.getElementById('overlay').removeAttribute('style');
+          document.getElementById('container').removeAttribute('style');
           element = "I could put literally anything here to stop this bug except null for some reason, weird.";
       }
     }
@@ -446,18 +447,19 @@ window.onload = function swipe() {
 
 // Function that runs when a list is clicked on.
 function expandList() {
+  var element = this;
+  var li = element.parentNode;
+  var list = li.parentNode;
+  var todo = document.getElementById('todo');
 
 // Expand it.
   if (list === todo) {
     // Variables and stuff
-    var element = this;
-    var li = element.parentNode;
-    var list = li.parentNode;
+
     var liText = li.childNodes[0];
     var clickBox = li.childNodes[3];
     var paragraph = li.childNodes[4];
     var img = li.childNodes[5];
-    var todo = document.getElementById('todo');
     var overlay = document.getElementById('overlay');
     var expansionBox = document.getElementById('expansion');
     var dynamicLi = document.getElementById('dynamic-li');
@@ -490,13 +492,12 @@ function expandList() {
     }
 
     function removeExpansion() {
-      expansionBox.style = "";
+      expansionBox.removeAttribute('style');
       liText.textContent = dynamicLi.innerText;
       paragraph.innerText = notes.innerText;
-      expansionBox.style = "";
-      expansionBox.children.style = "";
-      document.getElementById('overlay').style = "";
-      document.getElementById('container').style = "";
+      expansionBox.removeAttribute('style');
+      document.getElementById('overlay').removeAttribute('style');
+      document.getElementById('container').removeAttribute('style');
       clear();
     }
 
@@ -544,14 +545,14 @@ function previewFile() {
 
 // Reseting changed styling
 function previewFileOff() {
-  file.style = "";
+  file.removeAttribute('style');
   file.removeAttribute('src');
-  document.getElementById('upload-contain').style = "";
-  document.getElementById('header').style = "";
-  document.getElementById('item').style = "";
-  document.getElementById('todo').style = "";
-  document.getElementById('complete').style = "";
-  document.getElementById('upload-label').style = "";
+  document.getElementById('upload-contain').removeAttribute('style');
+  document.getElementById('header').removeAttribute('style');
+  document.getElementById('item').removeAttribute('style');
+  document.getElementById('todo').removeAttribute('style');
+  document.getElementById('complete').removeAttribute('style');
+  document.getElementById('upload-label').removeAttribute('style');
 }
 
 
