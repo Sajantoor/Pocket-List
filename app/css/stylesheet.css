@@ -240,7 +240,7 @@ ul#todo li div#click-box {
   transition: all 0.2s;
 }
 
-svg #removetodo:hover, svg #removetodo:focus  {
+svg #removetodo:hover  {
   fill: #ff4f4f;
   -webkit-animation: glow 1.0s ease-in-out infinite alternate;
   -moz-animation: glow 1.0s ease-in-out infinite alternate;
@@ -302,7 +302,7 @@ ul#todo li .buttons svg:last-child:before , ul#complete li .buttons svg:last-chi
    top: 10px;
 }
 
-ul#todo #addtodo:hover, ul#todo #addtodo:focus {
+ul#todo #addtodo:hover {
   background-color: #2ecc71;
   fill:#FFF;
 }
@@ -319,7 +319,7 @@ ul#complete #addtodo {
   left: 15px;
 }
 
-ul#complete div  #addtodo:hover, ul#complete div  #addtodo:focus {
+ul#complete div #addtodo:hover {
   background-color: #FFF;
   border-color: #2ecc71;
   fill: #2ecc71;
@@ -350,6 +350,12 @@ ul#complete:empty:after {
   font-weight: 200;
   text-align: center;
   color: #484c4f;
+}
+
+@media only screen and (max-width: 768px) {
+  div#closeMenu svg:hover {}
+  svg #removetodo:hover  {}
+  ul#complete div #addtodo:hover {}
 }
 
 #img-container {
@@ -383,8 +389,7 @@ ul#complete:empty:after {
   float: left;
   z-index: 100;
   height: 100%;
-	transition: width 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: 0.5s;
   width: 0;
   border-radius: 5px;
   overflow-y: auto;
@@ -570,8 +575,7 @@ div#progress {
 
 footer#Basic-Footer {
   position: fixed;
-	transition: width 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: 0.5s;
   z-index: 10000;
   background-color: #7b878f;
   width: 0;
@@ -583,8 +587,7 @@ footer#Basic-Footer {
 div#Gradient-Thing {
   position: fixed;
   z-index: 10000;
-	transition: width 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: 0.5s;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
@@ -677,7 +680,7 @@ div#closeMenu {
   right: 15px;
 }
 
-div#closeMenu svg:hover, div#closeMenu svg:focus {
+div#closeMenu svg:hover {
   fill: #e81123;
 }
 

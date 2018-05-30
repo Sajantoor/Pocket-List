@@ -3,6 +3,7 @@ var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 
 var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
 var file = document.getElementById('preview');
+var swipe = true;
 
 time();
 navListener();
@@ -331,6 +332,7 @@ function colourPicker() {
     var todo = document.getElementById('todo');
 
     if (list === todo) {
+      window.swipe = false;
       document.getElementById('colorPopUp').style = "display: block;";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
@@ -413,13 +415,14 @@ function colourPicker() {
           document.getElementById('colorPopUp').removeAttribute('style');
           document.getElementById('overlay').removeAttribute('style');
           document.getElementById('container').removeAttribute('style');
-          element = "I could put literally anything here to stop this bug except null for some reason, weird.";
+          element = "null";
+          window.swipe = true;
       }
     }
 }
 
 // Swipe Gesture
-/* window.onload = function swipe() {
+ window.onload = function swipe() {
     var touchstartX = 0;
     var touchendX = 0;
     var verticalDistance = false;
@@ -431,13 +434,13 @@ function colourPicker() {
 
     gestureZone.addEventListener('touchend', function(event) {
       touchendX = event.changedTouches[0].screenX;
+
       handleGesture();
     }, false);
 
     gestureZone.addEventListener('touchstart', function(event) {
       touchstartY = event.changedTouches[0].screenY;
     //  console.log(touchstartY);
-      handleGesture();
     }, false);
 
     gestureZone.addEventListener('touchend', function(event) {
@@ -454,28 +457,29 @@ function checkDistance() {
     distanceY = (distanceY * -1);
   }
 
-  if (distanceY < 50) {
+  if (distanceY < 30) {
     verticalDistance = true;
   } else {
     verticalDistance = false;
   }
-
 }
 
     function handleGesture() {
-     if (verticalDistance) {
-        if (touchendX >= (touchstartX + 50)) {
+     if (window.swipe && verticalDistance) {
+        if (touchendX >= (touchstartX + 25)) {
           openNavigation();
           }
+          setTimeout(2000);
           if ((touchstartX + 50) >= touchendX) {
             close();
         }
       }
     }
-  } */
+  }
 
 // Function that runs when a list is clicked on.
 function expandList() {
+
   var element = this;
   var li = element.parentNode;
   var list = li.parentNode;
@@ -484,7 +488,7 @@ function expandList() {
     // Expand it.
   if (list === todo) {
     // Variables and stuff
-
+    window.swipe = false;
     var liText = li.childNodes[0];
     var clickBox = li.childNodes[3];
     var paragraph = li.childNodes[4];
@@ -538,6 +542,7 @@ function expandList() {
       clickBox = "null";
       paragraph = "null";
       img = "null";
+      window.swipe = true;
     }
   }
 
