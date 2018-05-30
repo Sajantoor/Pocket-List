@@ -143,7 +143,6 @@ function addItem(text, complete) {
 
   var clickBox = document.createElement('div');
   clickBox.setAttribute('id', 'click-box');
-  clickBox.setAttribute('ondragstart', 'grab()');
 
   function append() {
     buttons.appendChild(complete);
@@ -420,10 +419,10 @@ function colourPicker() {
 }
 
 // Swipe Gesture
-window.onload = function swipe() {
+/* window.onload = function swipe() {
     var touchstartX = 0;
     var touchendX = 0;
-
+    var verticalDistance = false;
     var gestureZone = document.getElementById('container');
 
     gestureZone.addEventListener('touchstart', function(event) {
@@ -437,26 +436,43 @@ window.onload = function swipe() {
 
     gestureZone.addEventListener('touchstart', function(event) {
       touchstartY = event.changedTouches[0].screenY;
-          console.log(touchstartY);
+    //  console.log(touchstartY);
       handleGesture();
     }, false);
 
     gestureZone.addEventListener('touchend', function(event) {
       touchendY = event.changedTouches[0].screenY;
-          console.log(touchendY);
+    //  console.log(touchendY);
+      checkDistance();
       handleGesture();
     }, false);
 
+function checkDistance() {
+  var distanceY = (touchendY - touchstartY);
+
+  if (distanceY < 0) {
+    distanceY = (distanceY * -1);
+  }
+
+  if (distanceY < 50) {
+    verticalDistance = true;
+  } else {
+    verticalDistance = false;
+  }
+
+}
+
     function handleGesture() {
-// If screen y is too big then don't let it run. 
-      if (touchendX >= (touchstartX + 50)) {
-        openNavigation();
+     if (verticalDistance) {
+        if (touchendX >= (touchstartX + 50)) {
+          openNavigation();
+          }
+          if ((touchstartX + 50) >= touchendX) {
+            close();
         }
-        if ((touchstartX + 50) >= touchendX) {
-          close();
       }
     }
-  }
+  } */
 
 // Function that runs when a list is clicked on.
 function expandList() {
@@ -530,10 +546,6 @@ function expandList() {
       // This will have to result in the expansion changing to the image expansion size
       }
     }
-
-function grab() {
-  alert("Marth's grab range");
-}
 
 // Change styling stuff
 function previewImage() {
