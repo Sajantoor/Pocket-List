@@ -352,12 +352,6 @@ ul#complete:empty:after {
   color: #484c4f;
 }
 
-@media only screen and (max-width: 768px) {
-  div#closeMenu svg:hover {}
-  svg #removetodo:hover  {}
-  ul#complete div #addtodo:hover {}
-}
-
 #img-container {
   left: 20pt;
   top: 10px;
@@ -774,4 +768,12 @@ p#notes {
 p#notes:empty:not(:focus)::before {
   color: rgba(0, 0, 0, 0.75);
   content: attr(data-placeholder);
+}
+
+
+@media only screen and (max-width: 768px) {
+  div#closeMenu svg:hover {}
+  svg #removetodo:hover  {}
+  ul#complete div #addtodo:hover {}
+  ul#todo #addtodo:hover {}
 }

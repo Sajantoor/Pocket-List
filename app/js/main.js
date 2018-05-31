@@ -275,7 +275,8 @@ function navListener() {
 
 function openNavigation() {
   document.getElementById('navigation').style = "width: 90%;";
-  document.getElementById('container').style = "filter:blur(5px);";
+  // The blur causes frame drops in the animation
+  // document.getElementById('container').style = "filter:blur(5px);";
   document.getElementById('Gradient-Thing').style = "width: 90%;";
   document.getElementById('Basic-Footer').style = "width: 90%;";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
@@ -502,7 +503,7 @@ function expandList() {
 
     if (img) {
       expansionBox.style = "display: block; height: 50%; top: 50%;";
-      uploadContainer.style = "display: block; width: 100%;"
+      uploadContainer.style = "display: block; width: 100%;";
       previewAgain.src = img.childNodes[0].childNodes[0].src;
       previewAgain.style = "visibility: visible; display: block;";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
@@ -544,13 +545,46 @@ function expandList() {
       img = "null";
       window.swipe = true;
     }
-  }
 
-    function uploadImage() {
-      // Upload a new image creating all containers and stuff again.
-      // This will have to result in the expansion changing to the image expansion size
+    document.getElementById('uploadAgain').onchange = function uploadImage() {
+      var upload = document.getElementById('uploadAgain');
+      var fileType = this.files[0]['type'];
+      var fileValue = fileType.split('/')[0];
+      var previewAgain = document.getElementById('previewAgain');
+
+    // Changes the file to base64 information
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(this.files[0]);
+      fileReader.onload = function() {
+        base64 = fileReader.result;
+        previewAgain.setAttribute('src', base64);
       }
+
+    // If the file is an image is previews the image like how the image should be previewed
+      if (fileValue == 'image') {
+        var imgStuff = li.childNodes[5].childNodes[0].childNodes[0].src;
+        expansionBox.style = "display: block; height: 50%; top: 50%;";
+        uploadContainer.style = "display: block; width: 100%;";
+        previewAgain.style = "visibility: visible; display:block;";
+        document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
+        updateImage();
+        function updateImage() {
+          console.log('update!');
+          imgStuff = previewAgain.src;
+        }
+      }
+
+
+
+      // Remove the previewed file
+      file.addEventListener('click', function () {
+        file.src = null;
+          previewFileOff();
+          console.log('Removed file!');
+      })
     }
+  }
+}
 
 // Change styling stuff
 function previewImage() {
