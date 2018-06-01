@@ -383,7 +383,7 @@ ul#complete:empty:after {
   float: left;
   z-index: 100;
   height: 100%;
-  transition: 0.5s;
+  transition: 0.4s;
   width: 0;
   border-radius: 5px;
   overflow-y: auto;
@@ -569,7 +569,7 @@ div#progress {
 
 footer#Basic-Footer {
   position: fixed;
-  transition: 0.5s;
+  transition: 0.4s;
   z-index: 10000;
   background-color: #7b878f;
   width: 0;
@@ -581,7 +581,7 @@ footer#Basic-Footer {
 div#Gradient-Thing {
   position: fixed;
   z-index: 10000;
-  transition: 0.5s;
+  transition: 0.4s;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
@@ -714,14 +714,14 @@ div#expansion {
   display: none;
   padding: 10px;
   width: 90%;
-  position: fixed;
+  position: absolute;
   text-align: center;
   margin: auto;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #FFF;
   border-radius: 25px;
-  bottom: 50%;
+  top: 30%;
   left: 5%;
   z-index: 100;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
