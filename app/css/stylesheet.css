@@ -78,7 +78,7 @@ header #item:-moz-placeholder {
 	overflow: hidden;
 }
 
-#upload-label, #upload-labelAgain {
+#upload-label {
   cursor: pointer;
   right: -5px;
   z-index: 20;
@@ -776,4 +776,25 @@ p#notes:empty:not(:focus)::before {
   svg #removetodo:hover  {}
   ul#complete div #addtodo:hover {}
   ul#todo #addtodo:hover {}
+}
+
+#upload-labelAgain {
+  cursor: pointer;
+  bottom: 40px;
+  left: 5px;
+  padding: 10px;
+  position: relative;
+  float: left;
+}
+
+#close-expansion {
+  float: right;
+  position: relative;
+  cursor: pointer;
+  bottom: 35px;
+  right: 5px;
+}
+
+#close-expansion:hover {
+  fill: #ff4f4f;
 }

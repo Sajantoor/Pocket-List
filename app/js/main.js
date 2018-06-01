@@ -532,6 +532,13 @@ function expandList() {
       expansionBox.removeAttribute('style');
       document.getElementById('overlay').removeAttribute('style');
       document.getElementById('container').removeAttribute('style');
+      if (img) {
+        if (document.getElementById('previewAgain').src) {
+          document.getElementById('previewAgain').src = "null";
+          document.getElementById('previewAgain').src = img.childNodes[0].childNodes[0].src;
+        }
+      }
+
       clear();
     }
 
@@ -545,6 +552,8 @@ function expandList() {
       img = "null";
       window.swipe = true;
     }
+
+    document.getElementById('close-expansion').addEventListener('click', removeExpansion);
 
     document.getElementById('uploadAgain').onchange = function uploadImage() {
       var upload = document.getElementById('uploadAgain');
@@ -567,14 +576,7 @@ function expandList() {
         uploadContainer.style = "display: block; width: 100%;";
         previewAgain.style = "visibility: visible; display:block;";
         document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-        updateImage();
-        function updateImage() {
-          console.log('update!');
-          imgStuff = previewAgain.src;
-        }
       }
-
-
 
       // Remove the previewed file
       file.addEventListener('click', function () {
