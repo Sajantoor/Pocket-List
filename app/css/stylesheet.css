@@ -41,6 +41,7 @@ header #item {
   position: relative;
   border-radius: 5px;
   border: 0;
+  z-index: 20;
   box-shadow: none;
   outline: none;
   background-color: #6fcaff;
@@ -803,6 +804,29 @@ p#notes:empty:not(:focus)::before {
 input#date, input#time {
   margin: 10px;
   margin-top: 0;
+}
+
+img#expandedImage {
+  position: absolute;
+  margin-top: 50px;
+  height: auto;
+  width: 100%;
+  z-index: 9001;
+}
+
+div#background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #36393e;
+  z-index: 9000;
+}
+
+svg#closebuttonagain {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  z-index: 9002;
 }
 
 /*
