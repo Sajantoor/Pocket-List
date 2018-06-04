@@ -361,6 +361,7 @@ ul#complete:empty:after {
   height: 100px;
   overflow: hidden;
   border-radius: 5px;
+  display: none;
 }
 
 #img-file {
@@ -798,3 +799,20 @@ p#notes:empty:not(:focus)::before {
 #close-expansion:hover {
   fill: #ff4f4f;
 }
+
+input#date, input#time {
+  margin: 10px;
+  margin-top: 0;
+}
+
+/*
+@media only screen and (min-width: 992px) {
+  #navigation {
+    width: 20%;
+  }
+  #container {
+    width: 80%;
+    float: right;
+  }
+}
+*/

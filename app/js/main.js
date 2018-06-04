@@ -104,8 +104,6 @@ document.getElementById('upload').onchange = function uploadFile() {
       previewImage();
     } else {
       previewFileOff();
-  //    file.src = "Icons/file.svg";
-      previewFile();
   }
 
   // Remove the previewed file
@@ -114,6 +112,29 @@ document.getElementById('upload').onchange = function uploadFile() {
       previewFileOff();
       console.log('Removed file!');
   })
+}
+
+// Change styling stuff
+function previewImage() {
+    file.style = "visibility:visible; display:block;";
+    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
+    document.getElementById('header').style = "height:190px;";
+    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
+    document.getElementById('todo').style = "top: 200px;";
+    document.getElementById('complete').style = "top:200px;";
+    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
+}
+
+// Reseting changed styling
+function previewFileOff() {
+  file.removeAttribute('style');
+  file.removeAttribute('src');
+  document.getElementById('upload-contain').removeAttribute('style');
+  document.getElementById('header').removeAttribute('style');
+  document.getElementById('item').removeAttribute('style');
+  document.getElementById('todo').removeAttribute('style');
+  document.getElementById('complete').removeAttribute('style');
+  document.getElementById('upload-label').removeAttribute('style');
 }
 
 function dataObject() {
@@ -125,7 +146,7 @@ function addItem(text, complete) {
   var todo = (complete) ? document.getElementById('complete'):document.getElementById('todo');
 
   var newItem = document.createElement('li');
-  newItem.innerHTML = text;
+  newItem.innerHTML = text.replace(/\s/g, "");
 
   var buttons = document.createElement('div');
   buttons.classList.add('buttons');
@@ -145,6 +166,15 @@ function addItem(text, complete) {
   var clickBox = document.createElement('div');
   clickBox.setAttribute('id', 'click-box');
 
+  var newImage = new Image();
+  newImage.setAttribute('id', 'img-file');
+
+  var container = document.createElement('div');
+  container.setAttribute('id', 'img-container');
+
+  var link = document.createElement('a');
+  link.setAttribute('id', 'link');
+
   function append() {
     buttons.appendChild(complete);
     buttons.appendChild(remove);
@@ -153,32 +183,24 @@ function addItem(text, complete) {
     newItem.appendChild(clickBox);
     newItem.appendChild(paragraph);
     todo.prepend(newItem);
+    link.appendChild(newImage);
+    container.appendChild(link);
+    newItem.appendChild(container);
   }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
 
-    var newImage = new Image();
     newImage.src = document.getElementById('preview').src;
-    newImage.setAttribute('id', 'img-file');
+    container.style = "display: block;";
 
-    var container = document.createElement('div');
-    container.setAttribute('id', 'img-container');
-
-    var link = document.createElement('a');
     link.href = newImage.src;
     link.setAttribute('download', fileName);
-    link.setAttribute('id', 'link');
-// Append Child of parent nodes
-    append();
-    link.appendChild(newImage);
-    container.appendChild(link);
-    newItem.appendChild(container);
-  } else {
-  // Append Child of parent nodes
-    append();
   }
+
+// Append Child of parent nodes
+  append();
 // Event Listeners
   remove.addEventListener('click', removeItem);
 
@@ -205,7 +227,6 @@ function removeItem() {
   dataObject();
 // Remove Item From DOM
   item.remove();
-
   progress();
 }
 
@@ -493,7 +514,7 @@ function expandList() {
     var liText = li.childNodes[0];
     var clickBox = li.childNodes[3];
     var paragraph = li.childNodes[4];
-    var img = li.childNodes[5];
+    var img = li.childNodes[5].childNodes[0].childNodes[0];
     var overlay = document.getElementById('overlay');
     var expansionBox = document.getElementById('expansion');
     var dynamicLi = document.getElementById('dynamic-li');
@@ -501,28 +522,30 @@ function expandList() {
     var uploadContainer = document.getElementById('upload-containAgain');
     var previewAgain = document.getElementById('previewAgain');
 
-    if (img) {
-      expansionBox.style = "display: block; height: 50%; top: 50%;";
+    if (img.src) {
+      expansionBox.style = "display: block; height: 50%;";
       uploadContainer.style = "display: block; width: 100%;";
-      previewAgain.src = img.childNodes[0].childNodes[0].src;
+      previewAgain.src = img.src;
       previewAgain.style = "visibility: visible; display: block;";
+      spiderman();
+    } else {
+      expansionBox.style = "display: block;";
+      spiderman();
+    }
+
+    function spiderman() {
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
       dynamicLi.innerText = liText.textContent;
       notes.innerText = paragraph.innerText;
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
-    } else {
-      expansionBox.style = "display: block;";
-      document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
-      document.getElementById('container').style = "filter:blur(5px);";
-      dynamicLi.innerText = liText.textContent;
-      notes.innerText = paragraph.innerText;
-      document.getElementById('overlay').addEventListener('click', removeExpansion);
     }
 
     function imageExpansion() {
-      uploadContainer.style = "display: block; height: 100%; width: auto; position: fixed;";
+      var img = new Image;
+      img.setAttribute('id', 'expandedImage');
+      img.setAttribute('src', previewAgain.src);
     }
 
     function removeExpansion() {
@@ -532,13 +555,6 @@ function expandList() {
       expansionBox.removeAttribute('style');
       document.getElementById('overlay').removeAttribute('style');
       document.getElementById('container').removeAttribute('style');
-      if (img) {
-        if (document.getElementById('previewAgain').src) {
-          document.getElementById('previewAgain').src = "null";
-          document.getElementById('previewAgain').src = img.childNodes[0].childNodes[0].src;
-        }
-      }
-
       clear();
     }
 
@@ -550,10 +566,10 @@ function expandList() {
       clickBox = "null";
       paragraph = "null";
       img = "null";
+      previewSrc = "null";
+      img = "null";
       window.swipe = true;
     }
-
-    document.getElementById('close-expansion').addEventListener('click', removeExpansion);
 
     document.getElementById('uploadAgain').onchange = function uploadImage() {
       var upload = document.getElementById('uploadAgain');
@@ -567,54 +583,33 @@ function expandList() {
       fileReader.onload = function() {
         base64 = fileReader.result;
         previewAgain.setAttribute('src', base64);
-      }
 
-    // If the file is an image is previews the image like how the image should be previewed
-      if (fileValue == 'image') {
-        var imgStuff = li.childNodes[5].childNodes[0].childNodes[0].src;
-        expansionBox.style = "display: block; height: 50%; top: 50%;";
+        var previewSrc = previewAgain.src;
+        var img = li.childNodes[5].childNodes[0].childNodes[0];
+        expansionBox.style = "display: block; height: 50%;";
         uploadContainer.style = "display: block; width: 100%;";
         previewAgain.style = "visibility: visible; display:block;";
-        document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-      }
 
-      // Remove the previewed file
-      file.addEventListener('click', function () {
-        file.src = null;
-          previewFileOff();
-          console.log('Removed file!');
-      })
+        if (img.src) {
+          updateImage();
+        } else {
+          addImage();
+        }
+
+        function updateImage() {
+          img.removeAttribute('src');
+          img.setAttribute('src', previewSrc);
+        }
+
+        function addImage() {
+          img.setAttribute('src', previewSrc);
+          img.parentNode.parentNode.style = "display: block;";
+        }
+      }
     }
   }
 }
 
-// Change styling stuff
-function previewImage() {
-    file.style = "visibility:visible; display:block;";
-    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-    document.getElementById('header').style = "height:190px;";
-    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
-    document.getElementById('todo').style = "top: 200px;";
-    document.getElementById('complete').style = "top:200px;";
-    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
-  }
-// Preview File
-function previewFile() {
-    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
-    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
-  }
-
-// Reseting changed styling
-function previewFileOff() {
-  file.removeAttribute('style');
-  file.removeAttribute('src');
-  document.getElementById('upload-contain').removeAttribute('style');
-  document.getElementById('header').removeAttribute('style');
-  document.getElementById('item').removeAttribute('style');
-  document.getElementById('todo').removeAttribute('style');
-  document.getElementById('complete').removeAttribute('style');
-  document.getElementById('upload-label').removeAttribute('style');
-}
 
 
 // FIXME: Forgot to add a remove option for todo lists lol.
