@@ -716,7 +716,7 @@ div#expansion {
   display: none;
   padding: 10px;
   width: 90%;
-  position: absolute;
+  position: fixed;
   text-align: center;
   margin: auto;
   overflow-x: hidden;
@@ -808,17 +808,17 @@ input#date, input#time {
 
 img#expandedImage {
   position: absolute;
-  margin-top: 50px;
   height: auto;
   width: 100%;
   z-index: 9001;
+  margin-top: 100px;
 }
 
-div#background {
-  position: absolute;
-  width: 100%;
+div.background {
+  position: fixed;
   height: 100%;
-  background-color: #36393e;
+  width:  100%;
+  background-color: #888c8f;
   z-index: 9000;
 }
 

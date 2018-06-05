@@ -20,6 +20,12 @@ function time () {
     minute = '0' + minute;
 }
   console.log(hours + ":" + minute);
+
+  var dd = date.getDate();
+  var mm = date.getMonth()+1; 
+  var yyyy = date.getFullYear();
+  var today = mm + '/' + dd + '/' + yyyy;
+  console.log(today);
 }
 
 var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
@@ -177,6 +183,12 @@ function addItem(text, complete) {
   var link = document.createElement('a');
   link.setAttribute('id', 'link');
 
+  var timeValue = document.createElement('p');
+  timeValue.setAttribute('id', 'timeValue');
+
+  var dateValue = document.createElement('p');
+  dateValue.setAttribute('id', 'dateValue');
+
   function append() {
     buttons.appendChild(complete);
     buttons.appendChild(remove);
@@ -188,6 +200,8 @@ function addItem(text, complete) {
     link.appendChild(newImage);
     container.appendChild(link);
     newItem.appendChild(container);
+    newItem.appendChild(timeValue);
+    newItem.appendChild(dateValue);
   }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
@@ -522,6 +536,8 @@ function expandList() {
     var notes = document.getElementById('notes');
     var uploadContainer = document.getElementById('upload-containAgain');
     var previewAgain = document.getElementById('previewAgain');
+    var timeValue = li.childNodes[6];
+    var dateValue = li.childNodes[7];
 
     if (img.src) {
       expansionBox.style = "display: block; height: 50%; top: 25%;";
@@ -550,7 +566,7 @@ function expandList() {
       img.setAttribute('src', previewAgain.src);
 
       var background = document.createElement('div');
-      background.setAttribute('id', 'background');
+      background.setAttribute('class', 'background');
 
       document.body.prepend(background);
       background.appendChild(img);
@@ -558,6 +574,15 @@ function expandList() {
       var closeButton = document.createElement('svg');
       closeButton.innerHTML = closeSVG;
       background.appendChild(closeButton);
+
+      var i = document.getElementsByClassName('background').length;
+      if (i > 1) {
+        for (var j = 1; j < i; j++) {
+          img.remove();
+          background.remove();
+          closeButton.remove();
+        }
+      }
 
       closeButton.addEventListener('click', function() {
         img.remove();
@@ -586,6 +611,8 @@ function expandList() {
       img = "null";
       previewSrc = "null";
       img = "null";
+      timeValue = "null";
+      dateValue = "null";
       window.swipe = true;
     }
 
@@ -624,12 +651,16 @@ function expandList() {
           img.parentNode.parentNode.style = "display: block;";
         }
       }
+    }
 
-      document.getElementById('date').onchange = function() {
-          console.log(document.getElementById('date').value);
-          console.log(document.getElementById('time').value);
-      }
+    document.getElementById('date').onchange = function() {
+        dateValue.innerText = this.value;
+        console.log(dateValue);
+    }
 
+    document.getElementById('time').onchange = function() {
+        timeValue.innerText = this.value;
+        console.log(timeValue);
     }
   }
 }
