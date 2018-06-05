@@ -676,7 +676,7 @@ div#closeMenu {
   right: 15px;
 }
 
-div#closeMenu svg:hover {
+div#closeMenu svg:hover  {
   fill: #e81123;
 }
 
@@ -824,10 +824,16 @@ div#background {
 
 svg#closebuttonagain {
   position: absolute;
+  margin: 10px;
   right: 0;
-  top: 10px;
+  top: 0;
   z-index: 9002;
+  fill: #6c727c;
 }
+
+ svg#closebuttonagain:hover {
+   fill: #c0392b;
+ }
 
 /*
 @media only screen and (min-width: 992px) {

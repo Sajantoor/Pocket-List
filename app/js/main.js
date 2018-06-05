@@ -558,6 +558,12 @@ function expandList() {
       var closeButton = document.createElement('svg');
       closeButton.innerHTML = closeSVG;
       background.appendChild(closeButton);
+
+      closeButton.addEventListener('click', function() {
+        img.remove();
+        background.remove();
+        closeButton.remove();
+      })
     }
 
     function removeExpansion() {
@@ -618,6 +624,12 @@ function expandList() {
           img.parentNode.parentNode.style = "display: block;";
         }
       }
+
+      document.getElementById('date').onchange = function() {
+          console.log(document.getElementById('date').value);
+          console.log(document.getElementById('time').value);
+      }
+
     }
   }
 }
