@@ -4,6 +4,7 @@ var closeSVG = '<svg fill="#FFF" id="closebuttonagain" height="30" viewBox="0 0 
 var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
 var file = document.getElementById('preview');
+var blob = null;
 var swipe = true;
 
 
@@ -22,7 +23,7 @@ function time () {
   console.log(hours + ":" + minute);
 
   var dd = date.getDate();
-  var mm = date.getMonth()+1; 
+  var mm = date.getMonth()+1;
   var yyyy = date.getFullYear();
   var today = mm + '/' + dd + '/' + yyyy;
   console.log(today);
@@ -96,6 +97,8 @@ document.getElementById('upload').onchange = function uploadFile() {
   var fileType = this.files[0]['type'];
   var fileValue = fileType.split('/')[0];
 
+  blob = URL.createObjectURL(this.files[0]);
+
 // Changes the file to base64 information
   var fileReader = new FileReader();
   fileReader.readAsDataURL(this.files[0]);
@@ -105,13 +108,15 @@ document.getElementById('upload').onchange = function uploadFile() {
   }
 
 // If the file is an image is previews the image like how the image should be previewed
-  if(fileValue == 'image') {
+  if (fileValue == 'image') {
       previewFileOff();
     //  var url = URL.createObjectURL(this.files[0]);
     //  file.src = url;
       previewImage();
     } else {
       previewFileOff();
+ //    file.src = "Icons/file.svg";
+     previewFile();
   }
 
   // Remove the previewed file
@@ -120,29 +125,6 @@ document.getElementById('upload').onchange = function uploadFile() {
       previewFileOff();
       console.log('Removed file!');
   })
-}
-
-// Change styling stuff
-function previewImage() {
-    file.style = "visibility:visible; display:block;";
-    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-    document.getElementById('header').style = "height:190px;";
-    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
-    document.getElementById('todo').style = "top: 200px;";
-    document.getElementById('complete').style = "top:200px;";
-    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
-}
-
-// Reseting changed styling
-function previewFileOff() {
-  file.removeAttribute('style');
-  file.removeAttribute('src');
-  document.getElementById('upload-contain').removeAttribute('style');
-  document.getElementById('header').removeAttribute('style');
-  document.getElementById('item').removeAttribute('style');
-  document.getElementById('todo').removeAttribute('style');
-  document.getElementById('complete').removeAttribute('style');
-  document.getElementById('upload-label').removeAttribute('style');
 }
 
 function dataObject() {
@@ -205,13 +187,13 @@ function addItem(text, complete) {
   }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
-  if (document.getElementById('preview').src) {
+  if (file.src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
 
-    newImage.src = document.getElementById('preview').src;
+    newImage.src = file.src;
     container.style = "display: block;";
 
-    link.href = newImage.src;
+    link.href = blob;
     link.setAttribute('download', fileName);
   }
 
@@ -311,11 +293,11 @@ function navListener() {
 }
 
 function openNavigation() {
-  document.getElementById('navigation').style = "width: 90%;";
+  document.getElementById('navigation').style = "transform: translateX(0); box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);";
   // The blur causes frame drops in the animation
   // document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('Gradient-Thing').style = "width: 90%;";
-  document.getElementById('Basic-Footer').style = "width: 90%;";
+  document.getElementById('Gradient-Thing').style = "transform: translateX(0)";
+  document.getElementById('Basic-Footer').style = "transform: translateX(0)";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
 }
   // Style Reset
@@ -623,6 +605,8 @@ function expandList() {
       var previewAgain = document.getElementById('previewAgain');
 
     // Changes the file to base64 information
+
+
       var fileReader = new FileReader();
       fileReader.readAsDataURL(this.files[0]);
       fileReader.onload = function() {
@@ -663,6 +647,35 @@ function expandList() {
         console.log(timeValue);
     }
   }
+}
+
+
+// Change styling stuff
+function previewImage() {
+    file.style = "visibility:visible; display:block;";
+    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
+    document.getElementById('header').style = "height:190px;";
+    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
+    document.getElementById('todo').style = "top: 200px;";
+    document.getElementById('complete').style = "top:200px;";
+    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
+  }
+// Preview File
+function previewFile() {
+    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
+    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
+  }
+
+// Reseting changed styling
+function previewFileOff() {
+  file.removeAttribute('style');
+  file.removeAttribute('src');
+  document.getElementById('upload-contain').removeAttribute('style');
+  document.getElementById('header').removeAttribute('style');
+  document.getElementById('item').removeAttribute('style');
+  document.getElementById('todo').removeAttribute('style');
+  document.getElementById('complete').removeAttribute('style');
+  document.getElementById('upload-label').removeAttribute('style');
 }
 
 

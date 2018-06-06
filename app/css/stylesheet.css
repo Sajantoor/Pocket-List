@@ -41,7 +41,6 @@ header #item {
   position: relative;
   border-radius: 5px;
   border: 0;
-  z-index: 20;
   box-shadow: none;
   outline: none;
   background-color: #6fcaff;
@@ -386,13 +385,13 @@ ul#complete:empty:after {
   z-index: 100;
   height: 100%;
   transition: 0.4s;
-  width: 0;
+  transform: translateX(-100%);
+  width: 90%;
   border-radius: 5px;
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;
   background-color: #bdc3c7;
-  box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);
 }
 
 #navButton {
@@ -572,9 +571,10 @@ div#progress {
 footer#Basic-Footer {
   position: fixed;
   transition: 0.4s;
+  transform: translateX(-100%);
   z-index: 10000;
   background-color: #7b878f;
-  width: 0;
+  width: 90%;
   height: 25px;
   bottom: 0;
   left: 0;
@@ -583,13 +583,14 @@ footer#Basic-Footer {
 div#Gradient-Thing {
   position: fixed;
   z-index: 10000;
+  transform: translateX(-100%);
   transition: 0.4s;
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
   background: -ms-linear-gradient(0deg, #3298e0, #6666ff);
   height: 10px;
-  width: 0;
+  width: 90%;
   bottom: 25px;
 }
 
@@ -809,9 +810,16 @@ input#date, input#time {
 img#expandedImage {
   position: absolute;
   height: auto;
-  width: 100%;
+  min-width: 50%;
+  max-width: 100%;
+  min-height: 0%;
+  max-height: 90%;
   z-index: 9001;
-  margin-top: 100px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 div.background {
