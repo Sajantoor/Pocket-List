@@ -293,11 +293,11 @@ function navListener() {
 }
 
 function openNavigation() {
-  document.getElementById('navigation').style = "width: 90%;";
+  document.getElementById('navigation').style = "transform: translateX(0); box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);";
   // The blur causes frame drops in the animation
   // document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('Gradient-Thing').style = "width: 90%;";
-  document.getElementById('Basic-Footer').style = "width: 90%;";
+  document.getElementById('Gradient-Thing').style = "transform: translateX(0)";
+  document.getElementById('Basic-Footer').style = "transform: translateX(0)";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
 }
   // Style Reset
