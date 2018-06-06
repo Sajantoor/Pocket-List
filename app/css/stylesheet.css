@@ -41,7 +41,6 @@ header #item {
   position: relative;
   border-radius: 5px;
   border: 0;
-  z-index: 20;
   box-shadow: none;
   outline: none;
   background-color: #6fcaff;
@@ -809,9 +808,16 @@ input#date, input#time {
 img#expandedImage {
   position: absolute;
   height: auto;
-  width: 100%;
+  min-width: 50%;
+  max-width: 100%;
+  min-height: 0%;
+  max-height: 90%;
   z-index: 9001;
-  margin-top: 100px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 div.background {
