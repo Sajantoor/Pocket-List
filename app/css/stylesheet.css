@@ -384,8 +384,7 @@ ul#complete:empty:after {
   float: left;
   z-index: 100;
   height: 100%;
-  transition: 0.4s;
-  transform: translateX(-100%);
+  box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);
   width: 90%;
   border-radius: 5px;
   overflow-y: auto;
@@ -570,8 +569,6 @@ div#progress {
 
 footer#Basic-Footer {
   position: fixed;
-  transition: 0.4s;
-  transform: translateX(-100%);
   z-index: 10000;
   background-color: #7b878f;
   width: 90%;
@@ -583,8 +580,7 @@ footer#Basic-Footer {
 div#Gradient-Thing {
   position: fixed;
   z-index: 10000;
-  transform: translateX(-100%);
-  transition: 0.4s;
+  transform: translateX(-120%);
   background: linear-gradient(0deg, #3298e0, #6666ff);
   background: -moz-linear-gradient(0deg, #3298e0, #6666ff);
   background: -webkit-linear-gradient(0deg, #3298e0, #6666ff);
@@ -592,6 +588,18 @@ div#Gradient-Thing {
   height: 10px;
   width: 90%;
   bottom: 25px;
+}
+
+#navigation, div#Gradient-Thing, footer#Basic-Footer {
+  -webkit-transition: transform 200ms ease-in-out;
+  -moz-transition: transform 200ms ease-in-out;
+  -o-transition: transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out;
+  -webkit-transform: translateX(-120%);
+  transform: translateX(-120%);
+  -moz-transform: translateX(-120%);
+  -o-transform: translateX(-120%);
+  will-change: transform;
 }
 
 .text {

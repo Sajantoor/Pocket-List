@@ -5,6 +5,7 @@ var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
 var file = document.getElementById('preview');
 var blob = null;
+var addedBlob = null;
 var swipe = true;
 
 
@@ -91,6 +92,8 @@ function createItem() {
     }
   });
 
+
+
 // Upload file system
 document.getElementById('upload').onchange = function uploadFile() {
   var upload = document.getElementById('upload');
@@ -110,15 +113,12 @@ document.getElementById('upload').onchange = function uploadFile() {
 // If the file is an image is previews the image like how the image should be previewed
   if (fileValue == 'image') {
       previewFileOff();
-    //  var url = URL.createObjectURL(this.files[0]);
-    //  file.src = url;
       previewImage();
     } else {
-      previewFileOff();
- //    file.src = "Icons/file.svg";
-     previewFile();
+      alert('This file type is not yet supported, please choose an image.');
   }
 
+  upload.value = null;
   // Remove the previewed file
   file.addEventListener('click', function () {
     file.src = null;
@@ -136,7 +136,7 @@ function addItem(text, complete) {
   var todo = (complete) ? document.getElementById('complete'):document.getElementById('todo');
 
   var newItem = document.createElement('li');
-  newItem.innerHTML = text.replace(/\s/g, "");
+  newItem.innerHTML = text;
 
   var buttons = document.createElement('div');
   buttons.classList.add('buttons');
@@ -282,22 +282,16 @@ function navListener() {
   document.getElementById('navButton').addEventListener('click', openNavigation);
 
     // Close navigation Button Event Listener
-  document.getElementById('close').addEventListener('click', function () {
-    close();
-  })
-
+  document.getElementById('close').addEventListener('click', close);
     // If clicking anything but the navigation or the close button
-  document.getElementById('overlay').addEventListener('click', function() {
-    close();
-  })
+  document.getElementById('overlay').addEventListener('click', close);
 }
 
 function openNavigation() {
-  document.getElementById('navigation').style = "transform: translateX(0); box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);";
-  // The blur causes frame drops in the animation
-  // document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('Gradient-Thing').style = "transform: translateX(0)";
-  document.getElementById('Basic-Footer').style = "transform: translateX(0)";
+  document.getElementById('navigation').style = "-webkit-transform: none; transform: none;";
+  document.getElementById('container').style = "filter:blur(5px);";
+  document.getElementById('Gradient-Thing').style = "-webkit-transform: none; transform: none;";
+  document.getElementById('Basic-Footer').style = "-webkit-transform: none; transform: none;";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
 }
   // Style Reset
@@ -488,11 +482,9 @@ function checkDistance() {
      if (window.swipe && verticalDistance) {
         if (touchendX >= (touchstartX + 25)) {
           openNavigation();
-          }
-          setTimeout(2000);
-          if ((touchstartX + 50) >= touchendX) {
-            close();
+          window.swipe = false;
         }
+        window.swipe = true;
       }
     }
   }
@@ -603,9 +595,10 @@ function expandList() {
       var fileType = this.files[0]['type'];
       var fileValue = fileType.split('/')[0];
       var previewAgain = document.getElementById('previewAgain');
+      var fileName = document.getElementById('uploadAgain').value.split('\\')[2];
 
     // Changes the file to base64 information
-
+      addedBlob = URL.createObjectURL(this.files[0]);
 
       var fileReader = new FileReader();
       fileReader.readAsDataURL(this.files[0]);
@@ -619,6 +612,8 @@ function expandList() {
         uploadContainer.style = "display: block; width: 100%;";
         previewAgain.style = "visibility: visible; display:block;";
 
+        upload.value = null;
+
         if (img.src) {
           updateImage();
         } else {
@@ -628,11 +623,15 @@ function expandList() {
         function updateImage() {
           img.removeAttribute('src');
           img.setAttribute('src', previewSrc);
+          img.parentNode.setAttribute('download', fileName);
+          img.parentNode.setAttribute('href', addedBlob);
         }
 
         function addImage() {
           img.setAttribute('src', previewSrc);
           img.parentNode.parentNode.style = "display: block;";
+          img.parentNode.setAttribute('download', fileName);
+          img.parentNode.setAttribute('href', addedBlob);
         }
       }
     }
@@ -679,10 +678,7 @@ function previewFileOff() {
 }
 
 
-
 // FIXME: Forgot to add a remove option for todo lists lol.
-// BUG: When adding image then removing that image and trying to add it again, it won't work. You have to select a different image for some reason.
-// BUG: Microsoft Edge Event Listener Bugs
 
 // HACK: Gotta cursor pointer a lot of clickable stuff so the user clearly knows it's clickable
 
