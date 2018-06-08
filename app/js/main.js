@@ -12,6 +12,15 @@ var swipe = true;
 time();
 navListener();
 
+function isIE() {
+  ua = navigator.userAgent;
+  /* MSIE used to detect old browsers and Trident used to newer ones*/
+  var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+  return is_ie;
+}
+if (isIE()){
+    alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
+}
 
 // Basically a clock that serves no purpose right now xDDD
 function time () {
@@ -60,14 +69,20 @@ function focus() {
   document.getElementById('item').focus();
 }
 
+window.onload = function() {
+  document.getElementById('Basic-Footer').style = "visibility: visible;";
+  document.getElementById('Gradient-Thing').style = "visibility: visible;";
+  document.getElementById('navigation').style = "visibility: visible;";
+}
+
 // Grabs the value and then pushes it to dom and local storage
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
 function createItem() {
   var value = document.getElementById('item').value;
-      if (value && value.replace(/\s/g, "")) {
-        addItem(value.trim());
+      if (value) {
+        addItem(value.replace(/\s+/g,' ').trim());
         document.getElementById('item').value = "";
-        data.todo.push(value.trim());
+        data.todo.push(value.replace(/\s+/g,' ').trim());
         dataObject();
       } else {
         document.getElementById('item').value = "";
@@ -91,7 +106,6 @@ function createItem() {
       }
     }
   });
-
 
 
 // Upload file system
@@ -288,19 +302,19 @@ function navListener() {
 }
 
 function openNavigation() {
-  document.getElementById('navigation').style = "-webkit-transform: none; transform: none;";
+  document.getElementById('navigation').style = "-webkit-transform: none; visibility: visible; transform: none;";
   document.getElementById('container').style = "filter:blur(5px);";
-  document.getElementById('Gradient-Thing').style = "-webkit-transform: none; transform: none;";
-  document.getElementById('Basic-Footer').style = "-webkit-transform: none; transform: none;";
+  document.getElementById('Gradient-Thing').style = "-webkit-transform: none; transform: none; visibility: visible;";
+  document.getElementById('Basic-Footer').style = "-webkit-transform: none; transform: none; visibility: visible;";
   document.getElementById('overlay').style = "position: fixed; z-index: 80; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
 }
   // Style Reset
 function close() {
-  document.getElementById('navigation').removeAttribute('style');
   document.getElementById('container').removeAttribute('style');
   document.getElementById('overlay').removeAttribute('style');
-  document.getElementById('Gradient-Thing').removeAttribute('style');
-  document.getElementById('Basic-Footer').removeAttribute('style');
+  document.getElementById('Basic-Footer').style = "visibility: visible;";
+  document.getElementById('Gradient-Thing').style = "visibility: visible;";
+  document.getElementById('navigation').style = "visibility: visible;";
 }
 
 // Event Listener For Clicking on the add button
@@ -321,8 +335,8 @@ document.addEventListener('keypress', function(event)  {
 // Creates a new list in the navigation
 function createNewList() {
   var value = document.getElementById('List-Input').value;
-  if (value && value.replace(/\s/g, "")) {
-    addList(value.trim());
+  if (value) {
+    addList(value.replace(/\s+/g,' ').trim());
     document.getElementById('List-Input').value = "";
   } else {
     document.getElementById('item').value = "";

@@ -381,6 +381,7 @@ ul#complete:empty:after {
 }
 
 #navigation {
+  visibility: hidden;
   float: left;
   z-index: 100;
   height: 100%;
@@ -568,6 +569,7 @@ div#progress {
 }
 
 footer#Basic-Footer {
+  visibility: hidden;
   position: fixed;
   z-index: 10000;
   background-color: #7b878f;
@@ -578,6 +580,7 @@ footer#Basic-Footer {
 }
 
 div#Gradient-Thing {
+  visibility: hidden;
   position: fixed;
   z-index: 10000;
   transform: translateX(-120%);
