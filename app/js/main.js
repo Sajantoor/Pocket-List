@@ -11,6 +11,7 @@ var swipe = true;
 
 time();
 navListener();
+checkNotifications();
 
 function isIE() {
   ua = navigator.userAgent;
@@ -20,6 +21,29 @@ function isIE() {
 }
 if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
+}
+
+function checkNotifications() {
+  if (!window.Notification) {
+    hide();
+  } else {
+    console.log('notifcations');
+  }
+
+  if (window.Notification) {
+    Notification.requestPermission(function(p) {
+    if (p === 'granted') {
+
+    } else if (p === 'denied') {
+        hide();
+    }
+  });
+  }
+
+    function hide() {
+      document.getElementById('time').style = 'display: none;';
+      document.getElementById('date').style = 'display: none;';
+  }
 }
 
 // Basically a clock that serves no purpose right now xDDD
@@ -546,6 +570,8 @@ function expandList() {
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
+      document.getElementById('date').value = document.getElementById('dateValue').textContent;
+      document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
     function imageExpansion() {
@@ -581,8 +607,8 @@ function expandList() {
 
     function removeExpansion() {
       expansionBox.removeAttribute('style');
-      liText.textContent = dynamicLi.innerText;
-      paragraph.innerText = notes.innerText;
+      liText.textContent = dynamicLi.innerText.replace(/\s+/g,' ').trim();
+      paragraph.innerText = notes.innerText.replace(/\s+/g,' ').trim();
       expansionBox.removeAttribute('style');
       document.getElementById('overlay').removeAttribute('style');
       document.getElementById('container').removeAttribute('style');
@@ -602,6 +628,8 @@ function expandList() {
       timeValue = "null";
       dateValue = "null";
       window.swipe = true;
+      document.getElementById('time').value = null;
+      document.getElementById('date').value = null;
     }
 
     document.getElementById('uploadAgain').onchange = function uploadImage() {
@@ -652,12 +680,24 @@ function expandList() {
 
     document.getElementById('date').onchange = function() {
         dateValue.innerText = this.value;
-        console.log(dateValue);
+        notifcations();
     }
 
     document.getElementById('time').onchange = function() {
         timeValue.innerText = this.value;
-        console.log(timeValue);
+        notifcations();
+    }
+
+    function notifcations() {
+      var time = document.getElementById('time').value;
+      var date = document.getElementById('date').value;
+
+      if (date && time) {
+        var notification = new Notification("You've got something todo", {
+          body: liText.textContent,
+        })
+      }
+
     }
   }
 }

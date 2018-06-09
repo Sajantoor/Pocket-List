@@ -854,6 +854,10 @@ svg#closebuttonagain {
    fill: #c0392b;
  }
 
+ #timeValue, #dateValue {
+   display: none;
+ }
+
 /*
 @media only screen and (min-width: 992px) {
   #navigation {
