@@ -858,6 +858,16 @@ svg#closebuttonagain {
    display: none;
  }
 
+ input#time, input#date {
+   box-shadow: none;
+   outline: none;
+   appearance: none;
+   -webkit-appearance-none;
+   -moz-appearance-none;
+   -ms-appearance-none;
+   -o-appearance-none;
+ }
+
 /*
 @media only screen and (min-width: 992px) {
   #navigation {

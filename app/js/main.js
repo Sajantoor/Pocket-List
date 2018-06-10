@@ -8,8 +8,6 @@ var blob = null;
 var addedBlob = null;
 var swipe = true;
 
-
-time();
 navListener();
 checkNotifications();
 
@@ -44,23 +42,6 @@ function checkNotifications() {
       document.getElementById('time').style = 'display: none;';
       document.getElementById('date').style = 'display: none;';
   }
-}
-
-// Basically a clock that serves no purpose right now xDDD
-function time () {
-  var date = new Date();
-  var hours = date.getHours();
-  var minute = date.getMinutes();
-  if (minute < 10) {
-    minute = '0' + minute;
-}
-  console.log(hours + ":" + minute);
-
-  var dd = date.getDate();
-  var mm = date.getMonth()+1;
-  var yyyy = date.getFullYear();
-  var today = mm + '/' + dd + '/' + yyyy;
-  console.log(today);
 }
 
 var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
@@ -689,18 +670,55 @@ function expandList() {
     }
 
     function notifcations() {
+      var date = new Date();
+      var hours = date.getHours();
+      var minute = date.getMinutes();
+      if (minute < 10) {
+        minute = '0' + minute;
+      }
+
+      var timeNow = (hours + '' + minute);
       var time = document.getElementById('time').value;
+      timePartUno = time.split(':')[0];
+      timePartDos = time.split(':')[1];
+      // time = timePartUno + timePartDos;
+
+      var timeDifference = time - timeNow;
+      console.log(timeDifference + ' time difference');
+
+      var dd = date.getDate();
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+      var mm = date.getMonth()+1;
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
+      var yyyy = date.getFullYear();
+      var today = yyyy + '' +  mm + '' + dd;
+
       var date = document.getElementById('date').value;
+      var inputYear = date.split('-')[0];
+      var inputMonth = date.split('-')[1];
+      var inputDay = date.split('-')[2];
+      var inputDate = inputYear + inputMonth + inputDay;
+
+      var dateDifference = inputDate - today;
+        console.log(dateDifference + ' date difference');
+
+      var img = 'Icons/Logo.png';
 
       if (date && time) {
-        var notification = new Notification("You've got something todo", {
-          body: liText.textContent,
-        })
+            var notification = new Notification("Pocket List", {
+              body: 'You got 5 minutes to finish: ' + liText.textContent,
+              icon: img,
+              send_at: time,
+            },)
+        }
       }
 
     }
   }
-}
 
 
 // Change styling stuff
