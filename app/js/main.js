@@ -9,7 +9,6 @@ var addedBlob = null;
 var swipe = true;
 
 navListener();
-checkNotifications();
 
 function isIE() {
   ua = navigator.userAgent;
@@ -19,29 +18,6 @@ function isIE() {
 }
 if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
-}
-
-function checkNotifications() {
-  if (!window.Notification) {
-    hide();
-  } else {
-    console.log('notifcations');
-  }
-
-  if (window.Notification) {
-    Notification.requestPermission(function(p) {
-    if (p === 'granted') {
-
-    } else if (p === 'denied') {
-        hide();
-    }
-  });
-  }
-
-    function hide() {
-      document.getElementById('time').style = 'display: none;';
-      document.getElementById('date').style = 'display: none;';
-  }
 }
 
 var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
@@ -187,8 +163,8 @@ function addItem(text, complete) {
   var timeValue = document.createElement('p');
   timeValue.setAttribute('id', 'timeValue');
 
-  var dateValue = document.createElement('p');
-  dateValue.setAttribute('id', 'dateValue');
+  var countDown = document.createElement('p');
+  countDown.setAttribute('id', 'countDown');
 
   function append() {
     buttons.appendChild(complete);
@@ -202,7 +178,7 @@ function addItem(text, complete) {
     container.appendChild(link);
     newItem.appendChild(container);
     newItem.appendChild(timeValue);
-    newItem.appendChild(dateValue);
+    newItem.appendChild(countDown);
   }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
@@ -282,7 +258,7 @@ function progress() {
     var r = 146.5;
     var circumference = r * 2 * Math.PI;
     var percentage = (progress / 100);
-    var bar = document.getElementById('progress-bar');
+    var bar = document.getElementById('progress-bar-Again');
     var barPercentage = Math.round(circumference * (1 - percentage));
     bar.setAttribute("stroke-dashoffset", barPercentage);
     document.getElementById('progress-percentage').innerHTML = progress + "%";
@@ -299,7 +275,6 @@ function progress() {
 function navListener() {
   // Navigation Button Event Listener
   document.getElementById('navButton').addEventListener('click', openNavigation);
-
     // Close navigation Button Event Listener
   document.getElementById('close').addEventListener('click', close);
     // If clicking anything but the navigation or the close button
@@ -551,7 +526,6 @@ function expandList() {
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
-      document.getElementById('date').value = document.getElementById('dateValue').textContent;
       document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
@@ -610,7 +584,6 @@ function expandList() {
       dateValue = "null";
       window.swipe = true;
       document.getElementById('time').value = null;
-      document.getElementById('date').value = null;
     }
 
     document.getElementById('uploadAgain').onchange = function uploadImage() {
@@ -659,66 +632,73 @@ function expandList() {
       }
     }
 
-    document.getElementById('date').onchange = function() {
-        dateValue.innerText = this.value;
-        notifcations();
-    }
-
     document.getElementById('time').onchange = function() {
         timeValue.innerText = this.value;
-        notifcations();
+        countDown();
     }
 
-    function notifcations() {
-      var date = new Date();
-      var hours = date.getHours();
-      var minute = date.getMinutes();
-      if (minute < 10) {
-        minute = '0' + minute;
-      }
-
-      var timeNow = (hours + '' + minute);
+    function countDown() {
       var time = document.getElementById('time').value;
-      timePartUno = time.split(':')[0];
-      timePartDos = time.split(':')[1];
-      // time = timePartUno + timePartDos;
+      var countDownDate = new Date(time).getTime();
+      var x = setInterval(function() {
 
-      var timeDifference = time - timeNow;
-      console.log(timeDifference + ' time difference');
+        var now = new Date().getTime();
 
-      var dd = date.getDate();
-      if (dd < 10) {
-        dd = '0' + dd;
-      }
-      var mm = date.getMonth()+1;
-      if (mm < 10) {
-        mm = '0' + mm;
-      }
-      var yyyy = date.getFullYear();
-      var today = yyyy + '' +  mm + '' + dd;
+        var distance = countDownDate - now;
 
-      var date = document.getElementById('date').value;
-      var inputYear = date.split('-')[0];
-      var inputMonth = date.split('-')[1];
-      var inputDay = date.split('-')[2];
-      var inputDate = inputYear + inputMonth + inputDay;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var countElement = document.getElementById('countDown');
 
-      var dateDifference = inputDate - today;
-        console.log(dateDifference + ' date difference');
+        if (days === 0) {
+                countElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+            if (hours === 0) {
+                countElement.innerHTML = minutes + "m " + seconds + "s ";
+                if (minutes === 0) {
+                    countElement.innerHTML = seconds + "s ";
+                }
+            }
+        } else {
+          countElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        }
 
-      var img = 'Icons/Logo.png';
+        function progress() {
+          console.log(distance + 'distance');
+          console.log(countDownDate + 'countDownDate');
+          console.log(now + 'now');
+          var progress = Math.round((distance/(countDownDate + now)*100))
+          console.log(progress);
+          var r = 146.5;
+          var circumference = r * 2 * Math.PI;
+          var percentage = (progress / 100);
+          var bar = document.getElementById('progress-bar-Again');
+          var barPercentage = Math.round(circumference * (1 - percentage));
+          bar.setAttribute("stroke-dashoffset", barPercentage);
+          document.getElementById('progress-percentage').innerHTML = progress + "%";
+        }
+      // 0 / 0 is not a number, this fixes that.
+        if (distance === 0 & countDownDate === 0) {
+          progress = 0;
+          progress();
+        } else {
+          progress();
+        }
 
-      if (date && time) {
-            var notification = new Notification("Pocket List", {
-              body: 'You got 5 minutes to finish: ' + liText.textContent,
-              icon: img,
-              send_at: time,
-            },)
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById('countDown').innerHTML = "TIMES UP!";
+            document.getElementById('countDown').style = "color: #e74c3c;";
+            progress();
+          } else {
+            document.getElementById('countDown').removeAttribute('style');
+          }
+        }, 1000);
+
         }
       }
-
     }
-  }
 
 
 // Change styling stuff

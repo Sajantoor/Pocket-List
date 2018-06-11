@@ -156,7 +156,7 @@ ul#todo li, ul#complete li {
   color: #000;
   width: 100%;
   min-height: 50px;
-  font-size: 0.9em;
+  font-size: 1em;
   float: left;
   padding: 10px 100px 20px 50px;
   margin-bottom: 10px;
@@ -548,7 +548,7 @@ ul#todo-lists:last-of-type::before, ul#todo-lists:last-of-type::after {
   -o-appearance-none;
 }
 
-div#progress {
+div#progress, div#progress-Again {
   height: 120pt;
   width: 120pt;
   border-radius: 50%;
@@ -613,7 +613,7 @@ div#Gradient-Thing {
   font-family: Barlow;
 }
 
-p#progress-percentage {
+p#progress-percentage, p#progress-percentage-Again {
   font-weight: 600;
 }
 
@@ -858,7 +858,7 @@ svg#closebuttonagain {
    display: none;
  }
 
- input#time, input#date {
+ input#time {
    box-shadow: none;
    outline: none;
    appearance: none;
@@ -867,6 +867,13 @@ svg#closebuttonagain {
    -ms-appearance-none;
    -o-appearance-none;
  }
+
+#countDown {
+  font-size: 0.8em;
+  padding: 5px 5px 5px 0px;
+  display: block;
+}
+
 
 /*
 @media only screen and (min-width: 992px) {
