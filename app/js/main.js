@@ -60,15 +60,15 @@ window.onload = function() {
 // Checks if there is a value and if the value is not a space, if there is a space it alerts the user that that's invalid.
 function createItem() {
   var value = document.getElementById('item').value;
-      if (value) {
-        addItem(value.replace(/\s+/g,' ').trim());
-        document.getElementById('item').value = "";
-        data.todo.push(value.replace(/\s+/g,' ').trim());
-        dataObject();
-      } else {
-        document.getElementById('item').value = "";
-        alert('Error: Invalid entry, please add text to your entry!');
-    }
+    if (value) {
+      addItem(value.replace(/\s+/g,' ').trim());
+      document.getElementById('item').value = "";
+      data.todo.push(value.replace(/\s+/g,' ').trim());
+      dataObject();
+    } else {
+      document.getElementById('item').value = "";
+      alert('Error: Invalid entry, please add text to your entry!');
+  }
 }
 
 // Event Listner For The Button Click
@@ -258,7 +258,7 @@ function progress() {
     var r = 146.5;
     var circumference = r * 2 * Math.PI;
     var percentage = (progress / 100);
-    var bar = document.getElementById('progress-bar-Again');
+    var bar = document.getElementById('progress-bar');
     var barPercentage = Math.round(circumference * (1 - percentage));
     bar.setAttribute("stroke-dashoffset", barPercentage);
     document.getElementById('progress-percentage').innerHTML = progress + "%";
@@ -275,6 +275,7 @@ function progress() {
 function navListener() {
   // Navigation Button Event Listener
   document.getElementById('navButton').addEventListener('click', openNavigation);
+
     // Close navigation Button Event Listener
   document.getElementById('close').addEventListener('click', close);
     // If clicking anything but the navigation or the close button
@@ -505,16 +506,16 @@ function expandList() {
     var uploadContainer = document.getElementById('upload-containAgain');
     var previewAgain = document.getElementById('previewAgain');
     var timeValue = li.childNodes[6];
-    var dateValue = li.childNodes[7];
+    var countDownTimer = li.childNodes[7];
 
     if (img.src) {
-      expansionBox.style = "display: block; height: 50%; top: 25%;";
+      expansionBox.style = "-webkit-transform: none; transform: none; display: block; height: 50%; top: 25%;";
       uploadContainer.style = "display: block; width: 100%;";
       previewAgain.src = img.src;
       previewAgain.style = "visibility: visible; display: block;";
       spiderman();
     } else {
-      expansionBox.style = "display: block;";
+      expansionBox.style = "-webkit-transform: none; transform: none; display: block;";
       spiderman();
     }
 
@@ -526,6 +527,7 @@ function expandList() {
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
+    //  document.getElementById('countDown').value = document.getElementById('dateValue').textContent;
       document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
@@ -581,7 +583,6 @@ function expandList() {
       previewSrc = "null";
       img = "null";
       timeValue = "null";
-      dateValue = "null";
       window.swipe = true;
       document.getElementById('time').value = null;
     }
@@ -634,11 +635,24 @@ function expandList() {
 
     document.getElementById('time').onchange = function() {
         timeValue.innerText = this.value;
-        countDown();
+        var now = new Date().getTime();
+        var time = this.value;
+        var countDownDate = new Date(time).getTime();
+
+        if (now >= countDownDate) {
+          alert('Invalid Time...You must pick a time in the future');
+          document.getElementById('time').value = "";
+        } else {
+          countDown();
+        }
     }
 
     function countDown() {
       var time = document.getElementById('time').value;
+      countDownTimer.style = "display: block;";
+      document.getElementById('time').value = "";
+      var complete = document.getElementById('complete');
+
       var countDownDate = new Date(time).getTime();
       var x = setInterval(function() {
 
@@ -650,55 +664,37 @@ function expandList() {
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        var countElement = document.getElementById('countDown');
 
         if (days === 0) {
-                countElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+                countDownTimer.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
             if (hours === 0) {
-                countElement.innerHTML = minutes + "m " + seconds + "s ";
+                countDownTimer.innerHTML = minutes + "m " + seconds + "s ";
                 if (minutes === 0) {
-                    countElement.innerHTML = seconds + "s ";
+                    countDownTimer.innerHTML = seconds + "s ";
                 }
             }
         } else {
-          countElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-        }
-
-        function progress() {
-          console.log(distance + 'distance');
-          console.log(countDownDate + 'countDownDate');
-          console.log(now + 'now');
-          var progress = Math.round((distance/(countDownDate + now)*100))
-          console.log(progress);
-          var r = 146.5;
-          var circumference = r * 2 * Math.PI;
-          var percentage = (progress / 100);
-          var bar = document.getElementById('progress-bar-Again');
-          var barPercentage = Math.round(circumference * (1 - percentage));
-          bar.setAttribute("stroke-dashoffset", barPercentage);
-          document.getElementById('progress-percentage').innerHTML = progress + "%";
-        }
-      // 0 / 0 is not a number, this fixes that.
-        if (distance === 0 & countDownDate === 0) {
-          progress = 0;
-          progress();
-        } else {
-          progress();
+          countDownTimer.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
         }
 
         if (distance < 0) {
-            clearInterval(x);
-            document.getElementById('countDown').innerHTML = "TIMES UP!";
-            document.getElementById('countDown').style = "color: #e74c3c;";
-            progress();
-          } else {
-            document.getElementById('countDown').removeAttribute('style');
-          }
-        }, 1000);
+             clearInterval(x);
+             countDownTimer.innerHTML = "TIMES UP!";
+             countDownTimer.style = "display: block; color: #e74c3c;";
+           }
 
+        var list = countDownTimer.parentNode.parentNode;
+
+        if (list === complete) {
+          clearInterval(x);
+          countDownTimer.style = "display: none;"
+          countDownTimer.innerHTML = "";
         }
-      }
+
+      }, 100)
     }
+  }
+}
 
 
 // Change styling stuff
