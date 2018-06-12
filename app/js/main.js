@@ -54,6 +54,7 @@ window.onload = function() {
   document.getElementById('Basic-Footer').style = "visibility: visible;";
   document.getElementById('Gradient-Thing').style = "visibility: visible;";
   document.getElementById('navigation').style = "visibility: visible;";
+  document.getElementById('expansion').style = "display: block;";
 }
 
 // Grabs the value and then pushes it to dom and local storage
@@ -342,7 +343,7 @@ function colourPicker() {
 
     if (list === todo) {
       window.swipe = false;
-      document.getElementById('colorPopUp').style = "display: block;";
+      document.getElementById('colorPopUp').style = "-webkit-transform: none; transform: none; opacity: 1.0;";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
 
@@ -509,13 +510,13 @@ function expandList() {
     var countDownTimer = li.childNodes[7];
 
     if (img.src) {
-      expansionBox.style = "-webkit-transform: none; transform: none; display: block; height: 50%; top: 25%;";
+      expansionBox.style = "-webkit-transform: none; transform: none; height: 50%; top: 25%; opacity: 1.0";
       uploadContainer.style = "display: block; width: 100%;";
       previewAgain.src = img.src;
       previewAgain.style = "visibility: visible; display: block;";
       spiderman();
     } else {
-      expansionBox.style = "-webkit-transform: none; transform: none; display: block;";
+      expansionBox.style = "-webkit-transform: none; transform: none; opacity: 1.0;";
       spiderman();
     }
 
@@ -725,6 +726,9 @@ function previewFileOff() {
   document.getElementById('upload-label').removeAttribute('style');
 }
 
+
+// BUG: Undefined Image Bug only with the upload image uption when creating a new list item
+// BUG: Expansion related bugs when adding a new image
 
 // FIXME: Forgot to add a remove option for todo lists lol.
 

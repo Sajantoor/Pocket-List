@@ -627,13 +627,24 @@ div#colorPopUp {
   overflow-x: hidden;
   overflow-y: auto;
   margin-right: auto;
-  display: none;
+  display: block;
   background-color: #FFF;
   border-radius: 25px;
   bottom: 25%;
   left: 5%;
-  z-index: 9;
+  z-index: 900;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+
+  -webkit-transition: 300ms ease-in-out;
+  -moz-transition: 300ms ease-in-out;
+  -o-transition: 300ms ease-in-out;
+  transition: 300ms ease-in-out;
+  -webkit-transform: translateY(-300%);
+  transform: translateY(-300%);
+  -moz-transform: translateY(-300%);
+  -o-transform: translateY(-300%);
+  opacity: 0.0;
+  will-change: transform;
 }
 
 div#colorPopUp h1 {
@@ -725,7 +736,7 @@ div#blur {
 }
 
 div#expansion {
-  display: none;
+  display: block;
   padding: 10px;
   width: 90%;
   position: fixed;
@@ -740,14 +751,15 @@ div#expansion {
   z-index: 100;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 
-  -webkit-transition: transform 200ms ease-in-out;
-  -moz-transition: transform 200ms ease-in-out;
-  -o-transition: transform 200ms ease-in-out;
-  transition: transform 200ms ease-in-out;
-  -webkit-transform: translateY(-120%);
-  transform: translateY(-120%);
-  -moz-transform: translateY(-120%);
-  -o-transform: translateY(-120%);
+  -webkit-transition: 300ms ease-in-out;
+  -moz-transition: 300ms ease-in-out;
+  -o-transition: 300ms ease-in-out;
+  transition: 300ms ease-in-out;
+  -webkit-transform: translateY(-300%);
+  transform: translateY(-300%);
+  -moz-transform: translateY(-300%);
+  -o-transform: translateY(-300%);
+  opacity: 0.0;
   will-change: transform;
 }
 
