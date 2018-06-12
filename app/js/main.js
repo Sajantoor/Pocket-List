@@ -54,7 +54,6 @@ window.onload = function() {
   document.getElementById('Basic-Footer').style = "visibility: visible;";
   document.getElementById('Gradient-Thing').style = "visibility: visible;";
   document.getElementById('navigation').style = "visibility: visible;";
-  document.getElementById('expansion').style = "display: block;";
 }
 
 // Grabs the value and then pushes it to dom and local storage
@@ -343,7 +342,7 @@ function colourPicker() {
 
     if (list === todo) {
       window.swipe = false;
-      document.getElementById('colorPopUp').style = "-webkit-transform: none; transform: none; opacity: 1.0;";
+      document.getElementById('colorPopUp').style = "-webkit-transform: none; transform: none; opacity: 1.0; visibility: visible";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
 
