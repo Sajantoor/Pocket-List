@@ -608,7 +608,7 @@ function expandList() {
 
         var previewSrc = previewAgain.src;
         var img = li.childNodes[5].childNodes[0].childNodes[0];
-        expansionBox.style = "display: block; height: 50%; top: 25%;";
+        expansionBox.style = "-webkit-transform: none; transform: none; height: 50%; top: 25%; opacity: 1.0;";
         uploadContainer.style = "display: block; width: 100%;";
         previewAgain.style = "visibility: visible; display:block;";
 
@@ -699,6 +699,7 @@ function expandList() {
 }
 
 
+
 // Change styling stuff
 function previewImage() {
     file.style = "visibility:visible; display:block;";
@@ -727,18 +728,10 @@ function previewFileOff() {
   document.getElementById('upload-label').removeAttribute('style');
 }
 
-// BUG: Expansion related bugs when adding a new image
 
 // FIXME: Forgot to add a remove option for todo lists lol.
 
-// HACK: Gotta cursor pointer a lot of clickable stuff so the user clearly knows it's clickable
-
-// HACK: Notification System
-
 // HACK: Local Storage Redesign for more than just text values
-
-/* HACK: Requires a expand option when clicking on a list item itself. This shows more options
-including notes and addition information, uploading a file otption and more.*/
 
 /* HACK: Requires a way to clear the completed items after 24 hours of real time. This value
 should be able to be changed by the user, in app settings and should be able to be turned off. */

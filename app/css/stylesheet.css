@@ -35,7 +35,7 @@ header #item {
   float: right;
   top: 5px;
   padding:  10px  35px 10px 0px;
-  font-size: 0.9em;
+  font-size: 1em;
   text-indent: 10px;
   color: #FFF;
   position: relative;
@@ -157,7 +157,7 @@ ul#todo li, ul#complete li {
   color: #000;
   width: 100%;
   min-height: 50px;
-  font-size: 0.9em;
+  font-size: 1em;
   float: left;
   padding: 10px 100px 20px 50px;
   margin-bottom: 10px;
@@ -446,7 +446,7 @@ input#List-Input {
   border: 0;
   height: 45px;
   padding:  10px  55px 10px 0px;
-  font-size: 0.9em;
+  font-size: 1em;
   text-indent: 10px;
   color: #000;
   border-radius: 5px 20px 20px 5px;
@@ -490,7 +490,7 @@ ul#todo-lists {
   color: #000;
   width: 80%;
   height: 50px;
-  font-size: 0.9em;
+  font-size: 1em;
   padding: 15px 0 0 0;
   margin-bottom: 15px;
   border-radius: 5px;
@@ -893,7 +893,7 @@ svg#closebuttonagain {
 
  #countDown {
    font-size: 0.8em;
-   padding: 5px 5px 5px 0px;
+   padding: 20px 5px 5px 0px;
    display: none;
  }
 /*
