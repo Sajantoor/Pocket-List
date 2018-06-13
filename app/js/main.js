@@ -113,10 +113,10 @@ document.getElementById('upload').onchange = function uploadFile() {
       alert('This file type is not yet supported, please choose an image.');
   }
 
-  upload.value = null;
   // Remove the previewed file
   file.addEventListener('click', function () {
     file.src = null;
+    upload.value = null;
       previewFileOff();
       console.log('Removed file!');
   })
@@ -182,7 +182,7 @@ function addItem(text, complete) {
   }
 
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
-  if (file.src) {
+  if (document.getElementById('preview').src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
 
     newImage.src = file.src;
@@ -190,6 +190,7 @@ function addItem(text, complete) {
 
     link.href = blob;
     link.setAttribute('download', fileName);
+    upload.value = null;
   }
 
 // Append Child of parent nodes
@@ -726,8 +727,6 @@ function previewFileOff() {
   document.getElementById('upload-label').removeAttribute('style');
 }
 
-
-// BUG: Undefined Image Bug only with the upload image uption when creating a new list item
 // BUG: Expansion related bugs when adding a new image
 
 // FIXME: Forgot to add a remove option for todo lists lol.
