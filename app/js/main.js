@@ -362,7 +362,7 @@ function colourPicker() {
       })
 
       blue.addEventListener('click', function () {
-        element.style = "background-color: #30a0ff;"
+        element.style = "";
           repetition();
       })
 
@@ -466,7 +466,7 @@ function checkDistance() {
     distanceY = (distanceY * -1);
   }
 
-  if (distanceY < 30) {
+  if (distanceY < 50) {
     verticalDistance = true;
   } else {
     verticalDistance = false;
@@ -475,11 +475,13 @@ function checkDistance() {
 
     function handleGesture() {
      if (window.swipe && verticalDistance) {
-        if (touchendX >= (touchstartX + 25)) {
+        if (touchendX >= (touchstartX + 65)) {
           openNavigation();
           window.swipe = false;
         }
         window.swipe = true;
+        verticalDistance = null;
+        distanceY = null;
       }
     }
   }
@@ -527,7 +529,7 @@ function expandList() {
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
-    //  document.getElementById('countDown').value = document.getElementById('dateValue').textContent;
+      document.getElementById('dynamic-li').focus();
       document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
@@ -650,7 +652,6 @@ function expandList() {
     function countDown() {
       var time = document.getElementById('time').value;
       countDownTimer.style = "display: block;";
-      document.getElementById('time').value = "";
       var complete = document.getElementById('complete');
 
       var countDownDate = new Date(time).getTime();
@@ -690,8 +691,8 @@ function expandList() {
           countDownTimer.style = "display: none;"
           countDownTimer.innerHTML = "";
         }
-
       }, 100)
+      document.getElementById('time').value = null;
     }
   }
 }
