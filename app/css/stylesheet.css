@@ -644,6 +644,9 @@ div#colorPopUp {
   transform: translateY(-300%);
   -moz-transform: translateY(-300%);
   -o-transform: translateY(-300%);
+  -webkit-opacity: 0.0;
+  -o-opacity: 0.0;
+  -moz-opacity: 0.0;
   opacity: 0.0;
   will-change: transform;
 }
