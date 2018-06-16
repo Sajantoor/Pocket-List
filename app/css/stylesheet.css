@@ -915,6 +915,7 @@ div#loadingScreen div img {
 }
 
 div#loadingScreen h1 {
+  padding: 10px;
   text-align: center;
   color: #000;
   font-weight: 500;
@@ -928,7 +929,7 @@ div#loadingScreen p {
   color: #000;
   font-weight: 300;
   position: relative;
-  top: 48%;
+  top: 46%;
   font-size: 15pt;
   animation-name: textDrop;
   animation-duration: 2s;
@@ -937,8 +938,8 @@ div#loadingScreen p {
 
 @keyframes textDrop {
   0% {opacity: 0.0}
-  75% {transform: translateY(70%); opacity: 1.0}
-  100% {transform: translateY(70%); opacity: 0.0}
+  75% {transform: translateY(20pt); opacity: 1.0}
+  100% {transform: translateY(20pt); opacity: 0.0}
 }
 
 /* Version 1 of the animation
