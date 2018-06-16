@@ -43,17 +43,15 @@ function generateTodoList() {
 // Gets the Local Storage Array and Generates the todo and complete list
 generateTodoList();
 progress();
-focus();
+startUp();
+
+setTimeout(function loadIn() {
+  document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
+}, 2000)
 
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
-function focus() {
+function startUp() {
   document.getElementById('item').focus();
-}
-
-window.onload = function() {
-  document.getElementById('Basic-Footer').style = "visibility: visible;";
-  document.getElementById('Gradient-Thing').style = "visibility: visible;";
-  document.getElementById('navigation').style = "visibility: visible;";
 }
 
 // Grabs the value and then pushes it to dom and local storage
@@ -343,7 +341,7 @@ function colourPicker() {
 
     if (list === todo) {
       window.swipe = false;
-      document.getElementById('colorPopUp').style = "-webkit-transform: none; transform: none; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
+      document.getElementById('colorPopUp').style = "visibility: visible; opacity: 1.0; webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
 
@@ -512,13 +510,13 @@ function expandList() {
     var countDownTimer = li.childNodes[7];
 
     if (img.src) {
-      expansionBox.style = "-webkit-transform: none; transform: none; height: 50%; top: 25%; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
+      expansionBox.style = "height: 50%; top: 25%; visibility: visible; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
       uploadContainer.style = "display: block; width: 100%;";
       previewAgain.src = img.src;
       previewAgain.style = "visibility: visible; display: block;";
       spiderman();
     } else {
-      expansionBox.style = "-webkit-transform: none; transform: none; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
+      expansionBox.style = "visibility: visible; opacity: 1.0; webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
       spiderman();
     }
 
@@ -530,7 +528,6 @@ function expandList() {
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
-      document.getElementById('dynamic-li').focus();
       document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
@@ -702,19 +699,19 @@ function expandList() {
 
 // Change styling stuff
 function previewImage() {
-    file.style = "visibility:visible; display:block;";
-    document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
-    document.getElementById('header').style = "height:190px;";
-    document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
-    document.getElementById('todo').style = "top: 200px;";
-    document.getElementById('complete').style = "top:200px;";
-    document.getElementById('upload-label').style = "mix-blend-mode: difference;"
-  }
+  file.style = "visibility:visible; display:block;";
+  document.getElementById('upload-contain').style = "width:calc(100% - 34px); float: right;";
+  document.getElementById('header').style = "height:190px;";
+  document.getElementById('item').style = "padding: 20px 0px 131px 0px;";
+  document.getElementById('todo').style = "top: 200px;";
+  document.getElementById('complete').style = "top:200px;";
+  document.getElementById('upload-label').style = "mix-blend-mode: difference;"
+}
 // Preview File
 function previewFile() {
-    file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
-    document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
-  }
+  file.style = "visibility: visible; display: block; width: 30px; height: 30px;";
+  document.getElementById('upload-contain').style = "visibility: visible; display: block; width: 30px; height: 30px; bottom: 25pt; float: right; margin-right:0;";
+}
 
 // Reseting changed styling
 function previewFileOff() {
