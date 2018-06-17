@@ -20,13 +20,34 @@ if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
 }
 
-var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
+ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
   todo: [],
   complete: []
 };
 
+var liData = {
+  "text": null,
+  "img": null,
+  "link": null,
+  "imgName": null,
+  "todo": true,
+  "label": null,
+  "paragraph": null,
+  "timeValue": null,
+}
+
+function push() {
+  if (liData.todo) {
+    data.todo.push(liData);
+  } else if (liData.todo = false) {
+    data.complete.push(liData);
+  }
+  console.log(data);
+//  dataObject();
+}
+
 // Generates Todo List on Startup
-function generateTodoList() {
+/* function generateTodoList() {
   if (!data.todo.length && !data.complete.length) return;
 
   for (var i = 0; i < data.todo.length; i++) {
@@ -38,16 +59,16 @@ function generateTodoList() {
     var value = data.complete[j];
     addItem(value, true);
   }
-}
+} */
 
 // Gets the Local Storage Array and Generates the todo and complete list
-generateTodoList();
+// generateTodoList();
 progress();
 startUp();
 
-setTimeout(function loadIn() {
+/* setTimeout(function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
-}, 2000)
+}, 2000) */
 
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function startUp() {
@@ -61,8 +82,8 @@ function createItem() {
     if (value) {
       addItem(value.replace(/\s+/g,' ').trim());
       document.getElementById('item').value = "";
-      data.todo.push(value.replace(/\s+/g,' ').trim());
-      dataObject();
+//      data.todo.push(value.replace(/\s+/g,' ').trim());
+//      dataObject();
     } else {
       document.getElementById('item').value = "";
       alert('Error: Invalid entry, please add text to your entry!');
@@ -119,6 +140,7 @@ document.getElementById('upload').onchange = function uploadFile() {
       console.log('Removed file!');
   })
 }
+
 
 function dataObject() {
   localStorage.setItem('todoList', JSON.stringify(data));
@@ -184,10 +206,14 @@ function addItem(text, complete) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
 
     newImage.src = file.src;
+    liData.img = file.src;
     container.style = "display: block;";
 
     link.href = blob;
+    liData.link = blob;
     link.setAttribute('download', fileName);
+    liData.imgName = fileName;
+
     upload.value = null;
   }
 
@@ -202,6 +228,10 @@ function addItem(text, complete) {
 
   clickBox.addEventListener('click', expandList);
   progress();
+
+  liData.text = text;
+  console.log(liData);
+  push();
 }
 
 // Remove Item
@@ -212,9 +242,9 @@ function removeItem() {
   var value = item.innerText;
 // Remove item from local storage
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(value), 1);
+    data.todo.splice(data.todo.indexOf(item), 1);
   } else {
-    data.complete.splice(data.complete.indexOf(value), 1);
+    data.complete.splice(data.complete.indexOf(item), 1);
   }
   dataObject();
 // Remove Item From DOM
@@ -230,14 +260,15 @@ function completeItem() {
   var label = this.parentNode.previousSibling;
 // Remove from current array / list and move to the other array / list
 if (id === 'todo') {
-  data.todo.splice(data.todo.indexOf(value), 1);
-  data.complete.push(value);
+  data.todo.splice(data.todo.indexOf(item), 1);
+  data.complete.push(item);
   label.style = "background-color: #2ecc71;"
 } else {
-  data.complete.splice(data.complete.indexOf(value), 1);
-  data.todo.push(value);
+  data.complete.splice(data.complete.indexOf(item), 1);
+  data.todo.push(item);
   label.removeAttribute('style');
 }
+
   dataObject();
 
   // Complete Toggle
