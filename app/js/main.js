@@ -21,8 +21,7 @@ if (isIE()){
 }
 
  var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
-  todo: [],
-  complete: []
+   todo: [],
 };
 
 var liData = {
@@ -34,6 +33,7 @@ var liData = {
   "label": null,
   "paragraph": null,
   "timeValue": null,
+  "timeCompleted": null,
 }
 
 function push() {
@@ -230,7 +230,6 @@ function addItem(text, complete) {
   progress();
 
   liData.text = text;
-  console.log(liData);
   push();
 }
 
@@ -240,11 +239,24 @@ function removeItem() {
   var parent = item.parentNode;
   var id = parent.id;
   var value = item.innerText;
+  var length = parent.children.length;
+
+// Find the position of the li that was removed
+  var position = 0;
+   var currentNode = item;
+   var firstNode = parent.firstChild;
+   while(firstNode != currentNode) {
+       position++;
+       currentNode = currentNode.previousSibling;
+   }
+
 // Remove item from local storage
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(item), 1);
+
+    data.todo.splice(data.todo.indexOf(position), 1);
+    console.log(data);
   } else {
-    data.complete.splice(data.complete.indexOf(item), 1);
+  //  data.complete.splice(data.complete.indexOf(item), 1);
   }
   dataObject();
 // Remove Item From DOM
@@ -479,12 +491,10 @@ function colourPicker() {
 
     gestureZone.addEventListener('touchstart', function(event) {
       touchstartY = event.changedTouches[0].screenY;
-    //  console.log(touchstartY);
     }, false);
 
     gestureZone.addEventListener('touchend', function(event) {
       touchendY = event.changedTouches[0].screenY;
-    //  console.log(touchendY);
       checkDistance();
       handleGesture();
     }, false);
@@ -725,8 +735,6 @@ function expandList() {
     }
   }
 }
-
-
 
 // Change styling stuff
 function previewImage() {
