@@ -1,3 +1,7 @@
+// Literally all that's left todo is that I need to grab the thing from local storage and change it when expanded.
+// Then I got to do the multiple todo lists with JSON
+
+var multiList = 'General';
 var removeSVG = '<svg id="removetodo" fill="#c0cecb" x="0px" y="0px" viewBox="0 0 22 22"><g><g><path class="st0" d="M16.1,3.6h-1.9V3.3c0-1.3-1-2.3-2.3-2.3h-1.7C8.9,1,7.8,2,7.8,3.3v0.2H5.9c-1.3,0-2.3,1-2.3,2.3v1.3c0,0.5,0.4,0.9,0.9,1v10.5c0,1.3,1,2.3,2.3,2.3h8.5c1.3,0,2.3-1,2.3-2.3V8.2c0.5-0.1,0.9-0.5,0.9-1V5.9C18.4,4.6,17.4,3.6,16.1,3.6z M9.1,3.3c0-0.6,0.5-1.1,1.1-1.1h1.7c0.6,0,1.1,0.5,1.1,1.1v0.2H9.1V3.3z M16.3,18.7c0,0.6-0.5,1.1-1.1,1.1H6.7c-0.6,0-1.1-0.5-1.1-1.1V8.2h10.6L16.3,18.7L16.3,18.7z M17.2,7H4.8V5.9c0-0.6,0.5-1.1,1.1-1.1h10.2c0.6,0,1.1,0.5,1.1,1.1V7z"/></g><g><g><path class="st0" d="M11,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v6.8C11.6,17.7,11.4,18,11,18z"/></g><g><path class="st0" d="M8,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8C7.4,10.2,7.7,10,8,10c0.4,0,0.6,0.3,0.6,0.6v6.8C8.7,17.7,8.4,18,8,18z"/></g><g><path class="st0" d="M14,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6c0.4,0,0.6,0.3,0.6,0.6v6.8C14.6,17.7,14.3,18,14,18z"/></g></g></g></svg>';
 var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 var closeSVG = '<svg fill="#FFF" id="closebuttonagain" height="30" viewBox="0 0 24 24" width="30" xmlns="http://www.w3.org/2000/svg"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/></svg>'
@@ -27,7 +31,6 @@ if (isIE()){
 var liData = {
   "text": null,
   "img": null,
-  "link": null,
   "imgName": null,
   "todo": true,
   "label": null,
@@ -38,12 +41,13 @@ var liData = {
 
 function push() {
   if (liData.todo) {
-    data.todo.push(liData);
+    var obj = JSON.stringify(liData);
+    data.todo.push(obj);
+    console.log(data);
   } else if (liData.todo = false) {
     data.complete.push(liData);
   }
-  console.log(data);
-//  dataObject();
+     dataObject();
 }
 
 // Generates Todo List on Startup
@@ -143,7 +147,7 @@ document.getElementById('upload').onchange = function uploadFile() {
 
 
 function dataObject() {
-  localStorage.setItem('todoList', JSON.stringify(data));
+  localStorage.setItem('todoList', data.todo);
 }
 
 // Add List Object To the DOM
@@ -206,14 +210,9 @@ function addItem(text, complete) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
 
     newImage.src = file.src;
-    liData.img = file.src;
     container.style = "display: block;";
-
     link.href = blob;
-    liData.link = blob;
     link.setAttribute('download', fileName);
-    liData.imgName = fileName;
-
     upload.value = null;
   }
 
@@ -230,6 +229,8 @@ function addItem(text, complete) {
   progress();
 
   liData.text = text;
+  liData.img = file.src;
+  liData.imgName = fileName;
   push();
 }
 
@@ -243,8 +244,8 @@ function removeItem() {
 
 // Find the position of the li that was removed
   var position = 0;
-   var currentNode = item;
-   var firstNode = parent.firstChild;
+  var currentNode = item;
+  var firstNode = parent.firstChild;
    while(firstNode != currentNode) {
        position++;
        currentNode = currentNode.previousSibling;
@@ -252,11 +253,10 @@ function removeItem() {
 
 // Remove item from local storage
   if (id === 'todo') {
-
     data.todo.splice(data.todo.indexOf(position), 1);
     console.log(data);
   } else {
-  //  data.complete.splice(data.complete.indexOf(item), 1);
+    data.complete.splice(data.complete.indexOf(position), 1);
   }
   dataObject();
 // Remove Item From DOM
@@ -382,6 +382,16 @@ function colourPicker() {
     var list = element.parentNode.parentNode;
     var todo = document.getElementById('todo');
 
+    var position = 0;
+    var currentNode = this.parentNode;
+    console.log(currentNode);
+    var firstNode = parent.firstChild;
+     while(firstNode != currentNode) {
+         position++;
+         currentNode = currentNode.previousSibling;
+     }
+
+
     if (list === todo) {
       window.swipe = false;
       document.getElementById('colorPopUp').style = "visibility: visible; opacity: 1.0; webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
@@ -463,6 +473,9 @@ function colourPicker() {
       }
 
       function repetition() {
+
+          var obj = JSON.parse(data.todo[position]);
+          console.log(obj);
           document.getElementById('colorPopUp').removeAttribute('style');
           document.getElementById('overlay').removeAttribute('style');
           document.getElementById('container').removeAttribute('style');
