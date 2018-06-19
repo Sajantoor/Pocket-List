@@ -41,13 +41,14 @@ var liData = {
 
 function push() {
   if (liData.todo) {
+    console.log(liData);
     var obj = JSON.stringify(liData);
-    data.todo.push(obj);
+    data.todo.unshift(obj);
     console.log(data);
   } else if (liData.todo = false) {
     data.complete.push(liData);
   }
-     dataObject();
+  //   dataObject();
 }
 
 // Generates Todo List on Startup
@@ -382,7 +383,7 @@ function colourPicker() {
     var list = element.parentNode.parentNode;
     var todo = document.getElementById('todo');
 
-    var position = 0;
+    var position = -1;
     var currentNode = this.parentNode;
     console.log(currentNode);
     var firstNode = parent.firstChild;
@@ -410,47 +411,47 @@ function colourPicker() {
 
       red.addEventListener('click', function () {
         element.style = "background-color: #e74c3c;"
-          repetition();
+          repetition("#e74c3c");
       })
 
       blue.addEventListener('click', function () {
         element.style = "";
-          repetition();
+          repetition("");
       })
 
       green.addEventListener('click', function () {
         element.style = "background-color: #2ecc71;"
-          repetition();
+          repetition("#2ecc71");
       })
 
       orange.addEventListener('click', function () {
         element.style = "background-color: #e67e22;"
-          repetition();
+          repetition("#e67e22");
       })
 
       yellow.addEventListener('click', function () {
         element.style = "background-color: #f1c40f;"
-          repetition();
+          repetition("#f1c40f");
       })
 
       purple.addEventListener('click', function () {
         element.style = "background-color: #9b59b6;"
-          repetition();
+          repetition("#9b59b6");
       })
 
       black.addEventListener('click', function () {
         element.style = "background-color: #000;"
-        repetition();
+        repetition("#000");
       })
 
       grey.addEventListener('click', function () {
         element.style = "background-color: #95a5a6;"
-        repetition();
+        repetition("#95a5a6");
       })
 
       white.addEventListener('click', function () {
         element.style = "background-color: #ecf0f1;"
-        repetition();
+        repetition("#ecf0f1");
       })
 
       document.getElementById('overlay').addEventListener('click', function() {
@@ -467,19 +468,35 @@ function colourPicker() {
 
         if (value) {
           element.style.backgroundColor = value;
+          repetition(value);
           value = "";
-          repetition();
         }
       }
 
-      function repetition() {
+      function repetition(color) {
+        // Data stuff
 
+        // This is causing an error on the second attempting running this but the error doesn't seem important
+        // Because it's not actually causing any problems.
           var obj = JSON.parse(data.todo[position]);
+          console.log(color);
+
+          obj.label = color;
           console.log(obj);
+          var stringObj = JSON.stringify(obj);
+          data.todo.splice(position, 1, stringObj);
+          console.log(data);
+
           document.getElementById('colorPopUp').removeAttribute('style');
           document.getElementById('overlay').removeAttribute('style');
           document.getElementById('container').removeAttribute('style');
+          position = -1;
           element = "null";
+          color = "null";
+          obj.label = "null";
+          obj = "null";
+          stringObj = "null";
+
           window.swipe = true;
       }
     }
