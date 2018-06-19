@@ -1,6 +1,3 @@
-// Literally all that's left todo is that I need to grab the thing from local storage and change it when expanded.
-// Then I got to do the multiple todo lists with JSON
-
 var multiList = 'General';
 var removeSVG = '<svg id="removetodo" fill="#c0cecb" x="0px" y="0px" viewBox="0 0 22 22"><g><g><path class="st0" d="M16.1,3.6h-1.9V3.3c0-1.3-1-2.3-2.3-2.3h-1.7C8.9,1,7.8,2,7.8,3.3v0.2H5.9c-1.3,0-2.3,1-2.3,2.3v1.3c0,0.5,0.4,0.9,0.9,1v10.5c0,1.3,1,2.3,2.3,2.3h8.5c1.3,0,2.3-1,2.3-2.3V8.2c0.5-0.1,0.9-0.5,0.9-1V5.9C18.4,4.6,17.4,3.6,16.1,3.6z M9.1,3.3c0-0.6,0.5-1.1,1.1-1.1h1.7c0.6,0,1.1,0.5,1.1,1.1v0.2H9.1V3.3z M16.3,18.7c0,0.6-0.5,1.1-1.1,1.1H6.7c-0.6,0-1.1-0.5-1.1-1.1V8.2h10.6L16.3,18.7L16.3,18.7z M17.2,7H4.8V5.9c0-0.6,0.5-1.1,1.1-1.1h10.2c0.6,0,1.1,0.5,1.1,1.1V7z"/></g><g><g><path class="st0" d="M11,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v6.8C11.6,17.7,11.4,18,11,18z"/></g><g><path class="st0" d="M8,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8C7.4,10.2,7.7,10,8,10c0.4,0,0.6,0.3,0.6,0.6v6.8C8.7,17.7,8.4,18,8,18z"/></g><g><path class="st0" d="M14,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6c0.4,0,0.6,0.3,0.6,0.6v6.8C14.6,17.7,14.3,18,14,18z"/></g></g></g></svg>';
 var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
@@ -254,12 +251,12 @@ function removeItem() {
 
 // Remove item from local storage
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(position), 1);
+    data.todo.splice(position, 1);
     console.log(data);
   } else {
     data.complete.splice(data.complete.indexOf(position), 1);
   }
-  dataObject();
+  // dataObject();
 // Remove Item From DOM
   item.remove();
   progress();
@@ -271,18 +268,41 @@ function completeItem() {
   var id = parent.id;
   var value = item.innerText;
   var label = this.parentNode.previousSibling;
+
+  var position = -1;
+  var currentNode = this.parentNode;
+  var firstNode = parent.firstChild;
+/*   while(firstNode != currentNode) {
+  //    currentNode = currentNode.previousSibling;
+    //  position++;
+  } */
+
 // Remove from current array / list and move to the other array / list
 if (id === 'todo') {
-  data.todo.splice(data.todo.indexOf(item), 1);
-  data.complete.push(item);
   label.style = "background-color: #2ecc71;"
+/*
+  var now = new Date().getTime();
+  var obj = JSON.parse(data.todo[position]);
+  obj.timeCompleted = now;
+  obj.todo = false;
+  obj.label = "#2ecc71";
+  var stringObj = JSON.stringify(obj);
+  data.todo.splice(position, 1, stringObj);
+  console.log(data); */
 } else {
-  data.complete.splice(data.complete.indexOf(item), 1);
-  data.todo.push(item);
+/*  var todoLength = document.getElementById('todo').length;
+  var completePos = todoLength + position;
+  var obj = JSON.parse(data.todo[position]);
+  obj.timeCompleted = "null";
+  obj.todo = true;
+  obj.label = "";
+  var stringObj = JSON.stringify(obj);
+  data.todo.splice(todoLength, 1, stringObj);
+  console.log(data); */
   label.removeAttribute('style');
 }
 
-  dataObject();
+//  dataObject();
 
   // Complete Toggle
   var target = (id === 'todo') ? completeList:todo;
@@ -388,8 +408,8 @@ function colourPicker() {
     console.log(currentNode);
     var firstNode = parent.firstChild;
      while(firstNode != currentNode) {
-         position++;
-         currentNode = currentNode.previousSibling;
+        currentNode = currentNode.previousSibling;
+        position++;
      }
 
 
@@ -479,10 +499,7 @@ function colourPicker() {
         // This is causing an error on the second attempting running this but the error doesn't seem important
         // Because it's not actually causing any problems.
           var obj = JSON.parse(data.todo[position]);
-          console.log(color);
-
           obj.label = color;
-          console.log(obj);
           var stringObj = JSON.stringify(obj);
           data.todo.splice(position, 1, stringObj);
           console.log(data);
@@ -496,7 +513,6 @@ function colourPicker() {
           obj.label = "null";
           obj = "null";
           stringObj = "null";
-
           window.swipe = true;
       }
     }
@@ -580,6 +596,15 @@ function expandList() {
     var timeValue = li.childNodes[6];
     var countDownTimer = li.childNodes[7];
 
+    // Data stuff
+    var position = -1;
+    var currentNode = this.parentNode;
+    var firstNode = parent.firstChild;
+     while(firstNode != currentNode) {
+        currentNode = currentNode.previousSibling;
+        position++;
+     }
+
     if (img.src) {
       expansionBox.style = "height: 50%; top: 25%; visibility: visible; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
       uploadContainer.style = "display: block; width: 100%;";
@@ -640,6 +665,13 @@ function expandList() {
       expansionBox.removeAttribute('style');
       document.getElementById('overlay').removeAttribute('style');
       document.getElementById('container').removeAttribute('style');
+
+      var obj = JSON.parse(data.todo[position]);
+      obj.text = dynamicLi.innerText.replace(/\s+/g,' ').trim();
+      obj.paragraph = notes.innerText.replace(/\s+/g,' ').trim();
+      var stringObj = JSON.stringify(obj);
+      data.todo.splice(position, 1, stringObj);
+      console.log(data);
       clear();
     }
 
@@ -653,6 +685,9 @@ function expandList() {
       img = "null";
       previewSrc = "null";
       img = "null";
+      obj = "null";
+      position = -1;
+      stringObj = "null";
       timeValue = "null";
       window.swipe = true;
       document.getElementById('time').value = null;
@@ -693,6 +728,7 @@ function expandList() {
           img.setAttribute('src', previewSrc);
           img.parentNode.setAttribute('download', fileName);
           img.parentNode.setAttribute('href', addedBlob);
+          updateImageData();
         }
 
         function addImage() {
@@ -700,6 +736,15 @@ function expandList() {
           img.parentNode.parentNode.style = "display: block;";
           img.parentNode.setAttribute('download', fileName);
           img.parentNode.setAttribute('href', addedBlob);
+          updateImageData();
+        }
+
+        function updateImageData() {
+          var obj = JSON.parse(data.todo[position]);
+          obj.img = img.src;
+          obj.imgName = fileName;
+          var stringObj = JSON.stringify(obj);
+          data.todo.splice(position, 1, stringObj);
         }
       }
     }
@@ -724,6 +769,12 @@ function expandList() {
       var complete = document.getElementById('complete');
 
       var countDownDate = new Date(time).getTime();
+
+      var obj = JSON.parse(data.todo[position]);
+      obj.timeValue = countDownDate;
+      var stringObj = JSON.stringify(obj);
+      data.todo.splice(position, 1, stringObj);
+
       var x = setInterval(function() {
 
         var now = new Date().getTime();
