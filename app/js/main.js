@@ -13,7 +13,7 @@ navListener();
 
 function isIE() {
   ua = navigator.userAgent;
-  /* MSIE used to detect old browsers and Trident used to newer ones*/
+  // MSIE used to detect old browsers and Trident used to newer ones
   var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
   return is_ie;
 }
@@ -21,7 +21,7 @@ if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
 }
 
- var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
+ var data = (localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')):{
    todo: [],
 };
 
@@ -42,29 +42,22 @@ function push() {
     var obj = JSON.stringify(liData);
     data.todo.unshift(obj);
     console.log(data);
-  } else if (liData.todo = false) {
-    data.complete.push(liData);
   }
-  //   dataObject();
+    dataObject();
 }
 
 // Generates Todo List on Startup
-/* function generateTodoList() {
-  if (!data.todo.length && !data.complete.length) return;
+ function renderTodoList() {
+  if (!data.todo.length) return;
 
   for (var i = 0; i < data.todo.length; i++) {
-    var value = data.todo[i];
+    var value = data.todo[i].text;
     addItem(value);
   }
-
-  for (var j = 0; j < data.complete.length; j++) {
-    var value = data.complete[j];
-    addItem(value, true);
-  }
-} */
+}
 
 // Gets the Local Storage Array and Generates the todo and complete list
-// generateTodoList();
+ // renderTodoList();
 progress();
 startUp();
 
@@ -84,8 +77,6 @@ function createItem() {
     if (value) {
       addItem(value.replace(/\s+/g,' ').trim());
       document.getElementById('item').value = "";
-//      data.todo.push(value.replace(/\s+/g,' ').trim());
-//      dataObject();
     } else {
       document.getElementById('item').value = "";
       alert('Error: Invalid entry, please add text to your entry!');
@@ -145,7 +136,7 @@ document.getElementById('upload').onchange = function uploadFile() {
 
 
 function dataObject() {
-  localStorage.setItem('todoList', data.todo);
+  localStorage.setItem('todo', JSON.stringify(data));
 }
 
 // Add List Object To the DOM
@@ -256,7 +247,7 @@ function removeItem() {
   } else {
     data.complete.splice(data.complete.indexOf(position), 1);
   }
-  // dataObject();
+  dataObject();
 // Remove Item From DOM
   item.remove();
   progress();
@@ -269,40 +260,44 @@ function completeItem() {
   var value = item.innerText;
   var label = this.parentNode.previousSibling;
 
-  var position = -1;
-  var currentNode = this.parentNode;
+  var position = 0;
+  var currentNode = this.parentNode.parentNode;
   var firstNode = parent.firstChild;
-/*   while(firstNode != currentNode) {
-  //    currentNode = currentNode.previousSibling;
-    //  position++;
-  } */
+  while(firstNode != currentNode) {
+      currentNode = currentNode.previousSibling;
+      position++;
+  }
 
 // Remove from current array / list and move to the other array / list
 if (id === 'todo') {
   label.style = "background-color: #2ecc71;"
-/*
+
+  // Data stuff
   var now = new Date().getTime();
   var obj = JSON.parse(data.todo[position]);
   obj.timeCompleted = now;
   obj.todo = false;
   obj.label = "#2ecc71";
   var stringObj = JSON.stringify(obj);
-  data.todo.splice(position, 1, stringObj);
-  console.log(data); */
+  data.todo.splice(position, 1);
+  data.todo.push(stringObj)
 } else {
-/*  var todoLength = document.getElementById('todo').length;
-  var completePos = todoLength + position;
-  var obj = JSON.parse(data.todo[position]);
-  obj.timeCompleted = "null";
-  obj.todo = true;
-  obj.label = "";
-  var stringObj = JSON.stringify(obj);
-  data.todo.splice(todoLength, 1, stringObj);
-  console.log(data); */
   label.removeAttribute('style');
+
+  // Data Stuff
+  var todo = document.getElementById('todo');
+  var completePos = todo.childElementCount + position;
+  var obj = JSON.parse(data.todo[completePos]);
+  obj.timeCompleted = null;
+  obj.todo = true;
+  obj.label = null;
+  var stringObj = JSON.stringify(obj);
+  data.todo.splice(completePos, 1);
+  data.todo.unshift(stringObj);
+
 }
 
-//  dataObject();
+  dataObject();
 
   // Complete Toggle
   var target = (id === 'todo') ? completeList:todo;
@@ -502,7 +497,7 @@ function colourPicker() {
           obj.label = color;
           var stringObj = JSON.stringify(obj);
           data.todo.splice(position, 1, stringObj);
-          console.log(data);
+          dataObject();
 
           document.getElementById('colorPopUp').removeAttribute('style');
           document.getElementById('overlay').removeAttribute('style');
@@ -514,6 +509,7 @@ function colourPicker() {
           obj = "null";
           stringObj = "null";
           window.swipe = true;
+
       }
     }
 }
@@ -659,20 +655,21 @@ function expandList() {
     }
 
     function removeExpansion() {
-      expansionBox.removeAttribute('style');
-      liText.textContent = dynamicLi.innerText.replace(/\s+/g,' ').trim();
-      paragraph.innerText = notes.innerText.replace(/\s+/g,' ').trim();
-      expansionBox.removeAttribute('style');
-      document.getElementById('overlay').removeAttribute('style');
-      document.getElementById('container').removeAttribute('style');
+        expansionBox.removeAttribute('style');
+        liText.textContent = dynamicLi.innerText.replace(/\s+/g,' ').trim();
+        paragraph.innerText = notes.innerText.replace(/\s+/g,' ').trim();
+        expansionBox.removeAttribute('style');
+        document.getElementById('overlay').removeAttribute('style');
+        document.getElementById('container').removeAttribute('style');
 
-      var obj = JSON.parse(data.todo[position]);
-      obj.text = dynamicLi.innerText.replace(/\s+/g,' ').trim();
-      obj.paragraph = notes.innerText.replace(/\s+/g,' ').trim();
-      var stringObj = JSON.stringify(obj);
-      data.todo.splice(position, 1, stringObj);
-      console.log(data);
-      clear();
+        var obj = JSON.parse(data.todo[position]);
+        obj.text = dynamicLi.innerText.replace(/\s+/g,' ').trim();
+        obj.paragraph = notes.innerText.replace(/\s+/g,' ').trim();
+        var stringObj = JSON.stringify(obj);
+        data.todo.splice(position, 1, stringObj);
+        dataObject();
+        clear();
+
     }
 
     function clear() {
@@ -711,7 +708,7 @@ function expandList() {
 
         var previewSrc = previewAgain.src;
         var img = li.childNodes[5].childNodes[0].childNodes[0];
-        expansionBox.style = "-webkit-transform: none; transform: none; height: 50%; top: 25%; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
+        expansionBox.style = "visibility: visible; -webkit-transform: none; transform: none; height: 50%; top: 25%; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
         uploadContainer.style = "display: block; width: 100%;";
         previewAgain.style = "visibility: visible; display:block;";
 
@@ -745,6 +742,7 @@ function expandList() {
           obj.imgName = fileName;
           var stringObj = JSON.stringify(obj);
           data.todo.splice(position, 1, stringObj);
+          dataObject();
         }
       }
     }
@@ -774,6 +772,7 @@ function expandList() {
       obj.timeValue = countDownDate;
       var stringObj = JSON.stringify(obj);
       data.todo.splice(position, 1, stringObj);
+      dataObject();
 
       var x = setInterval(function() {
 
