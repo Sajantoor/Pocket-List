@@ -8,6 +8,7 @@ var file = document.getElementById('preview');
 var blob = null;
 var addedBlob = null;
 var swipe = true;
+var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
 navListener();
 
@@ -40,10 +41,8 @@ var liData = {
 
 function push() {
   if (liData.todo) {
-    console.log(liData);
     var obj = JSON.stringify(liData);
     data.todo.unshift(obj);
-    console.log(data);
   }
     dataObject();
 }
@@ -51,7 +50,6 @@ function push() {
 // Generates Todo List on Startup
  function renderTodoList() {
   if (!data.todo.length) return;
-      console.log(data);
 
   for (var i = 0; i < data.todo.length; i++) {
     var dataLi = JSON.parse(data.todo[i]);
@@ -172,7 +170,14 @@ document.getElementById('upload').onchange = function uploadFile() {
 
 
 function dataObject() {
-  localStorage.setItem('todo', JSON.stringify(data));
+  // if (indexedDB) {
+  //  var open = indexedDB.open('todo', 1);
+  //  var db = open.;
+  // } else {
+    localStorage.setItem('todo', JSON.stringify(data));
+    console.log(data);
+  // }
+
 }
 
 // Add List Object To the DOM
@@ -274,6 +279,7 @@ function addItem(text, completeData, fetched, imgData, imgNameData, labelData, p
       link.href = imgData;
     }
       label.style.backgroundColor = labelData;
+      paragraph.innerText = paragraphData;
 
       if (timeValueData) {
         timeValue.innerText = timeValueData;
@@ -347,21 +353,19 @@ if (id === 'todo') {
 
   // Data stuff
   var now = new Date().getTime();
-  console.log(now);
   var obj = JSON.parse(data.todo[position]);
   obj.timeCompleted = now;
   obj.todo = false;
   obj.label = "#2ecc71";
+  obj.timeValue = null;
   var stringObj = JSON.stringify(obj);
   data.todo.splice(position, 1);
   data.todo.push(stringObj);
+  item.childNodes[6].removeAttribute('style');
 } else {
   var complete = document.getElementById('complete');
   var todo = document.getElementById('todo');
-
-
   var position = complete.childElementCount -1;
-  console.log(position);
   var currentNode = this.parentNode.parentNode;
   var firstNode = parent.firstChild;
    while(firstNode != currentNode) {
@@ -374,7 +378,6 @@ if (id === 'todo') {
   label.removeAttribute('style');
 
   // Data Stuff
-
   var obj = JSON.parse(data.todo[position]);
   obj.timeCompleted = null;
   obj.todo = true;
@@ -465,7 +468,6 @@ function createNewList() {
     addList(value.replace(/\s+/g,' ').trim());
     document.getElementById('List-Input').value = "";
     data.list.push(value.replace(/\s+/g,' ').trim())
-    console.log(data.list);
   } else {
     document.getElementById('item').value = "";
     alert('Error: Invalid entry, please add text to your entry!');
@@ -489,13 +491,11 @@ function colourPicker() {
 
     var position = -1;
     var currentNode = this.parentNode;
-    console.log(currentNode);
     var firstNode = parent.firstChild;
      while(firstNode != currentNode) {
         currentNode = currentNode.previousSibling;
         position++;
      }
-
 
     if (list === todo) {
       window.swipe = false;
@@ -598,7 +598,6 @@ function colourPicker() {
           obj = "null";
           stringObj = "null";
           window.swipe = true;
-
       }
     }
 }
@@ -758,7 +757,6 @@ function expandList() {
         data.todo.splice(position, 1, stringObj);
         dataObject();
         clear();
-
     }
 
     function clear() {
