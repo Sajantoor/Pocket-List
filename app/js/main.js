@@ -46,18 +46,35 @@ function push() {
     dataObject();
 }
 
+console.log(data.todo.length);
+
+
 // Generates Todo List on Startup
  function renderTodoList() {
   if (!data.todo.length) return;
 
   for (var i = 0; i < data.todo.length; i++) {
-    var value = data.todo[i].text;
-    addItem(value);
+    var dataLi = JSON.parse(data.todo[i]);
+    var text = dataLi.text;
+
+    if (dataLi.todo) {
+      var completeData = false;
+    } else {
+      var completeData = true;
+    }
+
+    var fetched = true;
+    var imgData = dataLi.img;
+    var imgNameData = dataLi.imgName;
+    var labelData = dataLi.label;
+    var paragraphData = dataLi.paragraph;
+    var timeValueData = dataLi.timeValue;
+    addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData);
   }
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
- // renderTodoList();
+renderTodoList();
 progress();
 startUp();
 
@@ -140,8 +157,8 @@ function dataObject() {
 }
 
 // Add List Object To the DOM
-function addItem(text, complete) {
-  var todo = (complete) ? document.getElementById('complete'):document.getElementById('todo');
+function addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData) {
+  var todo = (completeData) ? document.getElementById('complete'):document.getElementById('todo');
 
   var newItem = document.createElement('li');
   newItem.innerHTML = text;
@@ -186,7 +203,16 @@ function addItem(text, complete) {
     newItem.appendChild(buttons);
     newItem.appendChild(clickBox);
     newItem.appendChild(paragraph);
-    todo.prepend(newItem);
+
+    if (fetched) {
+      todo.appendChild(newItem);
+      if (completeData) {
+        todo.prepend(newItem);
+      }
+    } else {
+      todo.prepend(newItem);
+    }
+
     link.appendChild(newImage);
     container.appendChild(link);
     newItem.appendChild(container);
@@ -197,7 +223,6 @@ function addItem(text, complete) {
 // Checks if preview has an image attached, if yes then it creates an image, div and link to download said image
   if (document.getElementById('preview').src) {
     var fileName = document.getElementById('upload').value.split('\\')[2];
-
     newImage.src = file.src;
     container.style = "display: block;";
     link.href = blob;
@@ -220,7 +245,20 @@ function addItem(text, complete) {
   liData.text = text;
   liData.img = file.src;
   liData.imgName = fileName;
-  push();
+
+  if (fetched) {
+    if (imgData) {
+      newImage.src = imgData;
+      container.style = "display: block;";
+      fileName = imgNameData;
+      link.setAttribute('download', fileName);
+      link.href = imgData;
+    }
+      label.style.backgroundColor = labelData;
+      timeValue.innerText = timeValueData;
+  } else {
+    push();
+  }
 }
 
 // Remove Item
@@ -280,7 +318,7 @@ if (id === 'todo') {
   obj.label = "#2ecc71";
   var stringObj = JSON.stringify(obj);
   data.todo.splice(position, 1);
-  data.todo.push(stringObj)
+  data.todo.push(stringObj);
 } else {
   label.removeAttribute('style');
 
@@ -294,7 +332,6 @@ if (id === 'todo') {
   var stringObj = JSON.stringify(obj);
   data.todo.splice(completePos, 1);
   data.todo.unshift(stringObj);
-
 }
 
   dataObject();
