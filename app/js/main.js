@@ -23,6 +23,7 @@ if (isIE()){
 
  var data = (localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')):{
    todo: [],
+   list: ["general"]
 };
 
 var liData = {
@@ -58,17 +59,36 @@ function push() {
 
     if (dataLi.todo) {
       var completeData = false;
+      ironman();
     } else {
       var completeData = true;
+      checkFinishTime();
+
+        function checkFinishTime() {
+          // Check if the time of the current item was 24 hours ago..
+          var time = dataLi.timeCompleted;
+          var timeExpired = (time + 86400000);
+          var now = new Date().getTime();
+          var timeDifference = (timeExpired - now);
+
+          if (timeDifference < 0) {
+            data.todo.splice(i, 1);
+            dataObject();
+          } else {
+            ironman();
+          }
+        }
     }
 
-    var fetched = true;
-    var imgData = dataLi.img;
-    var imgNameData = dataLi.imgName;
-    var labelData = dataLi.label;
-    var paragraphData = dataLi.paragraph;
-    var timeValueData = dataLi.timeValue;
-    addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData);
+    function ironman() {
+      var fetched = true;
+      var imgData = dataLi.img;
+      var imgNameData = dataLi.imgName;
+      var labelData = dataLi.label;
+      var paragraphData = dataLi.paragraph;
+      var timeValueData = dataLi.timeValue;
+      addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData);
+    }
   }
 }
 
@@ -254,7 +274,13 @@ function addItem(text, completeData, fetched, imgData, imgNameData, labelData, p
       link.href = imgData;
     }
       label.style.backgroundColor = labelData;
-      timeValue.innerText = timeValueData;
+
+      if (timeValueData) {
+        timeValue.innerText = timeValueData;
+        countDown.style = "display: block;";
+        countDownFunction(timeValueData, countDown);
+      }
+
   } else {
     push();
   }
@@ -321,6 +347,7 @@ if (id === 'todo') {
 
   // Data stuff
   var now = new Date().getTime();
+  console.log(now);
   var obj = JSON.parse(data.todo[position]);
   obj.timeCompleted = now;
   obj.todo = false;
@@ -437,6 +464,8 @@ function createNewList() {
   if (value) {
     addList(value.replace(/\s+/g,' ').trim());
     document.getElementById('List-Input').value = "";
+    data.list.push(value.replace(/\s+/g,' ').trim())
+    console.log(data.list);
   } else {
     document.getElementById('item').value = "";
     alert('Error: Invalid entry, please add text to your entry!');
@@ -833,47 +862,51 @@ function expandList() {
       var stringObj = JSON.stringify(obj);
       data.todo.splice(position, 1, stringObj);
       dataObject();
+      countDownFunction(countDownDate, countDownTimer);
 
-      var x = setInterval(function() {
-
-        var now = new Date().getTime();
-
-        var distance = countDownDate - now;
-
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        if (days === 0) {
-                countDownTimer.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-            if (hours === 0) {
-                countDownTimer.innerHTML = minutes + "m " + seconds + "s ";
-                if (minutes === 0) {
-                    countDownTimer.innerHTML = seconds + "s ";
-                }
-            }
-        } else {
-          countDownTimer.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-        }
-
-        if (distance < 0) {
-             clearInterval(x);
-             countDownTimer.innerHTML = "TIMES UP!";
-             countDownTimer.style = "display: block; color: #e74c3c;";
-           }
-
-        var list = countDownTimer.parentNode.parentNode;
-
-        if (list === complete) {
-          clearInterval(x);
-          countDownTimer.style = "display: none;"
-          countDownTimer.innerHTML = "";
-        }
-      }, 100)
       document.getElementById('time').value = null;
     }
   }
+}
+
+function countDownFunction(countDownDate, countDownTimer) {
+  var x = setInterval(function() {
+
+    var now = new Date().getTime();
+
+    var distance = countDownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    if (days === 0) {
+            countDownTimer.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+        if (hours === 0) {
+            countDownTimer.innerHTML = minutes + "m " + seconds + "s ";
+            if (minutes === 0) {
+                countDownTimer.innerHTML = seconds + "s ";
+            }
+        }
+    } else {
+      countDownTimer.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    }
+
+    if (distance < 0) {
+         clearInterval(x);
+         countDownTimer.innerHTML = "TIMES UP!";
+         countDownTimer.style = "display: block; color: #e74c3c;";
+       }
+
+    var list = countDownTimer.parentNode.parentNode;
+
+    if (list === complete) {
+      clearInterval(x);
+      countDownTimer.style = "display: none;"
+      countDownTimer.innerHTML = "";
+    }
+  }, 100)
 }
 
 // Change styling stuff
