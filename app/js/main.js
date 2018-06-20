@@ -34,6 +34,7 @@ var liData = {
   "paragraph": null,
   "timeValue": null,
   "timeCompleted": null,
+  "list": multiList,
 }
 
 function push() {
@@ -46,12 +47,10 @@ function push() {
     dataObject();
 }
 
-console.log(data.todo.length);
-
-
 // Generates Todo List on Startup
  function renderTodoList() {
   if (!data.todo.length) return;
+      console.log(data);
 
   for (var i = 0; i < data.todo.length; i++) {
     var dataLi = JSON.parse(data.todo[i]);
@@ -268,22 +267,32 @@ function removeItem() {
   var id = parent.id;
   var value = item.innerText;
   var length = parent.children.length;
+  var complete = document.getElementById('complete');
 
-// Find the position of the li that was removed
-  var position = 0;
-  var currentNode = item;
-  var firstNode = parent.firstChild;
-   while(firstNode != currentNode) {
-       position++;
-       currentNode = currentNode.previousSibling;
-   }
 
 // Remove item from local storage
   if (id === 'todo') {
+    // Find the position of the li that was removed
+    var position = 0;
+    var currentNode = this.parentNode.parentNode;
+    var firstNode = parent.firstChild;
+    while(firstNode != currentNode) {
+        currentNode = currentNode.previousSibling;
+        position++;
+    }
+
     data.todo.splice(position, 1);
-    console.log(data);
   } else {
-    data.complete.splice(data.complete.indexOf(position), 1);
+    var position = complete.childElementCount -1;
+    var currentNode = this.parentNode.parentNode;
+    var firstNode = parent.firstChild;
+     while(firstNode != currentNode) {
+         position--;
+         currentNode = currentNode.previousSibling;
+     }
+     position = position + todo.childElementCount;
+
+    data.todo.splice(position, 1);
   }
   dataObject();
 // Remove Item From DOM
@@ -298,6 +307,10 @@ function completeItem() {
   var value = item.innerText;
   var label = this.parentNode.previousSibling;
 
+// Remove from current array / list and move to the other array / list
+if (id === 'todo') {
+  label.style = "background-color: #2ecc71;";
+
   var position = 0;
   var currentNode = this.parentNode.parentNode;
   var firstNode = parent.firstChild;
@@ -305,10 +318,6 @@ function completeItem() {
       currentNode = currentNode.previousSibling;
       position++;
   }
-
-// Remove from current array / list and move to the other array / list
-if (id === 'todo') {
-  label.style = "background-color: #2ecc71;"
 
   // Data stuff
   var now = new Date().getTime();
@@ -320,17 +329,31 @@ if (id === 'todo') {
   data.todo.splice(position, 1);
   data.todo.push(stringObj);
 } else {
+  var complete = document.getElementById('complete');
+  var todo = document.getElementById('todo');
+
+
+  var position = complete.childElementCount -1;
+  console.log(position);
+  var currentNode = this.parentNode.parentNode;
+  var firstNode = parent.firstChild;
+   while(firstNode != currentNode) {
+       position--;
+       currentNode = currentNode.previousSibling;
+   }
+
+  position = position + todo.childElementCount;
+
   label.removeAttribute('style');
 
   // Data Stuff
-  var todo = document.getElementById('todo');
-  var completePos = todo.childElementCount + position;
-  var obj = JSON.parse(data.todo[completePos]);
+
+  var obj = JSON.parse(data.todo[position]);
   obj.timeCompleted = null;
   obj.todo = true;
   obj.label = null;
   var stringObj = JSON.stringify(obj);
-  data.todo.splice(completePos, 1);
+  data.todo.splice(position, 1);
   data.todo.unshift(stringObj);
 }
 
