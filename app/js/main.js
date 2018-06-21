@@ -8,8 +8,9 @@ var file = document.getElementById('preview');
 var blob = null;
 var addedBlob = null;
 var swipe = true;
-var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
+fetch();
 navListener();
 
 function isIE() {
@@ -22,10 +23,29 @@ if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
 }
 
- var data = (localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')):{
+ var data = {
    todo: [],
    list: ["general"]
 };
+
+
+
+function fetch() {
+    let request = window.indexedDB.open("todo", 1);
+
+    request.onsuccess = function(e) {
+      db = request.result;
+      tx = db.transaction("todoStore", "readwrite");
+      store = tx.objectStore("todoStore", "todo");
+      var thing = store.getAll();
+      thing.onsuccess = function(evt) {
+        var x = thing.result[0];
+        console.log(x);
+        data = x;
+    }
+  }
+}
+
 
 var liData = {
   "text": null,
@@ -51,8 +71,10 @@ function push() {
  function renderTodoList() {
   if (!data.todo.length) return;
 
+  var dataUpdated = JSON.stringify(data);
+  console.log(dataUpdated);
   for (var i = 0; i < data.todo.length; i++) {
-    var dataLi = JSON.parse(data.todo[i]);
+    var dataLi = dataUpdated[i];
     var text = dataLi.text;
 
     if (dataLi.todo) {
@@ -91,9 +113,43 @@ function push() {
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
-renderTodoList();
+setTimeout(renderTodoList, 200);
 progress();
 startUp();
+
+function dataObject() {
+  if (indexedDB) {
+    let request = window.indexedDB.open("todo", 1);
+
+    request.onupgradeneeded = function(e) {
+      let db = request.result,
+        store = db.createObjectStore("todoStore", {
+          keyPath: "todo"});
+    }
+
+    request.onerror = function(e) {
+      console.log("There was an error: " + e.target.errorCode);
+    };
+
+    request.onsuccess = function(e) {
+      db = request.result;
+      tx = db.transaction("todoStore", "readwrite");
+      store = tx.objectStore("todoStore", "todo");
+      store.clear()
+      obj = JSON.stringify(data);
+      store.add(data);
+      db.close();
+
+      db.onerror = function(e) {
+        console.log("Erorr " + e.target.errorCode);
+      }
+    }
+    } else {
+      localStorage.setItem('todo', JSON.stringify(data));
+      console.log(data);
+  }
+
+}
 
 /* setTimeout(function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
@@ -166,18 +222,6 @@ document.getElementById('upload').onchange = function uploadFile() {
       previewFileOff();
       console.log('Removed file!');
   })
-}
-
-
-function dataObject() {
-  // if (indexedDB) {
-  //  var open = indexedDB.open('todo', 1);
-  //  var db = open.;
-  // } else {
-    localStorage.setItem('todo', JSON.stringify(data));
-    console.log(data);
-  // }
-
 }
 
 // Add List Object To the DOM
