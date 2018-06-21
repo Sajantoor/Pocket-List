@@ -8,10 +8,16 @@ var file = document.getElementById('preview');
 var blob = null;
 var addedBlob = null;
 var swipe = true;
+var wasFetched = false;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-fetch();
 navListener();
+
+if (localStorage.getItem('checkFetch')) {
+  window.wasFetched = true;
+}
+
+fetch();
 
 function isIE() {
   ua = navigator.userAgent;
@@ -28,24 +34,27 @@ if (isIE()){
    list: ["general"]
 };
 
-
+var fetchDeclarer = {
+  fetch: true,
+}
 
 function fetch() {
-    let request = window.indexedDB.open("todo", 1);
+  if (wasFetched) {
+      let request = window.indexedDB.open("todo", 1);
 
-    request.onsuccess = function(e) {
-      db = request.result;
-      tx = db.transaction("todoStore", "readwrite");
-      store = tx.objectStore("todoStore", "todo");
-      var thing = store.getAll();
-      thing.onsuccess = function(evt) {
-        var x = thing.result[0];
-        console.log(x);
-        data = x;
+      request.onsuccess = function(e) {
+        db = request.result;
+        tx = db.transaction("todoStore", "readwrite");
+        store = tx.objectStore("todoStore", "todo");
+        var thing = store.getAll();
+        thing.onsuccess = function(evt) {
+          var x = thing.result[0];
+          console.log(x);
+          data = x;
+      }
     }
   }
 }
-
 
 var liData = {
   "text": null,
@@ -70,11 +79,8 @@ function push() {
 // Generates Todo List on Startup
  function renderTodoList() {
   if (!data.todo.length) return;
-
-  var dataUpdated = JSON.stringify(data);
-  console.log(dataUpdated);
   for (var i = 0; i < data.todo.length; i++) {
-    var dataLi = dataUpdated[i];
+    var dataLi = JSON.parse(data.todo[i]);
     var text = dataLi.text;
 
     if (dataLi.todo) {
@@ -127,10 +133,6 @@ function dataObject() {
           keyPath: "todo"});
     }
 
-    request.onerror = function(e) {
-      console.log("There was an error: " + e.target.errorCode);
-    };
-
     request.onsuccess = function(e) {
       db = request.result;
       tx = db.transaction("todoStore", "readwrite");
@@ -139,21 +141,17 @@ function dataObject() {
       obj = JSON.stringify(data);
       store.add(data);
       db.close();
-
-      db.onerror = function(e) {
-        console.log("Erorr " + e.target.errorCode);
+      localStorage.setItem('checkFetch', JSON.stringify(fetchDeclarer));
       }
-    }
     } else {
-      localStorage.setItem('todo', JSON.stringify(data));
-      console.log(data);
+      alert("Your browser does not support IndexedDB, storing items will not be avaliable...")
   }
 
 }
 
-/* setTimeout(function loadIn() {
+setTimeout(function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
-}, 2000) */
+}, 2000)
 
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function startUp() {
@@ -220,7 +218,6 @@ document.getElementById('upload').onchange = function uploadFile() {
     file.src = null;
     upload.value = null;
       previewFileOff();
-      console.log('Removed file!');
   })
 }
 
