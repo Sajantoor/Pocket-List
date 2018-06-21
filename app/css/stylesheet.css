@@ -932,7 +932,7 @@ div#loadingScreen p {
   top: 50px;
   font-size: 15pt;
   animation-name: textDrop;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-timing-function: ease-in-out;
 }
 

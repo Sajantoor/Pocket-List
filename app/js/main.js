@@ -31,7 +31,7 @@ if (isIE()){
 
  var data = {
    todo: [],
-   list: ["general"]
+   list: ["General"]
 };
 
 var fetchDeclarer = {
@@ -49,7 +49,6 @@ function fetch() {
         var thing = store.getAll();
         thing.onsuccess = function(evt) {
           var x = thing.result[0];
-          console.log(x);
           data = x;
       }
     }
@@ -116,6 +115,11 @@ function push() {
       addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData);
     }
   }
+
+  for (var j = 1; j < data.list.length; j++) {
+    var multiList = data.list[j];
+    addList(multiList);
+  }
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
@@ -151,7 +155,7 @@ function dataObject() {
 
 setTimeout(function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
-}, 2000)
+}, 1000)
 
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function startUp() {
@@ -508,7 +512,8 @@ function createNewList() {
   if (value) {
     addList(value.replace(/\s+/g,' ').trim());
     document.getElementById('List-Input').value = "";
-    data.list.push(value.replace(/\s+/g,' ').trim())
+    data.list.push(value.replace(/\s+/g,' ').trim());
+    dataObject();
   } else {
     document.getElementById('item').value = "";
     alert('Error: Invalid entry, please add text to your entry!');
@@ -976,10 +981,4 @@ function previewFileOff() {
   document.getElementById('upload-label').removeAttribute('style');
 }
 
-
 // FIXME: Forgot to add a remove option for todo lists lol.
-
-// HACK: Local Storage Redesign for more than just text values
-
-/* HACK: Requires a way to clear the completed items after 24 hours of real time. This value
-should be able to be changed by the user, in app settings and should be able to be turned off. */
