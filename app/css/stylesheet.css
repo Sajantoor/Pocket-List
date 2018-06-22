@@ -942,7 +942,7 @@ div#loadingScreen p {
 }
 
 
-@media only screen and (min-width: 992px) {
+/* @media only screen and (min-width: 992px) {
   #navigation {
     width: 20%;
     transform: none;
@@ -987,4 +987,4 @@ div#loadingScreen p {
     left: 30%;
   }
 
-}
+} */

@@ -487,7 +487,7 @@ function navListener() {
   var element = document.getElementById('navigation');
   var style = window.getComputedStyle(element, null);
   var targetedStyle = 'hidden'
-  if (style.visibility === 'hidden') {
+  // if (style.visibility === 'hidden') {
     // Navigation Button Event Listener
     document.getElementById('navButton').addEventListener('click', openNavigation);
 
@@ -495,7 +495,7 @@ function navListener() {
     document.getElementById('close').addEventListener('click', close);
       // If clicking anything but the navigation or the close button
     document.getElementById('overlay').addEventListener('click', close);
-  }
+//  }
 }
 
 function openNavigation() {
