@@ -948,6 +948,7 @@ div#loadingScreen p {
     transform: none;
     border-radius: 0px;
     visibility: visible;
+    box-shadow: 2px 0px 57px 0px rgba(0, 0, 0, 0.3);
   }
 
   div#Gradient-Thing {
@@ -956,6 +957,7 @@ div#loadingScreen p {
     z-index: 200;
     border-radius: 0px;
     visibility: visible;
+    box-shadow: 2px 0px 57px 0px rgba(0, 0, 0, 0.3);
   }
 
   footer#Basic-Footer {
@@ -964,7 +966,9 @@ div#loadingScreen p {
     z-index: 200;
     border-radius: 0px;
     visibility: visible;
+    box-shadow: 2px 0px 57px 0px rgba(0, 0, 0, 0.3);
   }
+
   #container {
     width: 80%;
     float: right;
