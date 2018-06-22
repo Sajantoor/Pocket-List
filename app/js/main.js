@@ -11,8 +11,6 @@ var swipe = true;
 var wasFetched = false;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-
-
 navListener();
 
 if (localStorage.getItem('checkFetch')) {
@@ -138,10 +136,10 @@ function push() {
     }
   }
 
-  for (var j = 1; j < data.list.length; j++) {
-    var multiList = data.list[j];
-    addList(multiList);
-  }
+  //for (var j = 1; j < data.list.length; j++) {
+    //var multiList = data.list[j];
+  //  addList(multiList);
+  // }
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
@@ -367,7 +365,6 @@ function removeItem() {
   var length = parent.children.length;
   var complete = document.getElementById('complete');
 
-
 // Remove item from local storage
   if (id === 'todo') {
     // Find the position of the li that was removed
@@ -487,13 +484,18 @@ function progress() {
 }
 
 function navListener() {
-  // Navigation Button Event Listener
-  document.getElementById('navButton').addEventListener('click', openNavigation);
+  var element = document.getElementById('navigation');
+  var style = window.getComputedStyle(element, null);
+  var targetedStyle = 'hidden'
+  if (style.visibility === 'hidden') {
+    // Navigation Button Event Listener
+    document.getElementById('navButton').addEventListener('click', openNavigation);
 
-    // Close navigation Button Event Listener
-  document.getElementById('close').addEventListener('click', close);
-    // If clicking anything but the navigation or the close button
-  document.getElementById('overlay').addEventListener('click', close);
+      // Close navigation Button Event Listener
+    document.getElementById('close').addEventListener('click', close);
+      // If clicking anything but the navigation or the close button
+    document.getElementById('overlay').addEventListener('click', close);
+  }
 }
 
 function openNavigation() {
@@ -512,6 +514,7 @@ function close() {
   document.getElementById('navigation').style = "visibility: visible;";
 }
 
+/*
 // Event Listener For Clicking on the add button
 document.getElementById('add-list').addEventListener('click', function () {
   createNewList();
@@ -528,6 +531,7 @@ document.addEventListener('keypress', function(event)  {
 });
 
 // Creates a new list in the navigation
+
 function createNewList() {
   var value = document.getElementById('List-Input').value;
   if (value) {
@@ -542,12 +546,12 @@ function createNewList() {
 }
 
 // Add Item For the Lists
-function addList(text) {
+ function addList(text) {
   var listOfLists = document.getElementById('todo-lists');
   var newItem = document.createElement('li');
   newItem.innerHTML = text;
   listOfLists.append(newItem);
-}
+} */
 
 // Colour Picker Thing
 function colourPicker() {
