@@ -931,14 +931,13 @@ div#loadingScreen p {
   position: relative;
   top: 50px;
   font-size: 15pt;
-  animation-name: textDrop;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
+  animation: textDrop 4s ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 @keyframes textDrop {
   0% {opacity: 0.0}
-  75% {transform: translateY(30px); opacity: 1.0}
+  50% {transform: translateY(30px); opacity: 1.0}
   100% {opacity: 0.0}
 }
 

@@ -11,10 +11,15 @@ var swipe = true;
 var wasFetched = false;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
+
+
 navListener();
 
 if (localStorage.getItem('checkFetch')) {
+  console.log('fetch was true!');
   window.wasFetched = true;
+} else {
+  document.getElementById('loadingLine').innerText = "Welcome to Pocket List!";
 }
 
 fetch();
@@ -40,6 +45,7 @@ var fetchDeclarer = {
 
 function fetch() {
   if (wasFetched) {
+    var t0 = performance.now();
       let request = window.indexedDB.open("todo", 1);
 
       request.onsuccess = function(e) {
@@ -50,10 +56,26 @@ function fetch() {
         thing.onsuccess = function(evt) {
           var x = thing.result[0];
           data = x;
+          renderTodoList();
+          console.log('Got data...');
+
+          var t1 = performance.now();
+          var perform = (t1 - t0);
+          console.log("Call to fetch took " + (t1 - t0) + " milliseconds.");
+
+          if (perform < 2000) {
+            setTimeout(loadIn, 2000);
+          } else {
+            loadIn();
+          }
       }
     }
+  } else {
+    setTimeout(loadIn, 2000);
   }
 }
+
+
 
 var liData = {
   "text": null,
@@ -123,7 +145,6 @@ function push() {
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
-setTimeout(renderTodoList, 200);
 progress();
 startUp();
 
@@ -153,9 +174,9 @@ function dataObject() {
 
 }
 
-setTimeout(function loadIn() {
+function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
-}, 1000)
+}
 
 // Focuses on the text box when starting up the app, this removes a click the user would have to make to add a new item
 function startUp() {
@@ -980,5 +1001,3 @@ function previewFileOff() {
   document.getElementById('complete').removeAttribute('style');
   document.getElementById('upload-label').removeAttribute('style');
 }
-
-// FIXME: Forgot to add a remove option for todo lists lol.
