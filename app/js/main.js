@@ -11,8 +11,11 @@ var swipe = true;
 var wasFetched = false;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
+// Event Listener for the navigation
 navListener();
 
+// Checks if there is a "checkFetch" item in local storage then sets gloabl "wasFetched" to true. This is used in the
+// fetch function so it must be run before that function.
 if (localStorage.getItem('checkFetch')) {
   console.log('fetch was true!');
   window.wasFetched = true;
@@ -32,15 +35,19 @@ if (isIE()){
     alert('Your browser is not supported, please use Google Chrome, Mozilla Firefox, Opera, or Safari.');
 }
 
+// The array of data stored.
  var data = {
    todo: [],
    list: ["General"]
 };
 
+// JSON data that will be put into local storage to check if the item can be fetched or not.
 var fetchDeclarer = {
   fetch: true,
 }
 
+// Checks if there is anything in the data base then fetches that data.
+// Also checks for how long it takes to run this fuction and makes the loading screen that long to avoid List items popping in
 function fetch() {
   if (wasFetched) {
     var t0 = performance.now();
@@ -55,8 +62,6 @@ function fetch() {
           var x = thing.result[0];
           data = x;
           renderTodoList();
-          console.log('Got data...');
-
           var t1 = performance.now();
           var perform = (t1 - t0);
           console.log("Call to fetch took " + (t1 - t0) + " milliseconds.");
@@ -73,8 +78,7 @@ function fetch() {
   }
 }
 
-
-
+// JSON data for the todo LI object
 var liData = {
   "text": null,
   "img": null,
@@ -87,6 +91,7 @@ var liData = {
   "list": multiList,
 }
 
+// Pushes the data to the data base.
 function push() {
   if (liData.todo) {
     var obj = JSON.stringify(liData);
@@ -135,17 +140,13 @@ function push() {
       addItem(text, completeData, fetched, imgData, imgNameData, labelData, paragraphData, timeValueData);
     }
   }
-
-  //for (var j = 1; j < data.list.length; j++) {
-    //var multiList = data.list[j];
-  //  addList(multiList);
-  // }
 }
 
 // Gets the Local Storage Array and Generates the todo and complete list
 progress();
 startUp();
 
+// Stores all data in indexedDB
 function dataObject() {
   if (indexedDB) {
     let request = window.indexedDB.open("todo", 1);
@@ -172,6 +173,7 @@ function dataObject() {
 
 }
 
+// Gets rid of the loading screen
 function loadIn() {
   document.getElementById('loadingScreen').style = "opacity: 0.0; webkit-opacity: 0.0; -o-opacity: 0.0; -moz-opacity: 0.0; visibility: hidden;";
 }
@@ -210,7 +212,6 @@ function createItem() {
       }
     }
   });
-
 
 // Upload file system
 document.getElementById('upload').onchange = function uploadFile() {
@@ -395,6 +396,7 @@ function removeItem() {
   progress();
 }
 
+// This function is run when an item is labelled as complete or "uncomplete"
 function completeItem() {
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
@@ -487,15 +489,10 @@ function navListener() {
   var element = document.getElementById('navigation');
   var style = window.getComputedStyle(element, null);
   var targetedStyle = 'hidden'
-  // if (style.visibility === 'hidden') {
-    // Navigation Button Event Listener
     document.getElementById('navButton').addEventListener('click', openNavigation);
-
-      // Close navigation Button Event Listener
     document.getElementById('close').addEventListener('click', close);
       // If clicking anything but the navigation or the close button
     document.getElementById('overlay').addEventListener('click', close);
-//  }
 }
 
 function openNavigation() {
@@ -650,7 +647,6 @@ function colourPicker() {
 
       function repetition(color) {
         // Data stuff
-
         // This is causing an error on the second attempting running this but the error doesn't seem important
         // Because it's not actually causing any problems.
           var obj = JSON.parse(data.todo[position]);
@@ -699,7 +695,7 @@ function colourPicker() {
       checkDistance();
       handleGesture();
     }, false);
-
+// Checks if the distance of the "swipes" are too small to be considered swipes.
 function checkDistance() {
   var distanceY = (touchendY - touchstartY);
 
@@ -713,7 +709,7 @@ function checkDistance() {
     verticalDistance = false;
   }
 }
-
+// This function is run when the distance is checked and handles the swipe
     function handleGesture() {
      if (window.swipe && verticalDistance) {
         if (touchendX >= (touchstartX + 65)) {
@@ -759,19 +755,20 @@ function expandList() {
         currentNode = currentNode.previousSibling;
         position++;
      }
-
+     // Styles accordingly if there is an image or not an image.
     if (img.src) {
       expansionBox.style = "height: 50%; top: 25%; visibility: visible; -webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
       uploadContainer.style = "display: block; width: 100%;";
       previewAgain.src = img.src;
       previewAgain.style = "visibility: visible; display: block;";
-      spiderman();
+      roadster();
     } else {
       expansionBox.style = "visibility: visible; opacity: 1.0; webkit-opacity: 1.0; -o-opacity: 1.0; -moz-opacity: 1.0; opacity: 1.0;";
-      spiderman();
+      roadster();
     }
 
-    function spiderman() {
+// A function named after a pretty cool car :P
+    function roadster() {
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
       dynamicLi.innerText = liText.textContent;
@@ -782,6 +779,7 @@ function expandList() {
       document.getElementById('time').value = document.getElementById('timeValue').textContent;
     }
 
+// Runs and expanded view of a image by creating a new image using DOM manipulation seamlessly.
     function imageExpansion() {
       var img = new Image;
       img.setAttribute('id', 'expandedImage');
@@ -813,6 +811,7 @@ function expandList() {
       })
     }
 
+// This function saves any data of the expansion and removes all style of the expansion box
     function removeExpansion() {
         expansionBox.removeAttribute('style');
         liText.textContent = dynamicLi.innerText.replace(/\s+/g,' ').trim();
@@ -830,6 +829,7 @@ function expandList() {
         clear();
     }
 
+// This stuff has to be cleared because for some reason it doesn't work otherwise.
     function clear() {
       element = "null";
       li = "null";
@@ -848,6 +848,7 @@ function expandList() {
       document.getElementById('time').value = null;
     }
 
+// Adds a new image or updates an existing one in the expansion box.
     document.getElementById('uploadAgain').onchange = function uploadImage() {
       var upload = document.getElementById('uploadAgain');
       var fileType = this.files[0]['type'];
@@ -905,6 +906,7 @@ function expandList() {
       }
     }
 
+// Time / Countdown system for the LIs
     document.getElementById('time').onchange = function() {
         timeValue.innerText = this.value;
         var now = new Date().getTime();
@@ -932,51 +934,59 @@ function expandList() {
       data.todo.splice(position, 1, stringObj);
       dataObject();
       countDownFunction(countDownDate, countDownTimer);
-
-      document.getElementById('time').value = null;
+      time.value = null;
     }
   }
 }
 
 function countDownFunction(countDownDate, countDownTimer) {
-  var x = setInterval(function() {
+  var x = setInterval(countDownInterval, 100)
 
-    var now = new Date().getTime();
+    function countDownInterval() {
+      var now = new Date().getTime();
 
-    var distance = countDownDate - now;
+      var distance = countDownDate - now;
 
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    if (days === 0) {
-            countDownTimer.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-        if (hours === 0) {
-            countDownTimer.innerHTML = minutes + "m " + seconds + "s ";
-            if (minutes === 0) {
-                countDownTimer.innerHTML = seconds + "s ";
-            }
-        }
-    } else {
-      countDownTimer.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      if (days === 0) {
+              countDownTimer.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+          if (hours === 0) {
+              countDownTimer.innerHTML = minutes + "m " + seconds + "s ";
+              if (minutes === 0) {
+                  countDownTimer.innerHTML = seconds + "s ";
+              }
+          }
+      } else {
+        countDownTimer.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      }
+
+      if (distance < 0) {
+           clearInterval(x);
+           countDownTimer.innerHTML = "TIMES UP!";
+           countDownTimer.style = "display: block; color: #e74c3c;";
+         }
+
+      var list = countDownTimer.parentNode.parentNode;
+
+
+
+      if (list === complete) {
+        clearInterval(x);
+        countDownTimer.style = "display: none;"
+        countDownTimer.innerHTML = "";
+      }
     }
 
-    if (distance < 0) {
-         clearInterval(x);
-         countDownTimer.innerHTML = "TIMES UP!";
-         countDownTimer.style = "display: block; color: #e74c3c;";
-       }
-
-    var list = countDownTimer.parentNode.parentNode;
-
-    if (list === complete) {
+    document.getElementById('time').onchange = function() {
       clearInterval(x);
-      countDownTimer.style = "display: none;"
-      countDownTimer.innerHTML = "";
+      console.log('worked');
     }
-  }, 100)
 }
+
 
 // Change styling stuff
 function previewImage() {
