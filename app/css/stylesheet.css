@@ -992,7 +992,7 @@ div#loadingScreen p {
 #navigation h2 {
   text-align: center;
   position: relative;
-  top: 150pt;
+  top: 50pt;
   padding: 10px;
 }
 
@@ -1005,7 +1005,7 @@ div#loadingScreen p {
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  top: 150pt;
+  top: 50pt;
 }
 
 .switch input {display:none;}
