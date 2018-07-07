@@ -16,7 +16,7 @@ navListener();
 
 // Checks if there is a "checkFetch" item in local storage then sets gloabl "wasFetched" to true. This is used in the
 // fetch function so it must be run before that function.
-if (localStorage.getItem('checkFetch')) {
+if (localStorage.getItem('checkFetch') || localStorage.getItem('theme')) {
   console.log('fetch was true!');
   window.wasFetched = true;
 } else {
@@ -24,7 +24,9 @@ if (localStorage.getItem('checkFetch')) {
 }
 
 fetch();
+getTheme();
 
+// Checks if the browser is Internet Explorer because that browser is not supported.
 function isIE() {
   ua = navigator.userAgent;
   // MSIE used to detect old browsers and Trident used to newer ones
@@ -170,7 +172,16 @@ function dataObject() {
     } else {
       alert("Your browser does not support IndexedDB, storing items will not be avaliable...")
   }
+}
 
+function getTheme() {
+  var theme = JSON.parse(localStorage.getItem('theme'));
+  if (theme) {
+    if (!theme.light) {
+      document.getElementById('theme').href = 'css/dark.css';
+      document.getElementById('transform').checked = true;
+    }
+  }
 }
 
 // Gets rid of the loading screen
@@ -511,7 +522,6 @@ function close() {
   document.getElementById('navigation').style = "visibility: visible;";
 }
 
-/*
 // Event Listener For Clicking on the add button
 document.getElementById('add-list').addEventListener('click', function () {
   createNewList();
@@ -528,7 +538,6 @@ document.addEventListener('keypress', function(event)  {
 });
 
 // Creates a new list in the navigation
-
 function createNewList() {
   var value = document.getElementById('List-Input').value;
   if (value) {
@@ -548,7 +557,7 @@ function createNewList() {
   var newItem = document.createElement('li');
   newItem.innerHTML = text;
   listOfLists.append(newItem);
-} */
+}
 
 // Colour Picker Thing
 function colourPicker() {
@@ -1014,4 +1023,30 @@ function previewFileOff() {
   document.getElementById('todo').removeAttribute('style');
   document.getElementById('complete').removeAttribute('style');
   document.getElementById('upload-label').removeAttribute('style');
+}
+
+// Event listener for changing themes
+document.getElementById('transform').onchange = changeThemes;
+
+function changeThemes() {
+  var transform = document.getElementById('transform');
+  stylesheet = document.getElementById('stylesheet');
+
+  if (transform.checked) {
+    theme.href = 'css/dark.css';
+    themeData.light = false;
+    storeThemeData();
+  } else {
+    theme.href = 'css/stylesheet.css';
+    themeData.light = true;
+    storeThemeData();
+  }
+}
+// JSON object for storing theme data.
+var themeData = {
+  light: true,
+}
+
+function storeThemeData() {
+  localStorage.setItem('theme', JSON.stringify(themeData));
 }

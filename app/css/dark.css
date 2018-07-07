@@ -43,7 +43,7 @@ header #item {
   border: 0;
   box-shadow: none;
   outline: none;
-  background-color: #0074b8;
+  background-color: #0088d6;
   appearance: none;
 
   -webkit-appearance-none;
@@ -314,7 +314,7 @@ ul#todo #addtodo:hover {
 ul#complete #addtodo {
   cursor: pointer;
   background-color: #2ecc71;
-  fill: #ccd9e7;
+  fill: #576574;
   padding:2px;
   border-radius: 50%;
   border: solid 3px #2ecc71;
@@ -414,7 +414,7 @@ ul#complete:empty:after {
 }
 
 #navButton svg {
-  fill: #0074b8;
+  fill: #0088d6;
 }
 
 #menu-header h1 {
@@ -449,6 +449,19 @@ input#List-Input {
   top: 10pt;
 }
 
+input#List-Input::-webkit-input-placeholder {
+  color: rgba(204,217,231, 0.7);
+}
+input#List-Input::-moz-placeholder {
+  color: rgba(204,217,231, 1);
+}
+input#List-Input:-ms-input-placeholder {
+  color: rgba(204,217,231, 0.7);
+}
+input#List-Input:-moz-placeholder {
+  color: rgba(204,217,231, 0.7);
+}
+
 #List-Input {
   width: 90%;
   border: 0;
@@ -456,11 +469,11 @@ input#List-Input {
   padding:  10px  55px 10px 0px;
   font-size: 1em;
   text-indent: 10px;
-  color: #000;
+  color: #ccd9e7;
   border-radius: 5px 20px 20px 5px;
   box-shadow: none;
   outline: none;
-  background-color: #FFF;
+  background-color: #576574;
   appearance: none;
 
   -webkit-appearance-none;
@@ -495,14 +508,14 @@ ul#todo-lists {
 #todo-lists li {
   position: relative;
   top: 10pt;
-  color: #000;
+  color: #ccd9e7;
   width: 80%;
   height: 50px;
   font-size: 1em;
   padding: 15px 0 0 0;
   margin-bottom: 15px;
   border-radius: 5px;
-  background-color: #FFF;
+  background-color: #576574;
   margin-right: auto;
   margin-left: auto;
 }
@@ -544,7 +557,7 @@ ul#todo-lists:last-of-type::before, ul#todo-lists:last-of-type::after {
   position: relative;
   display: inline-block;
   border: 0;
-  background-color: #484c4f;
+  background-color: #909fab;
   box-shadow: none;
   outline: none;
   appearance: none;
@@ -581,7 +594,7 @@ footer#Basic-Footer {
   visibility: hidden;
   position: fixed;
   z-index: 10000;
-  background-color: #7b878f;
+  background-color: #5a6369;
   width: 90%;
   height: 25px;
   bottom: 0;
@@ -704,13 +717,16 @@ div#closeMenu {
   right: 15px;
 }
 
+div#closeMenu svg {
+  fill: #ccd9e7;
+}
+
 div#closeMenu svg:hover  {
   fill: #e81123;
 }
 
 #red, #blue, #green, #purple, #yellow, #orange, #black, #grey, #white {
   cursor: pointer;
-
 }
 
 div#red {background-color: #e74c3c;}
@@ -832,7 +848,7 @@ p#notes:empty:not(:focus)::before {
 }
 
 #close-expansion:hover {
-  fill: #ff4f4f;
+  fill: #f05252;
 }
 
 input#time {
@@ -954,7 +970,7 @@ div#loadingScreen p {
   100% {opacity: 0.0}
 }
 
-
+/* Responsive Design Stuff */
 /* @media only screen and (min-width: 992px) {
   #navigation {
     width: 20%;
@@ -1001,3 +1017,72 @@ div#loadingScreen p {
   }
 
 } */
+
+
+#navigation h2 {
+  text-align: center;
+  position: relative;
+  top: 150pt;
+  padding: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 150pt;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
