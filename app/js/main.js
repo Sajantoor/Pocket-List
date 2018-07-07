@@ -1030,7 +1030,8 @@ document.getElementById('transform').onchange = changeThemes;
 
 function changeThemes() {
   var transform = document.getElementById('transform');
-  stylesheet = document.getElementById('stylesheet');
+  var stylesheet = document.getElementById('stylesheet');
+  var theme = document.getElementById('theme');
 
   if (transform.checked) {
     theme.href = 'css/dark.css';
