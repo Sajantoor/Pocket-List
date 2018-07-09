@@ -162,7 +162,7 @@ ul#todo li, ul#complete li {
   padding: 10px 100px 20px 50px;
   margin-bottom: 10px;
   border-radius: 15px;
-  background-color: #576574;
+  background-color: #4b5763;
   word-break: break-word;
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -208,6 +208,10 @@ div#label {
   overflow: hidden;
   background-color: #30a0ff;
   border-radius: 15px 0 0 15px;
+}
+
+ul#complete li div#label {
+  cursor: default;
 }
 
 p#paragraph {
@@ -308,13 +312,13 @@ ul#todo li .buttons svg:last-child:before , ul#complete li .buttons svg:last-chi
 
 ul#todo #addtodo:hover {
   background-color: #2ecc71;
-  fill:#576574;
+  fill:#4b5763;
 }
 
 ul#complete #addtodo {
   cursor: pointer;
   background-color: #2ecc71;
-  fill: #576574;
+  fill: #4b5763;
   padding:2px;
   border-radius: 50%;
   border: solid 3px #2ecc71;
@@ -324,7 +328,7 @@ ul#complete #addtodo {
 }
 
 ul#complete div #addtodo:hover {
-  background-color: #576574;
+  background-color: #4b5763;
   border-color: #2ecc71;
   fill: #2ecc71;
 }
@@ -473,7 +477,7 @@ input#List-Input:-moz-placeholder {
   border-radius: 5px 20px 20px 5px;
   box-shadow: none;
   outline: none;
-  background-color: #576574;
+  background-color: #4b5763;
   appearance: none;
 
   -webkit-appearance-none;
@@ -515,7 +519,7 @@ ul#todo-lists {
   padding: 15px 0 0 0;
   margin-bottom: 15px;
   border-radius: 5px;
-  background-color: #576574;
+  background-color: #4b5763;
   margin-right: auto;
   margin-left: auto;
 }
@@ -574,7 +578,7 @@ div#progress {
   height: 120pt;
   width: 120pt;
   border-radius: 50%;
-  border: 15pt solid #15154d;
+  border: 15pt solid #21214d;
   position: relative;
   top: 20px;
   margin-right: auto;
@@ -804,7 +808,7 @@ p#notes {
   overflow-y: auto;
   position: relative;
   border-radius: 15px;
-  background-color: #576574;
+  background-color: #4b5763;
 }
 
 #upload-containAgain {
@@ -916,53 +920,53 @@ svg#closebuttonagain {
    display: none;
  }
 
-div#loadingScreen {
-  position: fixed;
-  background-color: #2d2f36;
-  width: 100%;
-  height: 100%;
-  z-index: 8000;
-  opacity: 1.0;
-  visibility: visible;
-}
+ div#loadingScreen {
+   position: fixed;
+   background-color: #FFF;
+   width: 100%;
+   height: 100%;
+   z-index: 8000;
+   opacity: 1.0;
+   visibility: visible;
+ }
 
-div#loadingScreen div {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+ div#loadingScreen div {
+   width: 100%;
+   height: 100%;
+   position: fixed;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
 
-div#loadingScreen div img {
-  position: relative;
-  width: 150px;
-  bottom: 50px;
-}
+ div#loadingScreen div img {
+   position: relative;
+   width: 150px;
+   bottom: 50px;
+ }
 
-div#loadingScreen h1 {
-  padding: 10px;
-  text-align: center;
-  color: #ccd9e7;
-  font-weight: 500;
-  top: 50px;
-  font-size: 30pt;
-  position: relative;
+ div#loadingScreen h1 {
+   padding: 10px;
+   text-align: center;
+   color: #000;
+   font-weight: 500;
+   top: 50px;
+   font-size: 30pt;
+   position: relative;
 
-}
+ }
 
-div#loadingScreen p {
-  text-align: center;
-  color: #ccd9e7;
-  font-weight: 300;
-  position: relative;
-  top: 50px;
-  font-size: 15pt;
-  animation: textDrop 4s ease-in-out;
-  animation-iteration-count: infinite;
-}
+ div#loadingScreen p {
+   text-align: center;
+   color: #000;
+   font-weight: 300;
+   position: relative;
+   top: 50px;
+   font-size: 15pt;
+   animation: textDrop 4s ease-in-out;
+   animation-iteration-count: infinite;
+ }
 
 @keyframes textDrop {
   0% {opacity: 0.0}

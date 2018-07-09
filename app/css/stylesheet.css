@@ -210,6 +210,10 @@ div#label {
   border-radius: 15px 0 0 15px;
 }
 
+ul#complete li div#label {
+  cursor: default;
+}
+
 p#paragraph {
   display: none;
   position: absolute;
