@@ -396,7 +396,7 @@ ul#complete:empty:after {
   color: #ccd9e7;
   box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);
   width: 90%;
-  border-radius: 5px;
+  border-radius: 0 5px 0 0;
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;

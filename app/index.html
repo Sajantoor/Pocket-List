@@ -109,16 +109,18 @@
   <!-- Dynamic Expansion Box Thing -->
 <div id="expansion">
   <!-- Li Value gets stored as an editable h1 -->
-  <h1 contenteditable="true" id="dynamic-li"> Lorem ipsum... </h1>
+  <textarea id="dynamic-li" placeholder="Name your list item..."> </textarea>
   <!-- To upload images again -->
   <svg fill="#000" height="24" id="close-expansion" viewBox="0 0 24 24" width="30" xmlns="http://www.w3.org/2000/svg"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/></svg>
   <label id="upload-labelAgain"><svg fill="#30a0ff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
     <input type="file" id="uploadAgain" accept="image/*" onchange="uploadFile"/>
   </label>
-    <p contenteditable="true" id="notes" data-placeholder="Add some notes..."> </p>
+    <textarea id="notes" placeholder="Add some notes..."> </textarea>
     <!-- Inputs for time and date -->
+      <h3> Insert a link </h3>
+      <input id="link" type="text">
+      <input id="submitLink" type="submit">
       <input id="time" type="datetime-local">
-
       <!-- If there is an image it needs to display said image -->
       <div id=upload-containAgain>
     <img id="previewAgain">

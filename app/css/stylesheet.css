@@ -355,6 +355,7 @@ ul#complete:empty:after {
   font-weight: 200;
   text-align: center;
   color: #484c4f;
+  margin-bottom: 50pt;
 }
 
 #img-container {
@@ -392,7 +393,7 @@ ul#complete:empty:after {
   height: calc(100% - 35px);
   box-shadow: 5px 0px 57px 0px rgba(0, 0, 0, 0.3);
   width: 90%;
-  border-radius: 5px;
+  border-radius: 0 5px 0 0;
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;
@@ -758,22 +759,25 @@ div#expansion {
   visibility: hidden;
 }
 
-h1#dynamic-li {
+textarea#dynamic-li {
   position: relative;
   font-family: 'Barlow', sans-serif;
   font-weight: 400;
   width: 80%;
   left: 10%;
-  font-size: 16pt;
+  font-size: 14pt;
   padding: 10px;
   min-height: 20pt;
   max-height: 45pt;
   overflow-x: hidden;
   overflow-y: auto;
+  border: 0;
+  resize: none;
 }
 
-p#notes {
+textarea#notes {
   bottom: 20pt;
+  font-family: 'Barlow', sans-serif;
   font-size: 11pt;
   text-align: left;
   padding: 10px;
@@ -784,6 +788,8 @@ p#notes {
   position: relative;
   border-radius: 15px;
   background-color: #ecf0f1;
+  border: 0;
+  resize: none;
 }
 
 #upload-containAgain {

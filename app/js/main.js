@@ -2,6 +2,7 @@ var multiList = 'General';
 var removeSVG = '<svg id="removetodo" fill="#c0cecb" x="0px" y="0px" viewBox="0 0 22 22"><g><g><path class="st0" d="M16.1,3.6h-1.9V3.3c0-1.3-1-2.3-2.3-2.3h-1.7C8.9,1,7.8,2,7.8,3.3v0.2H5.9c-1.3,0-2.3,1-2.3,2.3v1.3c0,0.5,0.4,0.9,0.9,1v10.5c0,1.3,1,2.3,2.3,2.3h8.5c1.3,0,2.3-1,2.3-2.3V8.2c0.5-0.1,0.9-0.5,0.9-1V5.9C18.4,4.6,17.4,3.6,16.1,3.6z M9.1,3.3c0-0.6,0.5-1.1,1.1-1.1h1.7c0.6,0,1.1,0.5,1.1,1.1v0.2H9.1V3.3z M16.3,18.7c0,0.6-0.5,1.1-1.1,1.1H6.7c-0.6,0-1.1-0.5-1.1-1.1V8.2h10.6L16.3,18.7L16.3,18.7z M17.2,7H4.8V5.9c0-0.6,0.5-1.1,1.1-1.1h10.2c0.6,0,1.1,0.5,1.1,1.1V7z"/></g><g><g><path class="st0" d="M11,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v6.8C11.6,17.7,11.4,18,11,18z"/></g><g><path class="st0" d="M8,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8C7.4,10.2,7.7,10,8,10c0.4,0,0.6,0.3,0.6,0.6v6.8C8.7,17.7,8.4,18,8,18z"/></g><g><path class="st0" d="M14,18c-0.4,0-0.6-0.3-0.6-0.6v-6.8c0-0.4,0.3-0.6,0.6-0.6c0.4,0,0.6,0.3,0.6,0.6v6.8C14.6,17.7,14.3,18,14,18z"/></g></g></g></svg>';
 var completeSVG = '<svg fill="#2ecc71" id="addtodo" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 var closeSVG = '<svg fill="#FFF" id="closebuttonagain" height="30" viewBox="0 0 24 24" width="30" xmlns="http://www.w3.org/2000/svg"> <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> <path d="M0 0h24v24H0z" fill="none"/></svg>'
+var noteSVG = '<svg fill="#bfbfbf" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z"/> <path fill="none" d="M0 0h24v24H0V0z"/></svg>';
 var completeList = document.getElementById('complete');
 var todo = document.getElementById('todo');
 var file = document.getElementById('preview');
@@ -9,6 +10,7 @@ var blob = null;
 var addedBlob = null;
 var swipe = true;
 var wasFetched = false;
+var sizeLimitChecker = 100;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
 // Event Listener for the navigation
@@ -199,8 +201,12 @@ function startUp() {
 function createItem() {
   var value = document.getElementById('item').value;
     if (value) {
-      addItem(value.replace(/\s+/g,' ').trim());
-      document.getElementById('item').value = "";
+      if (window.sizeLimitChecker != 1) {
+        addItem(value.replace(/\s+/g,' ').trim());
+        document.getElementById('item').value = "";
+      } else {
+        alert('You have reached the limit for this todo list.');
+      }
     } else {
       document.getElementById('item').value = "";
       alert('Error: Invalid entry, please add text to your entry!');
@@ -366,6 +372,15 @@ function addItem(text, completeData, fetched, imgData, imgNameData, labelData, p
   } else {
     push();
   }
+
+    if (paragraph.innerText) {
+        console.log(newItem.childElementCount);
+        var noteIcon = document.createElement('div');
+        noteIcon.innerHTML = noteSVG;
+        noteIcon.setAttribute('class', 'notesDisplay')
+        newItem.appendChild(noteIcon);
+    }
+    sizeLimit();
 }
 
 // Remove Item
@@ -405,6 +420,7 @@ function removeItem() {
 // Remove Item From DOM
   item.remove();
   progress();
+  sizeLimit();
 }
 
 // This function is run when an item is labelled as complete or "uncomplete"
@@ -741,7 +757,7 @@ function expandList() {
 
     // Expand it.
   if (list === todo) {
-    // Variables and stuff
+    // Defining Variables and stuff
     window.swipe = false;
     var liText = li.childNodes[0];
     var clickBox = li.childNodes[3];
@@ -780,8 +796,8 @@ function expandList() {
     function roadster() {
       document.getElementById('overlay').style = "position: fixed; z-index: 100; width: 100%; height: 100%; background-color: #000; opacity: 0.2;";
       document.getElementById('container').style = "filter:blur(5px);";
-      dynamicLi.innerText = liText.textContent;
-      notes.innerText = paragraph.innerText;
+      dynamicLi.value = liText.textContent;
+      notes.value = paragraph.innerText;
       document.getElementById('overlay').addEventListener('click', removeExpansion);
       uploadContainer.addEventListener('click', imageExpansion);
       document.getElementById('close-expansion').addEventListener('click', removeExpansion);
@@ -823,15 +839,25 @@ function expandList() {
 // This function saves any data of the expansion and removes all style of the expansion box
     function removeExpansion() {
         expansionBox.removeAttribute('style');
-        liText.textContent = dynamicLi.innerText.replace(/\s+/g,' ').trim();
-        paragraph.innerText = notes.innerText.replace(/\s+/g,' ').trim();
+        liText.textContent = dynamicLi.value.replace(/\s+/g,' ').trim();
+        paragraph.innerText = notes.value.replace(/\s+/g,' ').trim();
         expansionBox.removeAttribute('style');
         document.getElementById('overlay').removeAttribute('style');
         document.getElementById('container').removeAttribute('style');
 
+        if (paragraph.innerText) {
+          if (li.childElementCount <= 7) {
+            console.log(li.childElementCount);
+            var noteIcon = document.createElement('div');
+            noteIcon.innerHTML = noteSVG;
+            noteIcon.setAttribute('class', 'notesDisplay')
+            li.appendChild(noteIcon);
+            }
+        }
+
         var obj = JSON.parse(data.todo[position]);
-        obj.text = dynamicLi.innerText.replace(/\s+/g,' ').trim();
-        obj.paragraph = notes.innerText.replace(/\s+/g,' ').trim();
+        obj.text = dynamicLi.value.replace(/\s+/g,' ').trim();
+        obj.paragraph = notes.value.replace(/\s+/g,' ').trim();
         var stringObj = JSON.stringify(obj);
         data.todo.splice(position, 1, stringObj);
         dataObject();
@@ -1050,4 +1076,13 @@ var themeData = {
 
 function storeThemeData() {
   localStorage.setItem('theme', JSON.stringify(themeData));
+}
+
+function sizeLimit() {
+  var todo = document.getElementById('todo');
+  var complete = document.getElementById('complete');
+  var totalItems = complete.childElementCount + todo.childElementCount;
+
+  window.sizeLimitChecker = 100 - totalItems;
+  console.log(window.sizeLimitChecker);
 }
